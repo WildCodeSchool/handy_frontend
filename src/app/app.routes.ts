@@ -6,4 +6,11 @@ export const routes: Routes = [
     path: '',
     component: AppComponent,
   },
+  {
+    path: 'users',
+  },
+  // path: '',
+  //     ,
+  //     pathMatch: 'full',
+  //   }
 ];
