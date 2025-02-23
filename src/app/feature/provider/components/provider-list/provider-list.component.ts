@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { ProviderFacadeService } from '../provider-facade.service';
+import { ProviderFacadeService } from '../../services/provider-facade.service';
 import { Observable } from 'rxjs';
-import { AppProvider } from '../provider';
+import { AppProvider } from '../../models/provider';
 import { AsyncPipe } from '@angular/common';
 
 @Component({

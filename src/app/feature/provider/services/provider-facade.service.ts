@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '../../core/api.service';
-import { ProviderStoreService } from './provider-store.service';
+import { ApiService } from '../../../core/services/api.service';
+import { ProviderStoreService } from '../../../feature/provider/services/provider-store.service';
 import { Observable, switchMap, tap } from 'rxjs';
-import { AppProvider } from './provider';
+import { AppProvider } from '../models/provider';
 
 @Injectable({
   providedIn: 'root',
