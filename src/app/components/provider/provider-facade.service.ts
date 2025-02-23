@@ -16,7 +16,6 @@ export class ProviderFacadeService {
     private _store: ProviderStoreService
   ) {}
 
-  // Charger les provisions depuis l'API et les stocker en mémoire
   getAll$(): Observable<AppProvider[]> {
     return this._api.getAllProvisions$().pipe(
       tap(provisions => console.log('Données reçues:', provisions)),
