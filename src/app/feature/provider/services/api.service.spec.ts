@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';  
 
-import { ApiService } from '../../core/services/api.service';
+import { ApiService } from '../../../feature/provider/services/api.service';
 
 
 describe('ApiService', () => {
@@ -11,7 +11,7 @@ describe('ApiService', () => {
     TestBed.configureTestingModule({
       providers: [
         ApiService,
-        provideHttpClient()  // <-- Remplacer HttpClientModule par provideHttpClient
+        provideHttpClient()  
       ],
     });
     service = TestBed.inject(ApiService);

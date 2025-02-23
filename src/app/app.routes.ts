@@ -1,16 +1,27 @@
 import { Routes } from '@angular/router';
-import { AppComponent } from './app.component';
+import { HomePageComponent } from './feature/home/pages/home-page/home-page.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: AppComponent,
+    component: HomePageComponent,
+    pathMatch: 'full',
   },
-  {
-    path: 'users',
-  },
-  // path: '',
-  //     ,
-  //     pathMatch: 'full',
-  //   }
+
+  // {
+  // //   path: 'article/:id',
+  // //   component: ArticlePageComponent,
+  // },
+  // {
+  // //   path: 'contact',
+  // //   component: ContactPageComponent,
+  // },
+  // {
+  //   path: 'signup',
+  //  component: SignupFormComponent
+  // },
+  // {
+  // //   path: '**',
+  // //   component: NotFoundPageComponent
+  // }
 ];

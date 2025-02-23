@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';  // <-- Utiliser provideHttpClient
+import { provideHttpClient } from '@angular/common/http';  
 import { ProviderFacadeService } from './provider-facade.service';
-import { ApiService } from '../../../core/services/api.service';  // Assure-toi du bon chemin
-import { ProviderStoreService } from '../../../feature/provider/services/provider-store.service';  // Assure-toi du bon chemin
+import { ApiService } from '../../../feature/provider/services/api.service';  
+import { ProviderStoreService } from '../../../feature/provider/services/provider-store.service';  
 
 describe('ProviderFacadeService', () => {
   let service: ProviderFacadeService;
@@ -13,7 +13,7 @@ describe('ProviderFacadeService', () => {
         ProviderFacadeService,
         ApiService,
         ProviderStoreService,
-        provideHttpClient()  // <-- Remplacer HttpClientModule par provideHttpClient
+        provideHttpClient()  
       ],
     });
     service = TestBed.inject(ProviderFacadeService);

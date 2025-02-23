@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '../../../core/services/api.service';
+import { ApiService } from './api.service';
 import { ProviderStoreService } from '../../../feature/provider/services/provider-store.service';
 import { Observable, switchMap, tap } from 'rxjs';
 import { AppProvider } from '../models/provider';
