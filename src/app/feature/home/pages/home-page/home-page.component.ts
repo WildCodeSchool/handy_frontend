@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProviderListComponent } from '../../provider/components/provider-list/provider-list.component';
+import { ProviderListComponent } from '../../../provider/components/provider-list/provider-list.component';
 
 @Component({
   selector: 'app-home-page',
