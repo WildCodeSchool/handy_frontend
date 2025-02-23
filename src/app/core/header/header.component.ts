@@ -11,6 +11,6 @@ import { Router } from '@angular/router';
 export class HeaderComponent {
   private _router: Router = inject(Router);
   navigateToSignUpPage(): void {
-    this._router.navigate(['/signup'])
+    this._router.navigate(['/signup']);
   }
 }
