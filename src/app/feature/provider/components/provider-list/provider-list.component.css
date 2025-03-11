@@ -12,3 +12,7 @@
   object-fit: cover;
   margin-bottom: 10px;
 }
+
+.text-black {
+  color: black;
+}
