@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';  
 import { ProviderFacadeService } from './provider-facade.service';
-import { ApiService } from '../../../feature/provider/services/api.service';  
-import { ProviderStoreService } from '../../../feature/provider/services/provider-store.service';  
+import { ApiService } from '../../../feature/product/services/api.service';  
+import { ProviderStoreService } from '../../../feature/product/services/provider-store.service';  
 
 describe('ProviderFacadeService', () => {
   let service: ProviderFacadeService;

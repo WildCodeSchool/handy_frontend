@@ -8,9 +8,9 @@ describe('HomePageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HomePageComponent], // Importer le composant de la page d'accueil
+      imports: [HomePageComponent], 
       providers: [
-        provideHttpClient(), // Fournir HttpClient pour les tests
+        provideHttpClient(), 
       ]
     })
     .compileComponents();

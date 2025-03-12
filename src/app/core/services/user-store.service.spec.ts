@@ -43,7 +43,7 @@ describe('UserStoreService', () => {
 
   it('should set and get user roles from an object', (done) => {
     const userData = { id: 1, name: 'John Doe', roles: ['USER', 'ADMIN'] };
-    service.setRolesFromStore(userData);
+    service.setRolesFromStore(userData.roles);
 
     service.getRolesFromStore().pipe(take(1)).subscribe((res) => {
       expect(res).toEqual(['USER', 'ADMIN']);
@@ -52,7 +52,7 @@ describe('UserStoreService', () => {
   });
 
   it('should handle invalid data gracefully', () => {
-    service.setRolesFromStore({ id: 1, name: 'John Doe' });
+    service.setRolesFromStore(['role1', 'role2']);
 
     service.getRolesFromStore().subscribe((roles) => {
       expect(roles).toEqual([]); // Pas de rôles valides
@@ -60,7 +60,7 @@ describe('UserStoreService', () => {
   });
 
   it('should handle non-object data', () => {
-    service.setRolesFromStore('invalid');
+    service.setRolesFromStore(['invalid']);
 
     service.getRolesFromStore().subscribe((roles) => {
       expect(roles).toEqual([]); // Donnée incorrecte

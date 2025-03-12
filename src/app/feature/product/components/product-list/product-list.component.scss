@@ -1,18 +1,17 @@
 .prestation {
-    background-color: #e6ddd0;
-  }
-  
-  .service-name {
-    font-size: 1.2rem;
-  }
-  .prestation img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    margin-bottom: 10px;
-  }
-  
-  .text-black {
-    color: black;
-  }
-  
+  background-color: #e6ddd0;
+}
+
+.service-name {
+  font-size: 1.2rem;
+}
+.prestation img {
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.text-black {
+  color: black;
+}

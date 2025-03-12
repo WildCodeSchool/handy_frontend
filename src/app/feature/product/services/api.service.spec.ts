@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';  
 
-import { ApiService } from '../../../feature/provider/services/api.service';
+import { ApiService } from '../../../feature/product/services/api.service';
 
 
 describe('ApiService', () => {

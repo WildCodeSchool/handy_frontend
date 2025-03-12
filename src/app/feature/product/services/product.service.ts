@@ -1,12 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-import { AppProvider } from '../models/provider';
+import { AppProvider } from './provider-store.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ApiService {
+export class ProductService {
   private _BASE_API_URL: string = 'http://localhost:8080/provisions';
 
   constructor(private _http: HttpClient) {}
@@ -39,8 +39,8 @@ export class ApiService {
       );
   }
 
-  updateProvision$(id: string, provision: AppProvider): Observable<AppProvider> {
-    const url = `${this._BASE_API_URL}/${id}`; // Construction de l'URL avec l'ID
+  updateProvision$(id: number, provision: AppProvider): Observable<AppProvider> {
+    const url = `${this._BASE_API_URL}/${id}`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     return this._http.put<AppProvider>(url, provision, { headers, withCredentials: true }).pipe(

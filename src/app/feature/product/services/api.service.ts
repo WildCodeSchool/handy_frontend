@@ -39,8 +39,8 @@ export class ApiService {
       );
   }
 
-  updateProvision$(id: string, provision: AppProvider): Observable<AppProvider> {
-    const url = `${this._BASE_API_URL}/${id}`; // Construction de l'URL avec l'ID
+  updateProvision$(id: number, provision: AppProvider): Observable<AppProvider> {
+    const url = `${this._BASE_API_URL}/${id}`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     return this._http.put<AppProvider>(url, provision, { headers, withCredentials: true }).pipe(

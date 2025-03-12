@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class UserStoreService {
   private _roles = new BehaviorSubject<string[]>([]);
   private _fullName = new BehaviorSubject<string>('');
-  private _authService!: any; // Type `any` pour éviter la dépendance immédiate
+  private _authService!: any; 
 
   constructor(private _injector: Injector) {}
 
@@ -27,22 +27,22 @@ export class UserStoreService {
     return this._roles.asObservable();
   }
 
-  // public setRolesFromStore(roles: string[]): void {
-  //   this._roles.next(roles);
-  //   console.log('les rôles:', roles);
-  // }
-
-  public setRolesFromStore(roles: any): void {
-    if (Array.isArray(roles)) {
-      this._roles.next(roles);
-    } else if (roles && Array.isArray(roles.roles)) {
-      this._roles.next(roles.roles || []);
-    } else {
-      console.warn('Format de données invalide pour setRolesFromStore');
-      this._roles.next([]);
-    }
-    console.log('Les rôles:', this._roles.value);
+  public setRolesFromStore(roles: string[]): void {
+    this._roles.next(roles);
+    console.log('les rôles:', roles);
   }
+
+  // public setRolesFromStore(roles: any): void {
+  //   if (Array.isArray(roles)) {
+  //     this._roles.next(roles);
+  //   } else if (roles && Array.isArray(roles.roles)) {
+  //     this._roles.next(roles.roles || []);
+  //   } else {
+  //     console.warn('Format de données invalide pour setRolesFromStore');
+  //     this._roles.next([]);
+  //   }
+  //   console.log('Les rôles:', this._roles.value);
+  // }
   public getFullNameFromStore(): Observable<string> {
     return this._fullName.asObservable();
   }

@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { ProviderStoreService } from '../../../feature/provider/services/provider-store.service';
+import { ProviderStoreService } from '../../../feature/product/services/provider-store.service';
 
 describe('ProviderStoreService', () => {
   let service: ProviderStoreService;

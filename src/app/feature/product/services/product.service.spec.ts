@@ -1,0 +1,22 @@
+import { TestBed } from '@angular/core/testing';
+
+import { ProductService } from '../../../feature/product/services/product.service';
+import { provideHttpClient } from '@angular/common/http';
+
+describe('ProductService', () => {
+  let service: ProductService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        ProductService,
+        provideHttpClient()  
+      ],
+    });
+    service = TestBed.inject(ProductService);
+  });
+
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+});
