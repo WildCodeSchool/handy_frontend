@@ -1,5 +1,5 @@
 .cover-container {
-  background-image: url("/assets/talks2.png");
+  background-image: url('/assets/talks2.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -26,7 +26,8 @@ h2 {
   margin-top: 40px;
 }
 
-h1, h2 {
+h1,
+h2 {
   text-shadow: 2px 2px 5px black;
 }
 
