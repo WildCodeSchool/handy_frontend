@@ -1,45 +1,25 @@
-// import { TestBed } from '@angular/core/testing';
 
-// import { TokenService } from '../../core/services/token.service';
 
-// describe('TokenService', () => {
-//   let service: TokenService;
+ import { TestBed } from '@angular/core/testing';
+import { TokenService } from '../../core/services/token.service';
 
-//   beforeEach(() => {
-//     TestBed.configureTestingModule({
-     
-//     });
-//     service = TestBed.inject(TokenService);
-//   });
+describe('TokenService', () => {
+  let service: TokenService;
 
-//   it('should be created', () => {
-//     expect(service).toBeTruthy();
-//   });
-// });
-// function provideHttpClient(): any {
-//   throw new Error('Function not implemented.');
-// }
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [TokenService]
+    });
+    service = TestBed.inject(TokenService);
+  });
 
-//le deuxieme import { TestBed } from '@angular/core/testing';
-// import { TokenService } from '../../core/services/token.service';
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
 
-// describe('TokenService', () => {
-//   let service: TokenService;
-
-//   beforeEach(() => {
-//     TestBed.configureTestingModule({
-//       providers: [TokenService]
-//     });
-//     service = TestBed.inject(TokenService);
-//   });
-
-//   it('should be created', () => {
-//     expect(service).toBeTruthy();
-//   });
-
-//   it('should save and retrieve a token', () => {
-//     const mockToken = 'test-token';
-//     service.setToken(mockToken);
-//     expect(service.getToken()).toBe(mockToken);
-//   });
-// });
+  it('should save and retrieve a token', () => {
+    const mockToken = 'test-token';
+    service.setToken(mockToken);
+    expect(service.getToken()).toBe(mockToken);
+  });
+});
