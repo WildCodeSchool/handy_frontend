@@ -6,8 +6,6 @@ import { ProductListComponent } from '../../components/product-list/product-list
   standalone: true,
   imports: [ProductListComponent],
   templateUrl: './product-page.component.html',
-  styleUrl: './product-page.component.scss'
+  styleUrl: './product-page.component.scss',
 })
-export class ProductPageComponent {
-
-}
+export class ProductPageComponent {}

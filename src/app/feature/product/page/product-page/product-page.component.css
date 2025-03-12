@@ -8,7 +8,7 @@
 /* Formes géométriques derrière le conteneur */
 .container::before,
 .container::after {
-  content: "";
+  content: '';
   position: absolute;
   z-index: -1;
   /* Les formes doivent être derrière le contenu */
@@ -36,4 +36,21 @@
   /* Triangle */
   bottom: -50px;
   right: -50px;
+}
+
+h2 {
+  text-shadow: 2px 2px 5px black;
+}
+
+div {
+  background-image: url("/assets/garden.jpg");
+  background-size: cover;
+}
+
+.cover-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font: bold;
+  /* margin-top: -50px; */
 }
