@@ -29,11 +29,16 @@
   <div class="order-details-container">
     <h3>Description</h3>
     <div class="px-6 py-4">
-      <div class="font-bold text-xl mb-2">{{ product.name }} - 💰 {{ product.coeff }}€</div>
+      <div class="font-bold text-xl mb-2">{{ product.name }} - 💰 {{  product.coeff | currency:'EUR' }}€</div>
     </div>
 
     <button type="button" class="btn btn-secondary mt-2" (click)="CloseDetails()">Fermer les détails</button>
-
+    <!-- @if (isAdmin) {
+      <app-update-product
+        [product]="product | clone"
+        (productUpdated)="onProductUpdated($event)">
+      </app-update-product>
+    } -->
     <app-update-product [product]="product"></app-update-product>
   </div>
 }

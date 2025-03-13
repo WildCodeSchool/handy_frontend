@@ -46,7 +46,7 @@
           <div class="card-body text-center">
             <h5 class="card-title fw-bold text-black">{{ product.name }}</h5>
             <p class="card-text text-muted">
-              💰 Prix : <span class="fw-bold">{{ product.coeff }} €</span>
+              💰 Prix : <span class="fw-bold">{{ product.coeff| currency:'EUR' }} </span>
             </p>
             <section class="prestation container text-center my-5">
               <div class="row g-5 justify-content-center">

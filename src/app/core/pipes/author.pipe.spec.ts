@@ -1,8 +1,8 @@
-import { AuthorPipe } from './author.pipe';
+import { ClonePipe } from './author.pipe';
 
-describe('AuthorPipe', () => {
+describe('ClonePipe', () => {
   it('create an instance', () => {
-    const pipe = new AuthorPipe();
+    const pipe = new ClonePipe();
     expect(pipe).toBeTruthy();
   });
 });
