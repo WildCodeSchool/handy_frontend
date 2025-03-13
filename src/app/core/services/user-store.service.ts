@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class UserStoreService {
   private _roles = new BehaviorSubject<string[]>([]);
   private _fullName = new BehaviorSubject<string>('');
-  private _authService!: any; 
+  private _authService!: any;
 
   constructor(private _injector: Injector) {}
 

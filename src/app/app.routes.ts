@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomePageComponent } from './feature/home/pages/home-page/home-page.component';
+import { ProductPageComponent } from './feature/product/page/product-page/product-page.component';
 
 export const routes: Routes = [
   {
@@ -8,10 +9,10 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
 
-  // {
-  // //   path: 'article/:id',
-  // //   component: ArticlePageComponent,
-  // },
+  {
+    path: 'products',
+    component: ProductPageComponent,
+  },
   // {
   // //   path: 'contact',
   // //   component: ContactPageComponent,

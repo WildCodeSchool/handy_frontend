@@ -1,24 +1,39 @@
-<p>product works!</p>
-<div *ngIf="product" class="order-details-container">
-  <h3>Description</h3>
-  <div class="px-6 py-4">
-    <div class="font-bold text-xl mb-2">
-      {{ product.name }}
-      {{ product.coeff }}
+<!-- 
+@if (product) {
+  <div class="order-details-container">
+    <h3>Description</h3>
+    <div class="px-6 py-4">
+      <div class="font-bold text-xl mb-2">
+        {{ product.name }}
+        {{ product.coeff }}
+      </div>
     </div>
-  </div>
-  <button type="button" class="btn btn-secondary mt-2" (click)="CloseDetails()">Close Details</button>
-  <button type="button" class="btn btn-primary mt-2" (click)="updateProductDetails()">Mettre à jour les détails du produit</button>
+    <button type="button" class="btn btn-secondary mt-2" (click)="CloseDetails()">Fermer les détails</button>
+    <button type="button" class="btn btn-primary mt-2" (click)="updateProductDetails()">Mettre à jour les détails du produit</button>
 
-  <h3>Description</h3>
-  <div class="px-6 py-4">
-    <div class="font-bold text-xl mb-2">
-      {{ product.name }}
+    <h3>Description</h3>
+    <div class="px-6 py-4">
+      <div class="font-bold text-xl mb-2">
+        {{ product.name }}
+      </div>
+      <ul class="list-group">
+        <li class="list-group-item">Product ID: {{ product.id }}</li>
+        <li class="list-group-item">Nom: <input type="text" [(ngModel)]="product.name" /></li>
+        <li class="list-group-item">Prix: <input type="number" [(ngModel)]="product.coeff" /></li>
+      </ul>
     </div>
-    <ul class="list-group">
-      <li class="list-group-item">Product ID: {{ product.id }}</li>
-      <li class="list-group-item">Nom: <input type="text" [(ngModel)]="product.name" /></li>
-      <li class="list-group-item">Prix: <input type="number" [(ngModel)]="product.coeff" /></li>
-    </ul>
   </div>
-</div>
+} -->
+
+@if (product) {
+  <div class="order-details-container">
+    <h3>Description</h3>
+    <div class="px-6 py-4">
+      <div class="font-bold text-xl mb-2">{{ product.name }} - 💰 {{ product.coeff }}€</div>
+    </div>
+
+    <button type="button" class="btn btn-secondary mt-2" (click)="CloseDetails()">Fermer les détails</button>
+
+    <app-update-product [product]="product"></app-update-product>
+  </div>
+}

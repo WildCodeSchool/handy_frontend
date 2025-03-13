@@ -1,22 +1,11 @@
-@charset "UTF-8";
 .order-details-container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  /* Centrer l'élément */
   max-width: 400px;
-  width: 100%;
-  /* S'assurer que l'élément occupe toute la largeur jusqu'à 400px */
   margin: auto;
   padding: 20px;
   background-color: #f8f9fa;
   border: 1px solid #dee2e6;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  /* Assure que l'élément est au-dessus des autres éléments de la page */
-  display: block;
 }
 
 .order-details-container h3 {
@@ -42,4 +31,20 @@
 
 .order-details-container .btn:hover {
   background-color: #218838;
+}
+.order-details-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 400px;
+  width: 100%;
+  margin: auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Assure que l'élément est au-dessus des autres éléments de la page */
+  display: block;
 }

@@ -4,11 +4,12 @@ import { AppProvider } from '../../models/provider';
 import { Observable } from 'rxjs';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { ProductComponent } from '../product/product.component';
+import { UpdateProductComponent } from '../update-product/update-product.component';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [AsyncPipe, CommonModule, ProductComponent],
+  imports: [AsyncPipe, CommonModule, ProductComponent, UpdateProductComponent],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss',
 })

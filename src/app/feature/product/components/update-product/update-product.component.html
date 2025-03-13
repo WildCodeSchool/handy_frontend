@@ -1,0 +1,18 @@
+<!-- @if (isAdmin) { -->
+<div class="order-details-container">
+  <h3>Modifier le produit</h3>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <h2>Nom :</h2>
+      <input type="text" [(ngModel)]="product.name" class="form-control" />
+    </li>
+    <li class="list-group-item">
+      <h3>Prix :</h3>
+      <input type="number" [(ngModel)]="product.coeff" class="form-control" />
+    </li>
+  </ul>
+
+  <button type="button" class="btn btn-primary mt-2" (click)="updateProductDetails()">Mettre à jour</button>
+  <button type="button" class="btn btn-secondary mt-2" (click)="CloseDetails()">Fermer les détails</button>
+</div>
+<!-- } -->
