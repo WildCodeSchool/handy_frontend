@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { AppProvider } from '../models/provider';
+import { ProductForCreation } from '../models/productCreation';
 
 @Injectable({
   providedIn: 'root',
@@ -48,4 +49,16 @@ export class ApiService {
       tap(() => console.log(`Requête envoyée pour modifier l'élément avec ID ${id}:`, url))
     );
   }
+
+  createProvision$(provision: ProductForCreation): Observable<ProductForCreation> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this._http.post<ProductForCreation>(this._BASE_API_URL, provision, { headers, withCredentials: true });
+  }
+
+  deleteProvision$(id: number): Observable<void> {
+    const url = `${this._BASE_API_URL}/${id}`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this._http.delete<void>(url, { headers, withCredentials: true });
+  }
 }
+

@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomePageComponent } from './feature/home/pages/home-page/home-page.component';
 import { ProductPageComponent } from './feature/product/page/product-page/product-page.component';
-import { UserConnectionComponent } from './feature/user/user-connection/user-connection.component';
+import { UserConnectionComponent } from './feature/user/components/user-connection/user-connection.component';
 
 export const routes: Routes = [
   {
@@ -15,8 +15,8 @@ export const routes: Routes = [
     component: ProductPageComponent,
   },
   {
-  path: 'contact',
-  component: UserConnectionComponent,
+    path: 'contact',
+    component: UserConnectionComponent,
   },
   // {
   //   path: 'signup',

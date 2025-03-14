@@ -37,7 +37,6 @@
   </div> -->
 <div class="container my-5">
   <h2 class="text-center mb-4">Nos Services</h2>
-
   <div class="row">
     @for (product of products$ | async; track product.id) {
       <div class="col-md-4 mb-4">
@@ -46,7 +45,7 @@
           <div class="card-body text-center">
             <h5 class="card-title fw-bold text-black">{{ product.name }}</h5>
             <p class="card-text text-muted">
-              💰 Prix : <span class="fw-bold">{{ product.coeff| currency:'EUR' }} </span>
+              💰 Prix : <span class="fw-bold">{{ product.coeff | currency: 'EUR' }} </span>
             </p>
             <section class="prestation container text-center my-5">
               <div class="row g-5 justify-content-center">
@@ -60,6 +59,7 @@
               </div>
             </section>
             <button type="button" class="btn btn-success" (click)="onSelectProduct(product)">Voir les détails</button>
+
           </div>
         </div>
       </div>
@@ -68,6 +68,10 @@
     @if (selectedItem) {
       <app-product [product]="selectedItem" (closeDetails)="CloseDetails()"></app-product>
       <app-update-product [product]="selectedItem" (closeDetails)="CloseDetails()"></app-update-product>
-    }
+      <app-delete-product
+      [product]="selectedItem"
+      (productDeleted)="onDeleteProduct($event)"
+    ></app-delete-product>    
+    <app-create-product (productCreated)="onCreateProduct($event)"></app-create-product>}
   </div>
 </div>

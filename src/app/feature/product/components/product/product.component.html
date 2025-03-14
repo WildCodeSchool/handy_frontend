@@ -29,7 +29,7 @@
   <div class="order-details-container">
     <h3>Description</h3>
     <div class="px-6 py-4">
-      <div class="font-bold text-xl mb-2">{{ product.name }} - 💰 {{  product.coeff | currency:'EUR' }}€</div>
+      <div class="font-bold text-xl mb-2">{{ product.name }} - 💰 {{ product.coeff | currency: 'EUR' }}€</div>
     </div>
 
     <button type="button" class="btn btn-secondary mt-2" (click)="CloseDetails()">Fermer les détails</button>

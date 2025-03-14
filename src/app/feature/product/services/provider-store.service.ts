@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { ProductForCreation } from '../models/productCreation';
 
 // Le type Provider
 export type AppProvider = {
@@ -13,6 +14,7 @@ export type AppProvider = {
 })
 export class ProviderStoreService {
   private _provisions$ = new BehaviorSubject<AppProvider[]>([]);
+  private _products$ = new BehaviorSubject<ProductForCreation[]>([]);
 
   constructor() {
     // const savedProvisions = localStorage.getItem('providers');
@@ -28,6 +30,11 @@ export class ProviderStoreService {
 
   // Récupérer les provisions stockées
   getAll$(): Observable<AppProvider[]> {
+    return this._provisions$.asObservable();
+  }
+
+  add$(product: ProductForCreation): Observable<AppProvider[]> {
+    this._products$.next([...this._products$.value, product]) //j'extrais la valeur contenue dans Bahvir subject , le nouvel élément de mon tableau
     return this._provisions$.asObservable();
   }
 }

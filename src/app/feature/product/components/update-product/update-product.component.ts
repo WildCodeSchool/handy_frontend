@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
@@ -12,11 +12,12 @@ import { AppProvider } from '../../models/provider';
   styleUrl: './update-product.component.scss',
 })
 export class UpdateProductComponent {
+  _productService: ApiService = inject(ApiService);
   @Input() product!: AppProvider;
   @Output() closeDetails = new EventEmitter<void>();
 
   // isAdmin = this.checkAdminRole();
-  constructor(private _productService: ApiService) {}
+  // constructor(private _productService: ApiService) {}
 
   checkAdminRole(): boolean {
     return localStorage.getItem('userRole') === 'admin';
