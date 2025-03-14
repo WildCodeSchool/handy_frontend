@@ -1,15 +1,18 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { AppProvider } from '../../models/provider';
 import { ApiService } from '../../services/api.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-delete-product',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './delete-product.component.html',
   styleUrl: './delete-product.component.scss',
 })
 export class DeleteProductComponent {
+  successMessageUpdate: string | null = null;
+
   _productService: ApiService = inject(ApiService);
 
   @Input() product!: AppProvider;
@@ -24,8 +27,11 @@ export class DeleteProductComponent {
       next: () => {
         console.log('Produit supprimé avec succès');
         this.productDeleted.emit(this.product.id);
+        this.successMessageUpdate = 'Produit supprimé avec succès !';
+
       },
       error: err => console.error('Erreur lors de la suppression', err),
     });
+
   }
 }

@@ -77,6 +77,5 @@ export class ProductComponent {
   }
   productCreatedHandler(product: ProductForCreation): void {
     console.log('Produit créé:', product);
-    
   }
 }

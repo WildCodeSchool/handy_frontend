@@ -1,9 +1,10 @@
-// .order-details-container {
-//   max-width: 400px;
-//   margin: auto;
-//   padding: 20px;
-//   background-color: #f8f9fa;
-//   border: 1px solid #dee2e6;
-//   border-radius: 5px;
-//   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-// }
+.order-details-container {
+//   border: 1px solid #ccc; /* Border léger avec une couleur gris clair */
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(96, 23, 23, 0.1); 
+//   margin:50px;
+}
+h3 {
+    color: #007bff;
+    margin-bottom: 10px;
+  }

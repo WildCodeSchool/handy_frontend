@@ -66,9 +66,9 @@
 
     @if (selectedItem) {
       <app-product [product]="selectedItem" (closeDetails)="CloseDetails()"></app-product>
-      <app-update-product [product]="selectedItem" (closeDetails)="CloseDetails()"></app-update-product>
+      <!-- <app-update-product [product]="selectedItem" (closeDetails)="CloseDetails()"></app-update-product> -->
       <!-- <app-delete-product [product]="selectedItem" (productDeleted)="onDeleteProduct($event)"></app-delete-product> -->
-      <app-create-product (productCreated)="onCreateProduct($event)"></app-create-product>
+      <!-- <app-create-product (productCreated)="onCreateProduct($event)"></app-create-product> -->
     }
   </div>
 </div>

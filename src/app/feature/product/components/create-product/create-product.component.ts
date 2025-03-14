@@ -13,14 +13,16 @@ import { ProductForCreation } from '../../models/productCreation';
   styleUrl: './create-product.component.scss',
 })
 export class CreateProductComponent {
+  successMessageUpdate: string | null = null;
+
   @Output() productCreated = new EventEmitter<ProductForCreation>();
 
   newProduct: ProductForCreation = { name: '', coeff: 0 };
 
   private _productFacadeService = inject(ProviderFacadeService);
 
-   // isAdmin = this.checkAdminRole();
-   checkAdminRole(): boolean {
+  // isAdmin = this.checkAdminRole();
+  checkAdminRole(): boolean {
     return localStorage.getItem('userRole') === 'admin';
   }
   onSubmit(): void {
@@ -33,5 +35,7 @@ export class CreateProductComponent {
       },
       error: (err: any) => console.error('Erreur lors de la création du produit', err),
     });
+    this.successMessageUpdate = 'Produit créé avec succès !';
+
   }
 }

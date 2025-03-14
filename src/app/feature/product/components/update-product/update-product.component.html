@@ -1,21 +1,28 @@
 <!-- @if (isAdmin) { -->
 <div class="order-details-container">
-  <h2>Modifier le produit</h2>
+  <h3>Modifier le produit</h3>
   <ul class="list-group">
     <li class="list-group-item">
-      <h3>Nom :</h3>
+      <h4>Nom :</h4>
       <input type="text" [(ngModel)]="product.name" class="form-control" />
     </li>
     <li class="list-group-item">
-      <h3>Prix :</h3>
+      <h4>Prix :</h4>
       <input type="number" [(ngModel)]="product.coeff" class="form-control" />
     </li>
   </ul>
-<div>
-  <button type="button" class="btn btn-primary mt-2" (click)="updateProductDetails()">Mettre à jour</button>
-</div>
-<div> 
-  <button type="button" class="btn btn-danger"(click)="CloseDetails()">Fermer</button>
-</div>
+  <div>
+    <button type="button" class="btn btn-primary mt-2" (click)="updateProductDetails()">Mettre à jour</button>
+    <div
+    *ngIf="successMessageUpdate"
+    class="alert alert-success mt-2"
+    role="alert"
+  >
+    {{ successMessageUpdate }}
+  </div>
+  </div>
+  <div>
+    <button type="button" class="btn btn-danger" (click)="CloseDetails()">Fermer</button>
+  </div>
 </div>
 <!-- } -->

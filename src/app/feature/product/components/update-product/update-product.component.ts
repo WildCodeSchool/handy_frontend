@@ -12,6 +12,8 @@ import { AppProvider } from '../../models/provider';
   styleUrl: './update-product.component.scss',
 })
 export class UpdateProductComponent {
+  successMessageUpdate: string | null = null;
+
   _productService: ApiService = inject(ApiService);
   @Input() product!: AppProvider;
   @Output() closeDetails = new EventEmitter<void>();
@@ -30,6 +32,7 @@ export class UpdateProductComponent {
       next: res => console.log(' le Produit a été mis à jour', res),
       error: err => console.error('Erreur lors de la mise à jour', err),
     });
+    this.successMessageUpdate = 'Produit mis à jour avec succès !';
   }
   CloseDetails(): void {
     this.closeDetails.emit();
