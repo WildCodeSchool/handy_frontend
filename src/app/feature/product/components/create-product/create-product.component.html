@@ -1,7 +1,12 @@
 <p>create-product works!</p>
+<!-- @if (isAdmin) { -->
+
+<div class=order-details-container>
 <form #myForm="ngForm" (ngSubmit)="onSubmit()">
-    <h3>Créer un nouveau produit</h3>
-    <input type="text" [(ngModel)]="newProduct.name" name="name" placeholder="Nom du produit" class="form-control mb-2" />
-    <input type="number" [(ngModel)]="newProduct.coeff" name="coeff" placeholder="Prix" class="form-control mb-2" />
-    <button type="submit">Créer le produit</button>
+  <h3>Créer un nouveau produit</h3>
+  <input type="text" [(ngModel)]="newProduct.name" name="name" placeholder="Nom du produit" class="form-control mb-2" />
+  <input type="number" [(ngModel)]="newProduct.coeff" name="coeff" placeholder="Prix" class="form-control mb-2" />
+  <button type="submit" class="btn btn-primary mt-2">Créer le produit</button>
 </form>
+</div>
+<!-- } -->

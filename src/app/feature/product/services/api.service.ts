@@ -61,4 +61,3 @@ export class ApiService {
     return this._http.delete<void>(url, { headers, withCredentials: true });
   }
 }
-

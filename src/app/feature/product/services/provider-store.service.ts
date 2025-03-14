@@ -34,7 +34,7 @@ export class ProviderStoreService {
   }
 
   add$(product: ProductForCreation): Observable<AppProvider[]> {
-    this._products$.next([...this._products$.value, product]) //j'extrais la valeur contenue dans Bahvir subject , le nouvel élément de mon tableau
+    this._products$.next([...this._products$.value, product]); //j'extrais la valeur contenue dans Bahvir subject , le nouvel élément de mon tableau
     return this._provisions$.asObservable();
   }
 }

@@ -19,11 +19,12 @@ export class CreateProductComponent {
 
   private _productFacadeService = inject(ProviderFacadeService);
 
+   // isAdmin = this.checkAdminRole();
+   checkAdminRole(): boolean {
+    return localStorage.getItem('userRole') === 'admin';
+  }
   onSubmit(): void {
-    
-
     console.log('Produit avant envoi:', this.newProduct);
-
 
     this._productFacadeService.post$(this.newProduct).subscribe({
       next: (res: ProductForCreation) => {

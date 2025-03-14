@@ -10,8 +10,8 @@ import { ApiService } from '../../services/api.service';
   styleUrl: './delete-product.component.scss',
 })
 export class DeleteProductComponent {
-    _productService: ApiService = inject(ApiService);
-  
+  _productService: ApiService = inject(ApiService);
+
   @Input() product!: AppProvider;
   @Output() productDeleted = new EventEmitter<number>();
 
@@ -25,7 +25,7 @@ export class DeleteProductComponent {
         console.log('Produit supprimé avec succès');
         this.productDeleted.emit(this.product.id);
       },
-      error: (err) => console.error('Erreur lors de la suppression', err),
+      error: err => console.error('Erreur lors de la suppression', err),
     });
   }
 }

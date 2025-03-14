@@ -45,9 +45,7 @@ export class ProductListComponent {
 
   onDeleteProduct(productId: number): void {
     console.log('Produit supprimé:', productId);
-    this.products$ = this.products$.pipe(
-      map(products => products.filter(product => product.id !== productId))
-    );
+    this.products$ = this.products$.pipe(map(products => products.filter(product => product.id !== productId)));
     // Rechargez les produits depuis l'API
     this.products$ = this._facadeProvisionService.getAll$();
   }

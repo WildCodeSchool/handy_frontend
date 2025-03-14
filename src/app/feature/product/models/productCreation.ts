@@ -1,5 +1,5 @@
 export type ProductForCreation = {
-    id?: number;
-    name: string;
-    coeff: number;
-  }
+  id?: number;
+  name: string;
+  coeff: number;
+};
