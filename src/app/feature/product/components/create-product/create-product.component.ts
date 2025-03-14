@@ -36,6 +36,5 @@ export class CreateProductComponent {
       error: (err: any) => console.error('Erreur lors de la création du produit', err),
     });
     this.successMessageUpdate = 'Produit créé avec succès !';
-
   }
 }

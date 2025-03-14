@@ -7,3 +7,11 @@ h3 {
   color: #007bff;
   margin-bottom: 10px;
 }
+
+.order-details-container .btn {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+}

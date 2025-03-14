@@ -13,16 +13,12 @@
   </ul>
   <div>
     <button type="button" class="btn btn-primary mt-2" (click)="updateProductDetails()">Mettre à jour</button>
-    <div
-    *ngIf="successMessageUpdate"
-    class="alert alert-success mt-2"
-    role="alert"
-  >
-    {{ successMessageUpdate }}
-  </div>
+    <div *ngIf="successMessageUpdate" class="alert alert-success mt-2" role="alert">
+      {{ successMessageUpdate }}
+    </div>
   </div>
   <div>
-    <button type="button" class="btn btn-danger" (click)="CloseDetails()">Fermer</button>
+    <!-- <button type="button" class="btn btn-danger" (click)="CloseDetails()">Fermer</button> -->
   </div>
 </div>
 <!-- } -->

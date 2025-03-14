@@ -28,10 +28,8 @@ export class DeleteProductComponent {
         console.log('Produit supprimé avec succès');
         this.productDeleted.emit(this.product.id);
         this.successMessageUpdate = 'Produit supprimé avec succès !';
-
       },
       error: err => console.error('Erreur lors de la suppression', err),
     });
-
   }
 }
