@@ -39,6 +39,7 @@
         (productUpdated)="onProductUpdated($event)">
       </app-update-product>
     } -->
+
     <app-update-product [product]="product"></app-update-product>
     <app-delete-product [product]="product"></app-delete-product>
     <app-create-product (productCreated)="productCreatedHandler($event)"></app-create-product>

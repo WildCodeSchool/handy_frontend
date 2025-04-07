@@ -1,6 +1,9 @@
 .order-details-container {
   background-color: #f8f9fa;
   width: 100%;
+  border: #007bff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(96, 23, 23, 0.1);
 }
 
 h3 {

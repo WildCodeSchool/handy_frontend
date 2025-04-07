@@ -1,5 +1,5 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
 import { AppProvider } from '../../models/provider';
@@ -7,7 +7,7 @@ import { AppProvider } from '../../models/provider';
 @Component({
   selector: 'app-update-product',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, AsyncPipe],
   templateUrl: './update-product.component.html',
   styleUrl: './update-product.component.scss',
 })
