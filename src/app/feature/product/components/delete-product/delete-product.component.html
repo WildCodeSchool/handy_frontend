@@ -1,0 +1,13 @@
+<!-- @if (isAdmin) { -->
+
+<div class="order-details-container">
+  <h3>Supprimer le produit</h3>
+  <p>Soihaitez - vous supprimer le produit {{ product?.name }} ?</p>
+  <div>
+    <button type="button" class="btn btn-danger" (click)="deleteProduct()">Supprimer</button>
+    <div *ngIf="successMessageUpdate" class="alert alert-success mt-2" role="alert">
+      {{ successMessageUpdate }}
+    </div>
+  </div>
+</div>
+<!-- } -->
