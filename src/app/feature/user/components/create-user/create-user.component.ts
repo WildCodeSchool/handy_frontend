@@ -13,8 +13,8 @@ export class CreateUserComponent {
   formBuilder = inject(FormBuilder);
   authService = inject(AuthService);
 
-  MIN_PASSWORD_LENGTH = "12";
-  MIN_USERNAME_LENGTH = "3";
+  MIN_PASSWORD_LENGTH = 12;
+  MIN_USERNAME_LENGTH = 3;
 
   loginForm = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
