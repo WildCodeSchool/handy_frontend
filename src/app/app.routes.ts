@@ -4,6 +4,7 @@ import { ProductPageComponent } from './feature/product/page/product-page/produc
 import { UserConnectionComponent } from './feature/user/components/user-connection/user-connection.component';
 //import { isLoggedInGuard } from './core/guards/is-logged-in.guard';
 import { isAdminGuard } from './core/guards/is-admin.guard';
+import { CreateUserComponent } from './feature/user/components/create-user/create-user.component';
 
 export const routes: Routes = [
   {
@@ -17,7 +18,7 @@ export const routes: Routes = [
   {
     path: 'products',
     component: ProductPageComponent,
-    
+
     canActivate: [isAdminGuard],
     //canActivate: [isLoggedInGuard],
   },
@@ -25,10 +26,8 @@ export const routes: Routes = [
     path: 'contact',
     component: UserConnectionComponent,
   },
-  // {
-  //   path: 'signup',
-  //  component: SignupFormComponent
-  // },
+  { path: 'signup', component: CreateUserComponent },
+
   // {
   // //   path: '**',
   // //   component: NotFoundPageComponent

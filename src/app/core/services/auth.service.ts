@@ -85,7 +85,7 @@ export class AuthService {
     this._userStore.setRolesFromStore(roles);
   }
 
-  // Obtenir l'ID de l'utilisateur à partir du token
+  // l'ID de l'utilisateur à partir du token **
   getUserIdFromToken(): string | null {
     return this._userPayload?.sub || null;
   }

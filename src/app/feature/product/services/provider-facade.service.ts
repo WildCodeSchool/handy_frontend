@@ -33,8 +33,8 @@ export class ProviderFacadeService {
     console.log('Envoi des données au serveur:', product);
     return this._api.createProvision$(product).pipe(
       tap((product: ProductForCreation) => {
-        console.log('Réponse du serveur:', product); // Réponse obtenue
-        this._store.add$(product); // Ajoute le produit dans le store si nécessaire
+        console.log('Réponse du serveur:', product);
+        this._store.add$(product);
       })
     );
   }
