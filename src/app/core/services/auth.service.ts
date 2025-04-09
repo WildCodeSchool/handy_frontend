@@ -24,18 +24,16 @@ export class AuthService {
   }
 
   //public login$(email: string, password: string): Observable<string> {
-   //return this._http.post<string>('http://localhost:8080/auth/login', { email, password },).pipe(
-    //tap((token: string) => this.saveToken(token))
-    //);
+  //return this._http.post<string>('http://localhost:8080/auth/login', { email, password },).pipe(
+  //tap((token: string) => this.saveToken(token))
+  //);
 
-    public login$(email: string, password: string): Observable<string> {
-      return this._http.post<{ token: string }>('http://localhost:8080/auth/login', { email, password }).pipe(
-        tap(res => this.saveToken(res.token)),
-        map(res => res.token)
-      );
-
+  public login$(email: string, password: string): Observable<string> {
+    return this._http.post<{ token: string }>('http://localhost:8080/auth/login', { email, password }).pipe(
+      tap(res => this.saveToken(res.token)),
+      map(res => res.token)
+    );
   }
-
 
   public saveToken(token: string): void {
     localStorage.setItem('token', token);
@@ -89,6 +87,6 @@ export class AuthService {
 
   // Obtenir l'ID de l'utilisateur à partir du token
   getUserIdFromToken(): string | null {
-    return this._userPayload?.sub || null; 
+    return this._userPayload?.sub || null;
   }
 }

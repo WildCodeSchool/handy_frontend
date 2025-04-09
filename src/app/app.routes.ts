@@ -2,7 +2,8 @@ import { Routes } from '@angular/router';
 import { HomePageComponent } from './feature/home/pages/home-page/home-page.component';
 import { ProductPageComponent } from './feature/product/page/product-page/product-page.component';
 import { UserConnectionComponent } from './feature/user/components/user-connection/user-connection.component';
-import { isLoggedInGuard } from './core/guards/is-logged-in.guard';
+//import { isLoggedInGuard } from './core/guards/is-logged-in.guard';
+import { isAdminGuard } from './core/guards/is-admin.guard';
 
 export const routes: Routes = [
   {
@@ -15,7 +16,10 @@ export const routes: Routes = [
 
   {
     path: 'products',
-    component: ProductPageComponent, canActivate: [isLoggedInGuard]
+    component: ProductPageComponent,
+    
+    canActivate: [isAdminGuard],
+    //canActivate: [isLoggedInGuard],
   },
   {
     path: 'contact',

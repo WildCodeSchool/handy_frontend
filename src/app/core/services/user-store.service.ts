@@ -13,7 +13,7 @@ export class UserStoreService {
 
   private get _authServiceInstance(): any {
     if (!this._authService) {
-      this._authService = this._injector.get('AuthService'); 
+      this._authService = this._injector.get('AuthService');
     }
     return this._authService;
   }

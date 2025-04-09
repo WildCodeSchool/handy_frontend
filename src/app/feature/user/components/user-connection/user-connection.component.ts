@@ -9,18 +9,12 @@ import { AuthService } from 'src/app/core/services/auth.service';
   templateUrl: './user-connection.component.html',
   styleUrl: './user-connection.component.scss',
 })
-
-
-
 export class UserConnectionComponent {
-
-  
   formBuilder = inject(FormBuilder);
   authService = inject(AuthService);
 
-
-   MIN_PASSWORD_LENGTH = "12";
- MIN_USERNAME_LENGTH = "3";
+  MIN_PASSWORD_LENGTH = "12";
+  MIN_USERNAME_LENGTH = "3";
 
   loginForm = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
@@ -89,13 +83,13 @@ export class UserConnectionComponent {
 
   onLogin(): void {
     if (this.loginForm.valid) {
-      const { email, password } = this.loginForm.getRawValue();;
-  
+      const { email, password } = this.loginForm.getRawValue();
+
       this.authService.login$(email, password).subscribe({
-        next: (token) => {
+        next: token => {
           console.log('Connexion réussie, token :', token);
         },
-        error: (err) => {
+        error: err => {
           console.error('Erreur de connexion', err);
         },
       });
