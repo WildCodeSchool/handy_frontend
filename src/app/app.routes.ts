@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { HomePageComponent } from './feature/home/pages/home-page/home-page.component';
 import { ProductPageComponent } from './feature/product/page/product-page/product-page.component';
 import { UserConnectionComponent } from './feature/user/components/user-connection/user-connection.component';
+import { isLoggedInGuard } from './core/guards/is-logged-in.guard';
 
 export const routes: Routes = [
   {
@@ -10,9 +11,11 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
 
+  { path: '', redirectTo: '', pathMatch: 'full' },
+
   {
     path: 'products',
-    component: ProductPageComponent,
+    component: ProductPageComponent, canActivate: [isLoggedInGuard]
   },
   {
     path: 'contact',

@@ -128,3 +128,21 @@
     </fieldset>
   </form>
 </div>
+
+ <!--login -->
+
+<form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="w-50 p-4 border rounded shadow-sm bg-light mt-5">
+  <fieldset>
+    <div class="mb-3">
+      <label for="loginEmail" class="form-label">Email</label>
+      <input id="loginEmail" formControlName="email" type="email" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label for="loginPassword" class="form-label">Mot de passe</label>
+      <input id="loginPassword" formControlName="password" type="password" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="loginForm.invalid">Se connecter</button>
+  </fieldset>
+</form>

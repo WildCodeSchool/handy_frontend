@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-user-connection',
@@ -8,11 +9,29 @@ import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Va
   templateUrl: './user-connection.component.html',
   styleUrl: './user-connection.component.scss',
 })
+
+
+
 export class UserConnectionComponent {
+
+  
   formBuilder = inject(FormBuilder);
+  authService = inject(AuthService);
+
+
+   MIN_PASSWORD_LENGTH = "12";
+ MIN_USERNAME_LENGTH = "3";
+
+  loginForm = this.formBuilder.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required]],
+  }) as FormGroup<{
+    email: FormControl<string>;
+    password: FormControl<string>;
+  }>;
 
   signUpForm = this.formBuilder.group({
-    username: ['', [Validators.required, Validators.minLength(3)]],
+    username: ['', [Validators.required, Validators.minLength(this.MIN_USERNAME_LENGTH)]],
     email: ['', [Validators.required, Validators.email]],
 
     passwords: this.formBuilder.group(
@@ -53,7 +72,7 @@ export class UserConnectionComponent {
       const hasLowerCase = /[a-z]/.test(value);
       const hasNumber = /\d/.test(value);
       const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
-      const isValidLength = value.length >= 12;
+      const isValidLength = value.length >= this.MIN_PASSWORD_LENGTH;
 
       console.log('Contient une majuscule:', hasUpperCase);
       console.log('Contient une minuscule:', hasLowerCase);
@@ -66,5 +85,22 @@ export class UserConnectionComponent {
 
       return passwordValid ? null : { securePassword: true };
     };
+  }
+
+  onLogin(): void {
+    if (this.loginForm.valid) {
+      const { email, password } = this.loginForm.getRawValue();;
+  
+      this.authService.login$(email, password).subscribe({
+        next: (token) => {
+          console.log('Connexion réussie, token :', token);
+        },
+        error: (err) => {
+          console.error('Erreur de connexion', err);
+        },
+      });
+    } else {
+      console.log('Formulaire de connexion invalide');
+    }
   }
 }
