@@ -34,7 +34,7 @@ export class ProviderStoreService {
   }
 
   add$(product: ProductForCreation): Observable<AppProvider[]> {
-    this._products$.next([...this._products$.value, product]); 
+    this._products$.next([...this._products$.value, product]);
     return this._provisions$.asObservable();
   }
 }

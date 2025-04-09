@@ -4,15 +4,13 @@ import { AppProvider } from '../../models/provider';
 import { map, Observable } from 'rxjs';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { ProductComponent } from '../product/product.component';
-import { UpdateProductComponent } from '../update-product/update-product.component';
-import { DeleteProductComponent } from '../delete-product/delete-product.component';
-import { CreateProductComponent } from '../create-product/create-product.component';
+
 import { ProductForCreation } from '../../models/productCreation';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [AsyncPipe, CommonModule, ProductComponent, UpdateProductComponent, DeleteProductComponent, CreateProductComponent],
+  imports: [AsyncPipe, CommonModule, ProductComponent],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss',
 })
@@ -46,7 +44,6 @@ export class ProductListComponent {
   onDeleteProduct(productId: number): void {
     console.log('Produit supprimé:', productId);
     this.products$ = this.products$.pipe(map(products => products.filter(product => product.id !== productId)));
-    // Rechargez les produits depuis l'API
     this.products$ = this._facadeProvisionService.getAll$();
   }
 }
