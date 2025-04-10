@@ -2,24 +2,28 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { Subscription } from 'rxjs';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
+import { UserStoreService } from '../../services/user-store.service';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, AsyncPipe],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit {
   isLoggedIn: boolean = false;
   isProvider = false;
-  // message: string | null = null;
 
   private _router: Router = inject(Router);
   private _authSubscription: Subscription = new Subscription();
-
-  constructor(private _authService: AuthService) {}
+    private _userStore = inject(UserStoreService);
+    private _authService = inject(AuthService)
+  
+    isAdmin$ = this._userStore.hasRole$('ROLE_ADMIN');
+  // constructor(private _authService: AuthService) {}
+  
 
   ngOnInit(): void {
     this._authSubscription = this._authService.authStatus$.subscribe((isLoggedIn: boolean) => {
@@ -37,7 +41,7 @@ export class HeaderComponent implements OnInit {
     //   }
     // });
 
-    this._authSubscription = this._authService.authStatus$.subscribe((status) => {
+    this._authSubscription = this._authService.authStatus$.subscribe(status => {
       this.isLoggedIn = status;
 
       if (status) {
@@ -46,8 +50,8 @@ export class HeaderComponent implements OnInit {
       } else {
         this.isProvider = false;
       }
+
     });
-  
   }
 
   navigateToSignUpPage(): void {

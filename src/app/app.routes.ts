@@ -7,6 +7,9 @@ import { isAdminGuard } from './core/guards/is-admin.guard';
 import { CreateUserComponent } from './feature/user/components/create-user/create-user.component';
 import { isProviderGuard } from './core/guards/is-provider.guard';
 import { ProviderHomeComponent } from './feature/provider/page/provider-home/provider-home.component';
+import { AdminHomeComponent } from './feature/admin/page/admin-home/admin-home.component';
+import { ClientHomeComponent } from './feature/client/page/client-home/client-home.component';
+import { isLoggedInGuard } from './core/guards/is-logged-in.guard';
 
 export const routes: Routes = [
   {
@@ -35,8 +38,19 @@ export const routes: Routes = [
     component: ProviderHomeComponent,
 
     canActivate: [isProviderGuard],
-    //canActivate: [isLoggedInGuard],
   },
+  {
+    path: 'admin',
+    component: AdminHomeComponent,
+    canActivate: [isAdminGuard],
+    
+  },
+  {
+    path: 'client',
+    component: ClientHomeComponent,
+    canActivate: [isLoggedInGuard],
+    
+  }
 
   // {
   // //   path: '**',

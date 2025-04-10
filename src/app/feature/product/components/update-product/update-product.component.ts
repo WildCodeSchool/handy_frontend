@@ -16,8 +16,8 @@ export class UpdateProductComponent {
   successMessageUpdate: string | null = null;
 
   _productService: ApiService = inject(ApiService);
-      private _userStore = inject(UserStoreService);
-  
+  private _userStore = inject(UserStoreService);
+
   @Input() product!: AppProvider;
   @Output() closeDetails = new EventEmitter<void>();
 

@@ -15,8 +15,7 @@ export class DeleteProductComponent {
   successMessageUpdate: string | null = null;
 
   _productService: ApiService = inject(ApiService);
-    private _userStore = inject(UserStoreService);
-  
+  private _userStore = inject(UserStoreService);
 
   @Input() product!: AppProvider;
   @Output() productDeleted = new EventEmitter<number>();

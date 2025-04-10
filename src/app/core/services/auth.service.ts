@@ -62,7 +62,7 @@ export class AuthService {
         if (roles.includes('ROLE_PROVIDER')) {
           this._router.navigate(['/providers']);
         } else if (roles.includes('ROLE_ADMIN')) {
-          this._router.navigate(['/products']);
+          this._router.navigate(['/admin']);
         } else {
           this._router.navigate(['/']);
         }

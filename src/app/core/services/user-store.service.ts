@@ -62,8 +62,6 @@ export class UserStoreService {
   }
 
   public hasRole$(role: string): Observable<boolean> {
-    return this._roles.asObservable().pipe(
-      map(roles => roles.includes(role))
-    );
+    return this._roles.asObservable().pipe(map(roles => roles.includes(role)));
   }
 }
