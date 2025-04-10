@@ -1,22 +1,30 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, of, tap } from 'rxjs';
+import {  map, Observable, of, tap } from 'rxjs';
 import { TokenService } from './token.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserStoreService } from './user-store.service';
+
+type Role = {
+  authority: string;
+};
+
+// Définir un type UserPayload avec les propriétés 'sub', 'roles', 'iat', et 'exp'
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private _userPayload: any;
-
+  
   constructor(
     private _http: HttpClient,
     private _tokenService: TokenService,
     private _userStore: UserStoreService
   ) {
     this._userPayload = this._decodeToken();
+    console.log('User Payload après décode :', this._userPayload);
   }
 
   public register$(email: string, password: string): Observable<boolean> {
@@ -28,9 +36,24 @@ export class AuthService {
   //tap((token: string) => this.saveToken(token))
   //);
 
+  //public login$(email: string, password: string): Observable<string> {
+    //return this._http.post<{ token: string }>('http://localhost:8080/auth/login', { email, password }).pipe(
+      //tap(res => this.saveToken(res.token)),
+      //map(res => res.token)
+      
+    //);
+  //}
   public login$(email: string, password: string): Observable<string> {
     return this._http.post<{ token: string }>('http://localhost:8080/auth/login', { email, password }).pipe(
-      tap(res => this.saveToken(res.token)),
+      tap(res => {
+        this.saveToken(res.token);     // Stocke dans localStorage
+        this.storeToken(res.token);    // Stocke dans TokenService + décode
+        console.log('token stored');
+        //this.setUserDetailsInStore();  // Injecte les rôles dans le store
+        this._userStore.initializeRoles();
+        
+        console.log('les roles');
+      }),
       map(res => res.token)
     );
   }
@@ -41,6 +64,7 @@ export class AuthService {
   storeToken(token: string): void {
     this._tokenService.setToken(token);
     this._userPayload = this._decodeToken();
+    // console.log('User Payload après décode :', this._userPayload);
   }
 
   isLoggedIn(): boolean {
@@ -55,9 +79,10 @@ export class AuthService {
   logout(): void {
     this._tokenService.clearToken();
     this._userPayload = null;
+    
   }
 
-  private _decodeToken(): any {
+  private _decodeToken(): unknown {
     const token = this._tokenService.getToken();
     if (!token) return null;
 
@@ -72,13 +97,23 @@ export class AuthService {
     }
   }
 
+  // getRoleFromToken(): string[] {
+  //   console.log('Décodage du token, _userPayload:', this._userPayload);
+  //   if (this._userPayload ) {
+  //     console.log('Rôles dans le payload:', this._userPayload.roles);
+  //     return this._userPayload.roles || [];
+  //   }
+  //   console.log('Aucun payload trouvé, retour d\'un tableau vide');
+
+  //   return [];
+  // }
+
   getRoleFromToken(): string[] {
-    if (this._userPayload) {
-      return this._userPayload.roles || [];
+        if (this._userPayload && this._userPayload.roles) {
+      return this._userPayload.roles.map((role: Role) => role.authority);
     }
     return [];
   }
-
   setUserDetailsInStore(): void {
     const roles = this.getRoleFromToken();
     console.log('Rôles extraits du token:', roles);

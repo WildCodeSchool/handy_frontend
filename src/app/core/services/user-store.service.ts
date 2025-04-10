@@ -1,5 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -7,20 +8,31 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class UserStoreService {
   private _roles = new BehaviorSubject<string[]>([]);
   private _fullName = new BehaviorSubject<string>('');
-  private _authService!: any;
+  private _authService!: AuthService;;
 
   constructor(private _injector: Injector) {}
 
-  private get _authServiceInstance(): any {
+  private get _authServiceInstance(): AuthService {
     if (!this._authService) {
-      this._authService = this._injector.get('AuthService');
+      this._authService = this._injector.get(AuthService);
     }
     return this._authService;
   }
 
+  
+
   initializeRoles(): void {
+    console.log('Appel de initializeRoles');
+  
     const roles = this._authServiceInstance.getRoleFromToken();
-    this._roles.next(roles);
+    console.log('Rôles récupérés du token :', roles);
+  
+    if (roles && roles.length > 0) {
+      this._roles.next(roles);
+      console.log('Les rôles ont été mis à jour dans le store :', this._roles.value);
+    } else {
+      console.log('Aucun rôle trouvé ou tableau vide.');
+    }
   }
 
   public getRolesFromStore(): Observable<string[]> {
