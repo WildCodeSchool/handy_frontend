@@ -1,5 +1,5 @@
 import { Injectable, Injector } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -59,5 +59,11 @@ export class UserStoreService {
 
   public setFullNameFromStore(fullName: string): void {
     this._fullName.next(fullName);
+  }
+
+  public hasRole$(role: string): Observable<boolean> {
+    return this._roles.asObservable().pipe(
+      map(roles => roles.includes(role))
+    );
   }
 }

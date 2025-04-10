@@ -13,10 +13,12 @@ import { CommonModule } from '@angular/common';
 })
 export class HeaderComponent implements OnInit {
   isLoggedIn: boolean = false;
+  isProvider = false;
   // message: string | null = null;
 
   private _router: Router = inject(Router);
   private _authSubscription: Subscription = new Subscription();
+
   constructor(private _authService: AuthService) {}
 
   ngOnInit(): void {
@@ -34,6 +36,18 @@ export class HeaderComponent implements OnInit {
     //     }, 3000);
     //   }
     // });
+
+    this._authSubscription = this._authService.authStatus$.subscribe((status) => {
+      this.isLoggedIn = status;
+
+      if (status) {
+        const roles = this._authService.getRoleFromToken();
+        this.isProvider = roles.includes('ROLE_PROVIDER');
+      } else {
+        this.isProvider = false;
+      }
+    });
+  
   }
 
   navigateToSignUpPage(): void {

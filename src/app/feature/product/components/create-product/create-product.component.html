@@ -1,4 +1,4 @@
-<!-- @if (isAdmin) { -->
+ @if (isAdmin$ | async) { 
 
 <div class="order-details-container">
   <form #myForm="ngForm" (ngSubmit)="onSubmit()">
@@ -11,4 +11,4 @@
     </div>
   </form>
 </div>
-<!-- } -->
+} 

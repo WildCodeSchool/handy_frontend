@@ -1,5 +1,5 @@
-<!-- @if (isAdmin) { -->
-
+@if (isAdmin$ | async) { 
+  
 <div class="order-details-container">
   <h3>Supprimer le produit</h3>
   <p>Soihaitez - vous supprimer le produit {{ product?.name }} ?</p>
@@ -10,4 +10,4 @@
     </div>
   </div>
 </div>
-<!-- } -->
+}

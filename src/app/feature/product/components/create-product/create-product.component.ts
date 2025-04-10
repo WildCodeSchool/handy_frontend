@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProviderFacadeService } from '../../services/provider-facade.service';
 import { ProductForCreation } from '../../models/productCreation';
+import { UserStoreService } from 'src/app/core/services/user-store.service';
 
 @Component({
   selector: 'app-create-product',
@@ -20,11 +21,9 @@ export class CreateProductComponent {
   newProduct: ProductForCreation = { name: '', coeff: 0 };
 
   private _productFacadeService = inject(ProviderFacadeService);
+  private _userStore = inject(UserStoreService);
 
-  // isAdmin = this.checkAdminRole();
-  checkAdminRole(): boolean {
-    return localStorage.getItem('userRole') === 'admin';
-  }
+  isAdmin$ = this._userStore.hasRole$('ROLE_ADMIN');
   onSubmit(): void {
     console.log('Produit avant envoi:', this.newProduct);
 
