@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {  map, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, of, tap } from 'rxjs';
 import { TokenService } from './token.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserStoreService } from './user-store.service';
@@ -9,23 +9,26 @@ type Role = {
   authority: string;
 };
 
-// Définir un type UserPayload avec les propriétés 'sub', 'roles', 'iat', et 'exp'
-
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private _userPayload: any;
-  
+  private _authStatus$!: BehaviorSubject<boolean>;
+  private _logoutMessage$ = new BehaviorSubject<string | null>(null);
+public logoutMessage$ = this._logoutMessage$.asObservable();
+
   constructor(
     private _http: HttpClient,
     private _tokenService: TokenService,
     private _userStore: UserStoreService
   ) {
+    this._authStatus$ = new BehaviorSubject<boolean>(this._tokenService.isLogged()); 
     this._userPayload = this._decodeToken();
     console.log('User Payload après décode :', this._userPayload);
   }
+  
 
   public register$(email: string, password: string): Observable<boolean> {
     return this._http.post<boolean>('http://localhost:8080/auth/register', { email, password });
@@ -37,25 +40,29 @@ export class AuthService {
   //);
 
   //public login$(email: string, password: string): Observable<string> {
-    //return this._http.post<{ token: string }>('http://localhost:8080/auth/login', { email, password }).pipe(
-      //tap(res => this.saveToken(res.token)),
-      //map(res => res.token)
-      
-    //);
+  //return this._http.post<{ token: string }>('http://localhost:8080/auth/login', { email, password }).pipe(
+  //tap(res => this.saveToken(res.token)),
+  //map(res => res.token)
+
+  //);
   //}
   public login$(email: string, password: string): Observable<string> {
     return this._http.post<{ token: string }>('http://localhost:8080/auth/login', { email, password }).pipe(
       tap(res => {
-        this.saveToken(res.token);     // Stocke dans localStorage
-        this.storeToken(res.token);    // Stocke dans TokenService + décode
+        this.saveToken(res.token); // Stocke dans localStorage
+        this.storeToken(res.token); // Stocke dans TokenService + décode
         console.log('token stored');
         //this.setUserDetailsInStore();  // Injecte les rôles dans le store
         this._userStore.initializeRoles();
-        
+        this._authStatus$.next(true);
+
         console.log('les roles');
       }),
       map(res => res.token)
     );
+  }
+  get authStatus$(): Observable<boolean> {
+    return this._authStatus$.asObservable();
   }
 
   public saveToken(token: string): void {
@@ -79,7 +86,8 @@ export class AuthService {
   logout(): void {
     this._tokenService.clearToken();
     this._userPayload = null;
-    
+    this._authStatus$.next(false);
+    this._logoutMessage$.next('Vous avez été déconnecté(e).')
   }
 
   private _decodeToken(): unknown {
@@ -109,7 +117,7 @@ export class AuthService {
   // }
 
   getRoleFromToken(): string[] {
-        if (this._userPayload && this._userPayload.roles) {
+    if (this._userPayload && this._userPayload.roles) {
       return this._userPayload.roles.map((role: Role) => role.authority);
     }
     return [];

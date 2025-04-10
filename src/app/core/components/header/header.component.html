@@ -21,10 +21,10 @@
       <a [routerLink]="'/products'" class="nav-link">Services</a>
       <a href="#" class="nav-link">Prestataires</a>
       <a [routerLink]="'/contact'" class="nav-link">Contact</a>
-      
     </nav>
   </div>
-  
-  <button type="button"  (click)="onLogout()">Déconnexion</button>
+
+  <button *ngIf="isLoggedIn" type="button" (click)="onLogout()">Déconnexion</button>
+  <button *ngIf="!isLoggedIn" type="button" class="btn btn-primary mt-2" (click)="navigateToSignUpPage()">Se connecter / s'inscrire</button>
   
 </header>

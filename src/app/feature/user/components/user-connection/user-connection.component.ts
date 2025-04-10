@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
@@ -13,16 +13,15 @@ export class UserConnectionComponent {
   formBuilder = inject(FormBuilder);
   authService = inject(AuthService);
 
-
   loginForm = this.formBuilder.group({
-    email: [''],  
-    password: [''], 
+    email: [''],
+    password: [''],
   }) as FormGroup<{
     email: FormControl<string>;
     password: FormControl<string>;
   }>;
 
-   onLogin(): void {
+  onLogin(): void {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.getRawValue();
 

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
-
+import { passwordMatchValidator } from 'src/app/core/validators/validators';
 @Component({
   selector: 'app-create-user',
   standalone: true,
@@ -16,13 +16,13 @@ export class CreateUserComponent {
   MIN_PASSWORD_LENGTH = "12";
   MIN_USERNAME_LENGTH = "3";
 
-  loginForm = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required]],
-  }) as FormGroup<{
-    email: FormControl<string>;
-    password: FormControl<string>;
-  }>;
+  // loginForm = this.formBuilder.group({
+  //   email: ['', [Validators.required, Validators.email]],
+  //   password: ['', [Validators.required]],
+  // }) as FormGroup<{
+  //   email: FormControl<string>;
+  //   password: FormControl<string>;
+  // }>;
 
   signUpForm = this.formBuilder.group({
     username: ['', [Validators.required, Validators.minLength(this.MIN_USERNAME_LENGTH)]],
@@ -33,7 +33,7 @@ export class CreateUserComponent {
         password: ['', [Validators.required, this.securePasswordValidator()]],
         confirmPassword: [''],
       },
-      { validators: this.passwordMatchValidator() }
+      { validators: passwordMatchValidator() }
     ),
   });
   passwordMatchValidator(): ValidatorFn {

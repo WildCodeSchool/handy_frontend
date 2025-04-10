@@ -13,12 +13,14 @@ import { UserStoreService } from './core/services/user-store.service';
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-
   constructor(private _userStore: UserStoreService) {}
 
+  // ngOnInit(): void {
+  //   this._userStore.initializeRoles();
+  // }
   ngOnInit(): void {
-    
-    this._userStore.initializeRoles();
-    
+    if (localStorage.getItem('token')) {
+      this._userStore.initializeRoles();
+    }
   }
 }
