@@ -5,6 +5,8 @@ import { UserConnectionComponent } from './feature/user/components/user-connecti
 //import { isLoggedInGuard } from './core/guards/is-logged-in.guard';
 import { isAdminGuard } from './core/guards/is-admin.guard';
 import { CreateUserComponent } from './feature/user/components/create-user/create-user.component';
+import { isProviderGuard } from './core/guards/is-provider.guard';
+import { ProviderHomeComponent } from './feature/provider/page/provider-home/provider-home.component';
 
 export const routes: Routes = [
   {
@@ -24,9 +26,17 @@ export const routes: Routes = [
   },
   {
     path: 'contact',
-    component: UserConnectionComponent,
+    component: CreateUserComponent,
   },
-  { path: 'signup', component: CreateUserComponent },
+  { path: 'auth', component: UserConnectionComponent },
+
+  {
+    path: 'providers',
+    component: ProviderHomeComponent,
+
+    canActivate: [isProviderGuard],
+    //canActivate: [isLoggedInGuard],
+  },
 
   // {
   // //   path: '**',

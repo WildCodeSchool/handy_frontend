@@ -10,8 +10,9 @@
       <a [routerLink]="'/contact'" class="nav-link">Contact</a>
     </nav>
 
-    <button class="header-button" type="button" (click)="navigateToSignUpPage()">Se connecter / s'inscrire</button>
-
+    <!-- <button class="header-button" type="button" (click)="navigateToSignUpPage()">Se connecter / s'inscrire</button>// -->
+    <button *ngIf="isLoggedIn" type="button" (click)="onLogout()">Déconnexion</button>
+    <button *ngIf="!isLoggedIn" type="button" class="header-button" (click)="navigateToSignUpPage()">Se connecter / s'inscrire</button>
     <button class="btn btn-light d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu">☰</button>
   </div>
 
@@ -24,7 +25,5 @@
     </nav>
   </div>
 
-  <button *ngIf="isLoggedIn" type="button" (click)="onLogout()">Déconnexion</button>
-  <button *ngIf="!isLoggedIn" type="button" class="btn btn-primary mt-2" (click)="navigateToSignUpPage()">Se connecter / s'inscrire</button>
   
 </header>

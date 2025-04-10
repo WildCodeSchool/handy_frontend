@@ -27,19 +27,17 @@ export class HeaderComponent implements OnInit {
     // this._authService.logoutMessage$.subscribe((msg) => {
     //   if (msg) {
     //     this.message = msg;
-  
+
     //     // Efface le message après quelques secondes
     //     setTimeout(() => {
     //       this.message = null;
     //     }, 3000);
     //   }
     // });
-
-    
   }
 
   navigateToSignUpPage(): void {
-    this._router.navigate(['/signup']);
+    this._router.navigate(['/auth']);
   }
   onLogout(): void {
     this._authService.logout();
