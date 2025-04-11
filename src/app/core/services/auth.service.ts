@@ -16,8 +16,9 @@ type Role = {
 export class AuthService {
   private _userPayload: any;
   private _authStatus$!: BehaviorSubject<boolean>;
-  private _logoutMessage$ = new BehaviorSubject<string | null>(null);
-  public logoutMessage$ = this._logoutMessage$.asObservable();
+  // private readonly apiBaseUrl = 'http://localhost:8080/auth';
+
+ 
 
   constructor(
     private _http: HttpClient,
@@ -34,12 +35,11 @@ export class AuthService {
     return this._http.post<boolean>('http://localhost:8080/auth/register', { email, password });
   }
 
-
   public login$(email: string, password: string): Observable<string> {
     return this._http.post<{ token: string }>('http://localhost:8080/auth/login', { email, password }).pipe(
       tap(res => {
-        this.saveToken(res.token); // Stocke dans localStorage
-        this.storeToken(res.token); // Stocke dans TokenService + décode
+        this.saveToken(res.token);
+        this.storeToken(res.token); 
         console.log('token stored');
         //this.setUserDetailsInStore();  // Injecte les rôles dans le store
         this._userStore.initializeRoles();
@@ -84,7 +84,6 @@ export class AuthService {
     this._tokenService.clearToken();
     this._userPayload = null;
     this._authStatus$.next(false);
-    this._logoutMessage$.next('Vous avez été déconnecté(e).');
     this._userStore.clearRoles();
     this._router.navigate(['/']);
   }
@@ -114,6 +113,4 @@ export class AuthService {
   //   console.log('Rôles extraits du token:', roles);
   //   this._userStore.setRolesFromStore(roles);
   // }
-
-
 }

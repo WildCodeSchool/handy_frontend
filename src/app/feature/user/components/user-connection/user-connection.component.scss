@@ -1,14 +1,15 @@
-
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; 
+  height: 100vh;
 }
 
 .form-container {
   max-width: 500px;
-  margin-right: 20px; 
+  margin-right: 20px;
+  border: 0,8px solid green;
+  border-radius: 8px;
 }
 
 .image-container {
@@ -19,12 +20,11 @@
 
 .image-container img {
   width: 100%;
-  max-width: 500px; 
-  height: auto; 
-  object-fit: cover; 
+  max-width: 500px;
+  height: auto;
+  object-fit: cover;
   border-radius: 8px;
 }
-
 
 body {
   height: 100%;
@@ -38,10 +38,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  min-height: 100vh; 
+  min-height: 100vh;
 }
 
-form {
-  max-width: 500px;
-  margin-top: 50px;
-}
+

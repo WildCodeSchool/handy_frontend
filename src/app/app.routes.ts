@@ -47,8 +47,7 @@ export const routes: Routes = [
     path: 'client',
     component: ClientHomeComponent,
     canActivate: [isLoggedInGuard],
-  }
-  
+  },
 
   // {
   // //   path: '**',

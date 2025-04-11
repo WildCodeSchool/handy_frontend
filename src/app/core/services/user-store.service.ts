@@ -42,17 +42,6 @@ export class UserStoreService {
     console.log('les rôles:', roles);
   }
 
-  // public setRolesFromStore(roles: any): void {
-  //   if (Array.isArray(roles)) {
-  //     this._roles.next(roles);
-  //   } else if (roles && Array.isArray(roles.roles)) {
-  //     this._roles.next(roles.roles || []);
-  //   } else {
-  //     console.warn('Format de données invalide pour setRolesFromStore');
-  //     this._roles.next([]);
-  //   }
-  //   console.log('Les rôles:', this._roles.value);
-  // }
   public getFullNameFromStore(): Observable<string> {
     return this._fullName.asObservable();
   }

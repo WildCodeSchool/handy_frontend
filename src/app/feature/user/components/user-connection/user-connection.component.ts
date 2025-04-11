@@ -13,8 +13,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class UserConnectionComponent {
   formBuilder = inject(FormBuilder);
   authService = inject(AuthService);
-    private _router: Router = inject(Router);
-  
+  private _router: Router = inject(Router);
 
   loginForm = this.formBuilder.group({
     email: [''],
@@ -44,5 +43,4 @@ export class UserConnectionComponent {
   //   this._router.navigate(['/signup']);
   // }
   // <button (click)="navigateToSignUpPage()" class="btn btn-link">S'inscrire</button>
-
 }
