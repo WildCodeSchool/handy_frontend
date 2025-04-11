@@ -1,17 +1,20 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-user-connection',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './user-connection.component.html',
   styleUrl: './user-connection.component.scss',
 })
 export class UserConnectionComponent {
   formBuilder = inject(FormBuilder);
   authService = inject(AuthService);
+    private _router: Router = inject(Router);
+  
 
   loginForm = this.formBuilder.group({
     email: [''],
@@ -37,4 +40,9 @@ export class UserConnectionComponent {
       console.log('Formulaire de connexion invalide');
     }
   }
+  // navigateToSignUpPage(): void {
+  //   this._router.navigate(['/signup']);
+  // }
+  // <button (click)="navigateToSignUpPage()" class="btn btn-link">S'inscrire</button>
+
 }

@@ -1,4 +1,31 @@
-html,
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+}
+
+.form-container {
+  max-width: 500px;
+  margin-right: 20px; 
+}
+
+.image-container {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+}
+
+.image-container img {
+  width: 100%;
+  max-width: 500px; 
+  height: auto; 
+  object-fit: cover; 
+  border-radius: 8px;
+}
+
+
 body {
   height: 100%;
   margin: 0;
@@ -7,6 +34,14 @@ body {
   align-items: center;
 }
 
+.d-flex {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh; 
+}
+
 form {
   max-width: 500px;
+  margin-top: 50px;
 }

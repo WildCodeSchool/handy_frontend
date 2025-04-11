@@ -34,18 +34,7 @@ export class AuthService {
     return this._http.post<boolean>('http://localhost:8080/auth/register', { email, password });
   }
 
-  //public login$(email: string, password: string): Observable<string> {
-  //return this._http.post<string>('http://localhost:8080/auth/login', { email, password },).pipe(
-  //tap((token: string) => this.saveToken(token))
-  //);
 
-  //public login$(email: string, password: string): Observable<string> {
-  //return this._http.post<{ token: string }>('http://localhost:8080/auth/login', { email, password }).pipe(
-  //tap(res => this.saveToken(res.token)),
-  //map(res => res.token)
-
-  //);
-  //}
   public login$(email: string, password: string): Observable<string> {
     return this._http.post<{ token: string }>('http://localhost:8080/auth/login', { email, password }).pipe(
       tap(res => {
@@ -80,7 +69,6 @@ export class AuthService {
   storeToken(token: string): void {
     this._tokenService.setToken(token);
     this._userPayload = this._decodeToken();
-    // console.log('User Payload après décode :', this._userPayload);
   }
 
   isLoggedIn(): boolean {
@@ -97,6 +85,8 @@ export class AuthService {
     this._userPayload = null;
     this._authStatus$.next(false);
     this._logoutMessage$.next('Vous avez été déconnecté(e).');
+    this._userStore.clearRoles();
+    this._router.navigate(['/']);
   }
 
   private _decodeToken(): unknown {
@@ -113,32 +103,17 @@ export class AuthService {
       return null;
     }
   }
-
-  // getRoleFromToken(): string[] {
-  //   console.log('Décodage du token, _userPayload:', this._userPayload);
-  //   if (this._userPayload ) {
-  //     console.log('Rôles dans le payload:', this._userPayload.roles);
-  //     return this._userPayload.roles || [];
-  //   }
-  //   console.log('Aucun payload trouvé, retour d\'un tableau vide');
-
-  //   return [];
-  // }
-
   getRoleFromToken(): string[] {
     if (this._userPayload && this._userPayload.roles) {
       return this._userPayload.roles.map((role: Role) => role.authority);
     }
     return [];
   }
-  setUserDetailsInStore(): void {
-    const roles = this.getRoleFromToken();
-    console.log('Rôles extraits du token:', roles);
-    this._userStore.setRolesFromStore(roles);
-  }
+  // setUserDetailsInStore(): void {
+  //   const roles = this.getRoleFromToken();
+  //   console.log('Rôles extraits du token:', roles);
+  //   this._userStore.setRolesFromStore(roles);
+  // }
 
-  // l'ID de l'utilisateur à partir du token **
-  getUserIdFromToken(): string | null {
-    return this._userPayload?.sub || null;
-  }
+
 }

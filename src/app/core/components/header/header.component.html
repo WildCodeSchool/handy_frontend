@@ -11,8 +11,8 @@
     </nav>
 
     <!-- <button class="header-button" type="button" (click)="navigateToSignUpPage()">Se connecter / s'inscrire</button>// -->
-    <button *ngIf="isLoggedIn" type="button" (click)="onLogout()">Déconnexion</button>
-    <button *ngIf="!isLoggedIn" type="button" class="header-button" (click)="navigateToSignUpPage()">Se connecter / s'inscrire</button>
+    <button *ngIf="isLoggedIn" type="button" class="btn btn-danger" (click)="onLogout()">Déconnexion</button>
+    <button *ngIf="!isLoggedIn" type="button" class="header-button btn btn-success" (click)="navigateToSignUpPage()">Se connecter / s'inscrire</button>
     <a *ngIf="isProvider" [routerLink]="'/providers'" class="nav-link">Mon profil (prestataire)</a>
     <a *ngIf="isAdmin$ | async" [routerLink]="'/admin'" class="nav-link">Mon profil (admin)</a>
 

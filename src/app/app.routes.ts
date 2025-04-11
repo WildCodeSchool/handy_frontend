@@ -2,14 +2,13 @@ import { Routes } from '@angular/router';
 import { HomePageComponent } from './feature/home/pages/home-page/home-page.component';
 import { ProductPageComponent } from './feature/product/page/product-page/product-page.component';
 import { UserConnectionComponent } from './feature/user/components/user-connection/user-connection.component';
-//import { isLoggedInGuard } from './core/guards/is-logged-in.guard';
 import { isAdminGuard } from './core/guards/is-admin.guard';
 import { CreateUserComponent } from './feature/user/components/create-user/create-user.component';
 import { isProviderGuard } from './core/guards/is-provider.guard';
 import { ProviderHomeComponent } from './feature/provider/page/provider-home/provider-home.component';
-import { AdminHomeComponent } from './feature/admin/page/admin-home/admin-home.component';
 import { ClientHomeComponent } from './feature/client/page/client-home/client-home.component';
 import { isLoggedInGuard } from './core/guards/is-logged-in.guard';
+import { AdminHomeComponent } from './feature/admin/page/admin-home/admin-home.component';
 
 export const routes: Routes = [
   {
@@ -28,7 +27,7 @@ export const routes: Routes = [
     //canActivate: [isLoggedInGuard],
   },
   {
-    path: 'contact',
+    path: 'signup',
     component: CreateUserComponent,
   },
   { path: 'auth', component: UserConnectionComponent },
@@ -43,14 +42,13 @@ export const routes: Routes = [
     path: 'admin',
     component: AdminHomeComponent,
     canActivate: [isAdminGuard],
-    
   },
   {
     path: 'client',
     component: ClientHomeComponent,
     canActivate: [isLoggedInGuard],
-    
   }
+  
 
   // {
   // //   path: '**',

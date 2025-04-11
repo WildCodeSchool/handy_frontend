@@ -18,12 +18,11 @@ export class HeaderComponent implements OnInit {
 
   private _router: Router = inject(Router);
   private _authSubscription: Subscription = new Subscription();
-    private _userStore = inject(UserStoreService);
-    private _authService = inject(AuthService)
-  
-    isAdmin$ = this._userStore.hasRole$('ROLE_ADMIN');
+  private _userStore = inject(UserStoreService);
+  private _authService = inject(AuthService);
+
+  isAdmin$ = this._userStore.hasRole$('ROLE_ADMIN');
   // constructor(private _authService: AuthService) {}
-  
 
   ngOnInit(): void {
     this._authSubscription = this._authService.authStatus$.subscribe((isLoggedIn: boolean) => {
@@ -50,7 +49,6 @@ export class HeaderComponent implements OnInit {
       } else {
         this.isProvider = false;
       }
-
     });
   }
 

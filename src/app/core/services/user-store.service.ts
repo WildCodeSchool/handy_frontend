@@ -64,4 +64,9 @@ export class UserStoreService {
   public hasRole$(role: string): Observable<boolean> {
     return this._roles.asObservable().pipe(map(roles => roles.includes(role)));
   }
+
+  public clearRoles(): void {
+    this._roles.next([]);
+    console.log('Les rôles ont été réinitialisés dans le store.');
+  }
 }
