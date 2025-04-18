@@ -13,29 +13,26 @@ export class ProductService {
   getAllProvisions$(): Observable<AppProvider[]> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    return this._http
-      .get<AppProvider[]>(this._BASE_API_URL, {
-        headers,
-        withCredentials: true,
-      })
-      
+    return this._http.get<AppProvider[]>(this._BASE_API_URL, {
+      headers,
+      withCredentials: true,
+    });
   }
 
   getProvisionById$(id: string): Observable<AppProvider> {
     const url = `${this._BASE_API_URL}/${id}`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    return this._http
-      .get<AppProvider>(url, {
-        headers,
-        withCredentials: true,
-      })
+    return this._http.get<AppProvider>(url, {
+      headers,
+      withCredentials: true,
+    });
   }
 
   updateProvision$(id: number, provision: AppProvider): Observable<AppProvider> {
     const url = `${this._BASE_API_URL}/${id}`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    return this._http.put<AppProvider>(url, provision, { headers, withCredentials: true })
+    return this._http.put<AppProvider>(url, provision, { headers, withCredentials: true });
   }
 }

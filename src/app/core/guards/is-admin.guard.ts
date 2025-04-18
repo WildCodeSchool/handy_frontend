@@ -15,9 +15,7 @@ export const isAdminGuard: CanActivateFn = (): Observable<boolean | UrlTree> => 
   return userStoreService.getRolesFromStore().pipe(
     switchMap(() => {
       if (rolesFromToken.includes('ROLE_ADMIN')) {
-        return authService.isLoggedInObservable().pipe(
-          map(loggedIn => (loggedIn ? true : router.createUrlTree(['/auth'])))
-        );
+        return authService.isLoggedInObservable().pipe(map(loggedIn => (loggedIn ? true : router.createUrlTree(['/auth']))));
       }
 
       return of(router.createUrlTree(['/auth']));

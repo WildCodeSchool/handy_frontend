@@ -1,4 +1,4 @@
-export type ProvisionCartItem ={
-    userId: number;
-    provisionId: number;
-  }
+export type ProvisionCartItem = {
+  userId: number;
+  provisionId: number;
+};

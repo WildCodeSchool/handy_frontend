@@ -4,12 +4,12 @@ import { ProviderWithServicesDTO } from '../../cart/models/ProviderWithServicesD
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProvidersService {
   private _providersUrl = 'http://localhost:8080/users/providers-with-services';
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient) {}
   getProviderWithServices(id: number): Observable<ProviderWithServicesDTO> {
     return this._http.get<ProviderWithServicesDTO>(`${this._providersUrl}/${id}`);
   }

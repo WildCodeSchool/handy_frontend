@@ -1,6 +1,5 @@
-
-@if (isSelectedServicesVisible){
-<div class="selected-services">
+@if (isSelectedServicesVisible) {
+  <div class="selected-services">
     <button type="button" class="btn-close" (click)="closeSelectedServices()">Fermer</button>
     <h3>✅ Services sélectionnés</h3>
     <ul>
@@ -10,52 +9,48 @@
             <strong>{{ provider.firstName }} {{ provider.lastName }}</strong>
             ({{ provider.email }} – {{ provider.city }})<br />
           </ng-container>
-          
+
           <ng-container *ngIf="getServiceInfo(item.userId, item.provisionId) as service">
             Service : {{ service.name }} (prix: {{ service.coeff }})
           </ng-container>
-  
-          <button type="button" class="btn-remove" 
-                  (click)="removeFromCart(item.userId, item.provisionId)">
-            Supprimer
-          </button>
+
+          <button type="button" class="btn-remove" (click)="removeFromCart(item.userId, item.provisionId)">Supprimer</button>
         </li>
       }
     </ul>
     <div class="total-coeff">
-        <h4>Total à régler : {{ getTotalCoefficient() }}</h4>
-      </div>
+      <h4>Total à régler : {{ getTotalCoefficient() }}</h4>
+    </div>
   </div>
 }
-  
-  
-  <div class="provider-container">
-    @for (provider of providersWithServices; track provider.providerId) {
-      <div class="provider-card">
-        <div class="provider-info">🧺
-          <h3>{{ provider.firstName }} {{ provider.lastName }}</h3>
-          <p><strong>Email:</strong> {{ provider.email || 'Email non spécifié' }}</p>
-          <p><strong>Ville:</strong> {{ provider.city || 'Ville non spécifiée' }}</p>
-        </div>
-  
-        @if (provider.services.length > 0) {
-          <div class="service-list">
-            <h4>Services disponibles :</h4>
-            <ul>
-              @for (service of provider.services.slice(0,3); track service.id) {
-                <li class="service-item">
-                  <span>{{ service.name }} <em>(prix: {{ service.coeff | currency: 'EUR' }})</em></span>
-                  <button type="button" class="btn-add" (click)="addToCart(provider.providerId, service.id)">Ajouter</button>
-                </li>
-              }
-            </ul>
-          </div>
-        } @else {
-          <p class="no-service">Aucun service disponible</p>
-        }
-      </div>
-    }
-  </div>
 
-  
-  
+<div class="provider-container">
+  @for (provider of providersWithServices; track provider.providerId) {
+    <div class="provider-card">
+      <div class="provider-info">
+        🧺
+        <h3>{{ provider.firstName }} {{ provider.lastName }}</h3>
+        <p><strong>Email:</strong> {{ provider.email || 'Email non spécifié' }}</p>
+        <p><strong>Ville:</strong> {{ provider.city || 'Ville non spécifiée' }}</p>
+      </div>
+
+      @if (provider.services.length > 0) {
+        <div class="service-list">
+          <h4>Services disponibles :</h4>
+          <ul>
+            @for (service of provider.services.slice(0, 3); track service.id) {
+              <li class="service-item">
+                <span
+                  >{{ service.name }} <em>(prix: {{ service.coeff | currency: 'EUR' }})</em></span
+                >
+                <button type="button" class="btn-add" (click)="addToCart(provider.providerId, service.id)">Ajouter</button>
+              </li>
+            }
+          </ul>
+        </div>
+      } @else {
+        <p class="no-service">Aucun service disponible</p>
+      }
+    </div>
+  }
+</div>

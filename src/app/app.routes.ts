@@ -25,7 +25,7 @@ export const routes: Routes = [
 
   {
     path: 'products',
-    component: ProductPageComponent
+    component: ProductPageComponent,
   },
   {
     path: 'signup',
@@ -51,23 +51,22 @@ export const routes: Routes = [
   },
   {
     path: 'order-cart',
-    component: OrderCartComponent
+    component: OrderCartComponent,
   },
   {
     path: 'create-cart',
-    component: CreateCartComponent
+    component: CreateCartComponent,
   },
   {
     path: 'providers-list',
-    component: ProvidersListComponent
+    component: ProvidersListComponent,
   },
   {
     path: 'provider-one/:id',
-    component: ProviderOneComponent
+    component: ProviderOneComponent,
   },
   {
     path: 'order',
     loadComponent: () => import('./feature/cart/page/cart/cart.component').then(c => c.CartComponent),
-    
-  }
+  },
 ];

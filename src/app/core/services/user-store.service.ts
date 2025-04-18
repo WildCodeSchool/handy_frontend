@@ -24,8 +24,8 @@ export class UserStoreService {
 
     if (roles && roles.length > 0) {
       this._roles.next(roles);
-     
-  }}
+    }
+  }
 
   public getRolesFromStore(): Observable<string[]> {
     return this._roles.asObservable();

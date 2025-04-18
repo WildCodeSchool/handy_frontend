@@ -14,8 +14,6 @@ export const isProviderGuard: CanActivateFn = (): Observable<boolean | UrlTree> 
 
   return userStoreService.getRolesFromStore().pipe(
     switchMap(() => {
-      
-
       if (rolesFromToken.includes('ROLE_PROVIDER')) {
         return authService.isLoggedInObservable().pipe(map(loggedIn => (loggedIn ? true : router.createUrlTree(['/auth']))));
       }

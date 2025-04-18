@@ -8,13 +8,13 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [OrderCartComponent, CreateCartComponent, CommonModule],
   templateUrl: './cart.component.html',
-  styleUrl: './cart.component.scss'
+  styleUrl: './cart.component.scss',
 })
 export class CartComponent {
-
   isCartVisible = false;
 
   toggleCartVisibility(): void {
     this.isCartVisible = !this.isCartVisible;
     console.log('Panier visible ?', this.isCartVisible);
-  } }
+  }
+}

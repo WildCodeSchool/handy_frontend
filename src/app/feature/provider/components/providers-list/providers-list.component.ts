@@ -10,11 +10,11 @@ import { AppProvider } from 'src/app/feature/product/models/provider';
   standalone: true,
   imports: [RouterModule],
   templateUrl: './providers-list.component.html',
-  styleUrl: './providers-list.component.scss'
+  styleUrl: './providers-list.component.scss',
 })
 export class ProvidersListComponent implements OnInit {
-  providersWithServices: ProviderWithServicesDTO[] = []; 
-  selectedServices: { userId: number, provisionId: number }[] = [];
+  providersWithServices: ProviderWithServicesDTO[] = [];
+  selectedServices: { userId: number; provisionId: number }[] = [];
 
   selectedProvider: AppProvider[] = [];
   constructor(
@@ -24,15 +24,15 @@ export class ProvidersListComponent implements OnInit {
 
   ngOnInit(): void {
     this._cartService.getProvidersWithServices().subscribe({
-      next: (data) => {
+      next: data => {
         this.providersWithServices = data.map(provider => ({
           ...provider,
-          services: provider.services || []
+          services: provider.services || [],
         }));
       },
-      error: (err) => {
+      error: err => {
         console.error('Erreur lors de la récupération des providers:', err);
-      }
+      },
     });
 
     this._cartService.cart$.subscribe(cart => {
@@ -41,7 +41,7 @@ export class ProvidersListComponent implements OnInit {
   }
 
   addToCart(providerId: number, serviceId: number): void {
-    const userId = providerId; 
+    const userId = providerId;
     const exists = this.selectedServices.some(item => item.userId === userId && item.provisionId === serviceId);
 
     if (!exists) {
@@ -54,7 +54,7 @@ export class ProvidersListComponent implements OnInit {
 
   clearCart(): void {
     this._cartService.clearCart();
-    this.selectedServices = []; 
+    this.selectedServices = [];
     console.log('Panier vidé');
   }
   removeFromCart(providerId: number, provisionId: number): void {

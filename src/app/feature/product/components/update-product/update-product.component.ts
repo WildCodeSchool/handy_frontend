@@ -22,7 +22,6 @@ export class UpdateProductComponent {
   @Output() closeDetails = new EventEmitter<void>();
 
   isAdmin$ = this._userStore.hasRole$('ROLE_ADMIN');
-  
 
   updateProductDetails(): void {
     const updatedProduct = { ...this.product };

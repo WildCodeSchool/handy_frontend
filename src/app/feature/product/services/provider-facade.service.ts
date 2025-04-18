@@ -18,11 +18,9 @@ export class ProviderFacadeService {
   ) {}
 
   getAll$(): Observable<AppProvider[]> {
-    return this._api.getAllProvisions$().pipe(
-      switchMap(provisions => this._store.setAll$(provisions))
-    );
+    return this._api.getAllProvisions$().pipe(switchMap(provisions => this._store.setAll$(provisions)));
   }
- 
+
   post$(product: ProductForCreation): any {
     return this._api.createProvision$(product).pipe(
       tap((product: ProductForCreation) => {

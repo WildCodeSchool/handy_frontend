@@ -10,7 +10,7 @@ export type ProviderWithServicesDTO = {
   lastName: string;
   email: string;
   city: string;
-  services: AppProvider[]; 
+  services: AppProvider[];
 };
 
 @Component({
@@ -18,11 +18,11 @@ export type ProviderWithServicesDTO = {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './order-cart.component.html',
-  styleUrl: './order-cart.component.scss'
+  styleUrl: './order-cart.component.scss',
 })
 export class OrderCartComponent implements OnInit {
-  providersWithServices: ProviderWithServicesDTO[] = []; 
-  selectedServices: { userId: number, provisionId: number }[] = [];
+  providersWithServices: ProviderWithServicesDTO[] = [];
+  selectedServices: { userId: number; provisionId: number }[] = [];
 
   selectedProvider: AppProvider[] = [];
   isSelectedServicesVisible = true;
@@ -34,15 +34,15 @@ export class OrderCartComponent implements OnInit {
 
   ngOnInit(): void {
     this._cartService.getProvidersWithServices().subscribe({
-      next: (data) => {
+      next: data => {
         this.providersWithServices = data.map(provider => ({
           ...provider,
-          services: provider.services || []
+          services: provider.services || [],
         }));
       },
-      error: (err) => {
+      error: err => {
         console.error('Erreur lors de la récupération des éléments:', err);
-      }
+      },
     });
 
     this._cartService.cart$.subscribe(cart => {
@@ -51,7 +51,7 @@ export class OrderCartComponent implements OnInit {
   }
 
   addToCart(providerId: number, serviceId: number): void {
-    const userId = providerId; 
+    const userId = providerId;
     const exists = this.selectedServices.some(item => item.userId === userId && item.provisionId === serviceId);
 
     if (!exists) {
@@ -63,7 +63,7 @@ export class OrderCartComponent implements OnInit {
 
   clearCart(): void {
     this._cartService.clearCart();
-    this.selectedServices = []; 
+    this.selectedServices = [];
   }
   removeFromCart(providerId: number, provisionId: number): void {
     this._cartService.removeFromCart(providerId, provisionId);
@@ -72,7 +72,7 @@ export class OrderCartComponent implements OnInit {
   getProviderInfo(userId: number): ProviderWithServicesDTO | undefined {
     return this.providersWithServices.find(p => p.providerId === userId);
   }
-  
+
   getServiceInfo(userId: number, provisionId: number): AppProvider | undefined {
     const provider = this.getProviderInfo(userId);
     return provider?.services.find(s => s.id === provisionId);
@@ -84,7 +84,7 @@ export class OrderCartComponent implements OnInit {
       return total + (service?.coeff || 0);
     }, 0);
   }
-  closeSelectedServices():void {
+  closeSelectedServices(): void {
     this.isSelectedServicesVisible = false;
   }
 }

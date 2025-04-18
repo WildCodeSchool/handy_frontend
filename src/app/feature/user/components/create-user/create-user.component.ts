@@ -18,7 +18,6 @@ export class CreateUserComponent {
   MIN_PASSWORD_LENGTH = 12;
   MIN_USERNAME_LENGTH = 3;
 
-
   signUpForm = this.formBuilder.group({
     username: ['', [Validators.required, Validators.minLength(this.MIN_USERNAME_LENGTH)]],
     email: ['', [Validators.required, Validators.email]],
@@ -49,7 +48,6 @@ export class CreateUserComponent {
   securePasswordValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value || '';
-      
 
       const hasUpperCase = /[A-Z]/.test(value);
       const hasLowerCase = /[a-z]/.test(value);
@@ -62,5 +60,4 @@ export class CreateUserComponent {
       return passwordValid ? null : { securePassword: true };
     };
   }
-
 }

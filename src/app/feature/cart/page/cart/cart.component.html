@@ -1,15 +1,13 @@
 <p>cart works!</p>
 
-    <h1>Trouvez l'aide qui vous correspond</h1>
-    <div class="button-container">
-    <button type = "button"(click)="toggleCartVisibility()" class="btn-toggle-cart">
-        {{ isCartVisible ? 'Cacher le panier' : 'Afficher le panier 🛒' }}
-      </button>
-    </div>
-    @if(isCartVisible){
-    <app-create-cart ></app-create-cart>}
-    <hr />
-    <app-order-cart></app-order-cart>
-    
-      
-      
+<h1>Trouvez l'aide qui vous correspond</h1>
+<div class="button-container">
+  <button type="button" (click)="toggleCartVisibility()" class="btn-toggle-cart">
+    {{ isCartVisible ? 'Cacher le panier' : 'Afficher le panier 🛒' }}
+  </button>
+</div>
+@if (isCartVisible) {
+  <app-create-cart></app-create-cart>
+}
+<hr />
+<app-order-cart></app-order-cart>

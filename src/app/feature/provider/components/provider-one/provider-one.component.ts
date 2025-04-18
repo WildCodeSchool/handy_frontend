@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './provider-one.component.html',
-  styleUrl: './provider-one.component.scss'
+  styleUrl: './provider-one.component.scss',
 })
 export class ProviderOneComponent {
   private _route = inject(ActivatedRoute);
@@ -24,11 +24,11 @@ export class ProviderOneComponent {
     effect(() => {
       const providerId = this.id();
       this._providerService.getProviderWithServices(providerId).subscribe({
-        next: (data) => this.provider.set(data),
-        error: (err) => {
+        next: data => this.provider.set(data),
+        error: err => {
           this.error.set('Provider not found or server error');
           console.error(err);
-        }
+        },
       });
     });
   }

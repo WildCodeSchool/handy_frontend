@@ -14,5 +14,4 @@ import { ProductListComponent } from '../../../../feature/product/components/pro
 })
 export class HomePageComponent {
   constructor(private _router: Router) {}
-
 }

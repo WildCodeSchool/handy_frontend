@@ -6,7 +6,7 @@
     </div>
 
     <button type="button" class="btn btn-secondary mt-2" (click)="CloseDetails()">Fermer les détails</button>
-    
+
     <app-update-product [product]="product"></app-update-product>
     <app-delete-product [product]="product"></app-delete-product>
     <app-create-product (productCreated)="productCreatedHandler($event)"></app-create-product>
