@@ -4,7 +4,7 @@
     <p>Soihaitez - vous supprimer le produit {{ product.name }} ?</p>
     <div>
       <button type="button" class="btn btn-danger" (click)="deleteProduct()">Supprimer</button>
-      
+
       @if (successMessageUpdate) {
         <div class="alert alert-success mt-2" role="alert">
           {{ successMessageUpdate }}

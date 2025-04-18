@@ -5,6 +5,7 @@ import { TokenService } from './token.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserStoreService } from './user-store.service';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment.development';
 
 type Role = {
   authority: string;
@@ -16,9 +17,7 @@ type Role = {
 export class AuthService {
   private _userPayload: any;
   private _authStatus$!: BehaviorSubject<boolean>;
-  // private readonly apiBaseUrl = 'http://localhost:8080/auth';
-
- 
+  private readonly _apiBaseUrl = environment.apiUrl;
 
   constructor(
     private _http: HttpClient,
@@ -32,16 +31,15 @@ export class AuthService {
   }
 
   public register$(email: string, password: string): Observable<boolean> {
-    return this._http.post<boolean>('http://localhost:8080/auth/register', { email, password });
+    return this._http.post<boolean>(`${this._apiBaseUrl}/auth/register`, { email, password });
   }
 
   public login$(email: string, password: string): Observable<string> {
-    return this._http.post<{ token: string }>('http://localhost:8080/auth/login', { email, password }).pipe(
+    return this._http.post<{ token: string }>(`${this._apiBaseUrl}/auth/login`, { email, password }).pipe(
       tap(res => {
         this.saveToken(res.token);
-        this.storeToken(res.token); 
+        this.storeToken(res.token);
         console.log('token stored');
-        //this.setUserDetailsInStore();  // Injecte les rôles dans le store
         this._userStore.initializeRoles();
         this._authStatus$.next(true);
 
@@ -108,9 +106,5 @@ export class AuthService {
     }
     return [];
   }
-  // setUserDetailsInStore(): void {
-  //   const roles = this.getRoleFromToken();
-  //   console.log('Rôles extraits du token:', roles);
-  //   this._userStore.setRolesFromStore(roles);
-  // }
+
 }

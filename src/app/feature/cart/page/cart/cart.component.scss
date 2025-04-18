@@ -1,0 +1,100 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+  
+  h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+  }
+  
+  .btn-toggle-cart {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.2em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+  }
+  
+  .btn-toggle-cart:hover {
+    background-color: #3de561; 
+  }
+  
+ 
+  .app-order-cart {
+    background-color: white;
+    padding: 36px;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+    text-align: left;
+    width: 80%;
+    max-width: 1000px;
+    margin: 20px auto;
+  }
+  
+  .app-create-cart {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+  }
+  
+  .app-create-cart h3 {
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  .app-create-cart ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .app-create-cart li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 1.1em;
+  }
+  
+  .app-create-cart button {
+    background-color: #38a169;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: background-color 0.3s ease;
+  }
+  
+  .app-create-cart button:hover {
+    background-color: #2f855a;
+  }
+  
+  .app-create-cart p {
+    color: #888;
+    font-style: italic;
+    font-size: 1.1em;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center;     
+    height: 20vh;           
+    margin-bottom: 20px;     
+  }

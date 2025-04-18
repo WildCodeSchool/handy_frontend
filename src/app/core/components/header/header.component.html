@@ -6,7 +6,7 @@
     <nav class="d-none d-md-flex gap-4">
       <a [routerLink]="''" class="nav-link">Accueil</a>
       <a [routerLink]="'/products'" class="nav-link">Services</a>
-      <a href="#" class="nav-link">Prestataires</a>
+      <a [routerLink]="'/providers-list'" class="nav-link">Prestataires</a>
       <a [routerLink]="'/contact'" class="nav-link">Contact</a>
     </nav>
 
@@ -17,10 +17,10 @@
     }
     @if (isProvider) {
       <a [routerLink]="'/providers'" class="nav-link">Mon profil (prestataire)</a>
-    }    
-    @if (isAdmin$ | async){
-    <a [routerLink]="'/admin'" class="nav-link">Mon profil (admin)</a>
-  } 
+    }
+    @if (isAdmin$ | async) {
+      <a [routerLink]="'/admin'" class="nav-link">Mon profil (admin)</a>
+    }
     <button class="btn btn-light d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu">☰</button>
   </div>
 
@@ -28,7 +28,7 @@
     <nav class="d-flex flex-column text-center">
       <a [routerLink]="''" class="nav-link">Accueil</a>
       <a [routerLink]="'/products'" class="nav-link">Services</a>
-      <a href="#" class="nav-link">Prestataires</a>
+      <a [routerLink]="'/providers-list'" class="nav-link">Prestataires</a>
       <a [routerLink]="'/contact'" class="nav-link">Contact</a>
     </nav>
   </div>

@@ -20,18 +20,12 @@ export class UserStoreService {
   }
 
   initializeRoles(): void {
-    console.log('Appel de initializeRoles');
-
     const roles = this._authServiceInstance.getRoleFromToken();
-    console.log('Rôles récupérés du token :', roles);
 
     if (roles && roles.length > 0) {
       this._roles.next(roles);
-      console.log('Les rôles ont été mis à jour dans le store :', this._roles.value);
-    } else {
-      console.log('Aucun rôle trouvé ou tableau vide.');
-    }
-  }
+     
+  }}
 
   public getRolesFromStore(): Observable<string[]> {
     return this._roles.asObservable();
@@ -39,7 +33,6 @@ export class UserStoreService {
 
   public setRolesFromStore(roles: string[]): void {
     this._roles.next(roles);
-    console.log('les rôles:', roles);
   }
 
   public getFullNameFromStore(): Observable<string> {

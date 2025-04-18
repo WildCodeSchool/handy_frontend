@@ -24,7 +24,6 @@ export class TokenService {
 
   getToken(): string | null {
     console.log('Récupération du token:', this._token);
-    //return this._token;
     return localStorage.getItem('token');
   }
 

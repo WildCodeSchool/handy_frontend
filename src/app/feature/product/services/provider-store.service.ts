@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ProductForCreation } from '../models/productCreation';
 
-// Le type Provider
 export type AppProvider = {
   id: number;
   name: string;
@@ -28,7 +27,6 @@ export class ProviderStoreService {
     return this._provisions$.asObservable();
   }
 
-  // Récupérer les provisions stockées
   getAll$(): Observable<AppProvider[]> {
     return this._provisions$.asObservable();
   }

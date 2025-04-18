@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AppProvider } from './provider-store.service';
 
 @Injectable({
@@ -18,10 +18,7 @@ export class ProductService {
         headers,
         withCredentials: true,
       })
-      .pipe(
-        tap(response => console.log('Réponse API:', response)),
-        tap(() => console.log('Requête envoyée à:', this._BASE_API_URL))
-      );
+      
   }
 
   getProvisionById$(id: string): Observable<AppProvider> {
@@ -33,19 +30,12 @@ export class ProductService {
         headers,
         withCredentials: true,
       })
-      .pipe(
-        tap(response => console.log('Réponse API pour un élément:', response)),
-        tap(() => console.log(`Requête envoyée pour récupérer l'élément avec ID ${id}:`, url))
-      );
   }
 
   updateProvision$(id: number, provision: AppProvider): Observable<AppProvider> {
     const url = `${this._BASE_API_URL}/${id}`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    return this._http.put<AppProvider>(url, provision, { headers, withCredentials: true }).pipe(
-      tap(response => console.log('Réponse API après modification:', response)),
-      tap(() => console.log(`Requête envoyée pour modifier l'élément avec ID ${id}:`, url))
-    );
+    return this._http.put<AppProvider>(url, provision, { headers, withCredentials: true })
   }
 }

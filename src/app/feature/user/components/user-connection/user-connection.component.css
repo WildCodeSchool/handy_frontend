@@ -8,7 +8,9 @@
 .form-container {
   max-width: 500px;
   margin-right: 20px;
-  border: 0,8px solid green;
+  border:
+    0,
+    8px solid green;
   border-radius: 8px;
 }
 

@@ -1,0 +1,18 @@
+<p>provider-one works!</p>
+<div *ngIf="provider(); else errorBlock">
+    <h2>{{ provider()?.firstName }} {{ provider()?.lastName }}</h2>
+    <p>Email: {{ provider()?.email }}</p>
+    <p>City: {{ provider()?.city }}</p>
+  
+    <h3>Services:</h3>
+    <ul>
+      <li *ngFor="let service of provider()?.services?.slice(0, 3) ?? []">
+        {{ service.name }} (Coeff: {{ service.coeff }})
+      </li>
+    </ul>
+  </div>
+  
+  <ng-template #errorBlock>
+    <p *ngIf="error()">{{ error() }}</p>
+  </ng-template>
+  

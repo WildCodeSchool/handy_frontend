@@ -9,6 +9,10 @@ import { ProviderHomeComponent } from './feature/provider/page/provider-home/pro
 import { ClientHomeComponent } from './feature/client/page/client-home/client-home.component';
 import { isLoggedInGuard } from './core/guards/is-logged-in.guard';
 import { AdminHomeComponent } from './feature/admin/page/admin-home/admin-home.component';
+import { OrderCartComponent } from './feature/cart/components/order-cart/order-cart.component';
+import { CreateCartComponent } from './feature/cart/components/create-cart/create-cart.component';
+import { ProvidersListComponent } from './feature/provider/components/providers-list/providers-list.component';
+import { ProviderOneComponent } from './feature/provider/components/provider-one/provider-one.component';
 
 export const routes: Routes = [
   {
@@ -21,10 +25,7 @@ export const routes: Routes = [
 
   {
     path: 'products',
-    component: ProductPageComponent,
-
-    canActivate: [isAdminGuard],
-    //canActivate: [isLoggedInGuard],
+    component: ProductPageComponent
   },
   {
     path: 'signup',
@@ -48,9 +49,25 @@ export const routes: Routes = [
     component: ClientHomeComponent,
     canActivate: [isLoggedInGuard],
   },
-
-  // {
-  // //   path: '**',
-  // //   component: NotFoundPageComponent
-  // }
+  {
+    path: 'order-cart',
+    component: OrderCartComponent
+  },
+  {
+    path: 'create-cart',
+    component: CreateCartComponent
+  },
+  {
+    path: 'providers-list',
+    component: ProvidersListComponent
+  },
+  {
+    path: 'provider-one/:id',
+    component: ProviderOneComponent
+  },
+  {
+    path: 'order',
+    loadComponent: () => import('./feature/cart/page/cart/cart.component').then(c => c.CartComponent),
+    
+  }
 ];

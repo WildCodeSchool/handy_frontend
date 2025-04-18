@@ -1,0 +1,108 @@
+.cart-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+  
+    li {
+      background: #f9f9f9;
+      padding: 15px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  
+      .btn-remove {
+        background: #e74c3c;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.2s ease-in-out;
+  
+        &:hover {
+          background: #c0392b;
+        }
+      }
+    }
+  }
+  
+  .cart-actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+  
+    .btn-clear,
+    .btn-submit {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.2s ease-in-out;
+    }
+  
+    .btn-clear {
+      background-color: #f39c12;
+      color: white;
+  
+      &:hover {
+        background-color: #e67e22;
+      }
+    }
+  
+    .btn-submit {
+      background-color: #2ecc71;
+      color: white;
+  
+      &:hover {
+        background-color: #27ae60;
+      }
+  
+      &:disabled {
+        background-color: #bdc3c7;
+        cursor: not-allowed;
+      }
+    }
+  }
+  
+  .toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    animation: fade-in-out 3s ease forwards;
+  
+    &.success {
+      background-color: #2ecc71;
+    }
+  
+    &.error {
+      background-color: #e74c3c;
+    }
+  }
+  
+  @keyframes fade-in-out {
+    0% { opacity: 0; transform: translateY(20px); }
+    10% { opacity: 1; transform: translateY(0); }
+    90% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(20px); }
+  }
+  
+  .cart-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 20vh;  
+    margin: 0 auto;    
+    padding: 20px;
+    box-sizing: border-box; 
+    width: 100%;
+  }

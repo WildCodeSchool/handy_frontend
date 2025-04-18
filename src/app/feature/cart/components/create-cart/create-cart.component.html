@@ -1,0 +1,36 @@
+
+<div class="cart-container">
+
+<ul class="cart-list">
+    @for (item of cart; track item.provisionId) {
+      <li>
+        <ng-container *ngIf="getProviderInfo(item.userId) as provider">
+          <strong>{{ provider.firstName }} {{ provider.lastName }}</strong>
+          ({{ provider.email }} – {{ provider.city }})<br />
+        </ng-container>
+  
+        <ng-container *ngIf="getServiceInfo(item.userId, item.provisionId) as service">
+          Service : {{ service.name }} (prix: {{ service.coeff }})
+        </ng-container>
+  
+        <button type="button" class="btn-remove"
+                (click)="removeFromCart(item.userId, item.provisionId)">
+          Supprimer
+        </button>
+      </li>
+    }
+  </ul>
+  <div class="total-coeff">
+    <h4>Total à régler : {{ getTotalCoefficient() }}</h4>
+  </div>
+  <div class="cart-actions">
+    <button type="submit" (click)="clearCart()" class="btn-clear">🗑 Vider le panier</button>
+    <button type="submit" (click)="submitCart()" [disabled]="cart.length === 0" class="btn-submit">✅ Commander</button>
+  </div>
+  
+  <div class="toast" *ngIf="toastMessage" [ngClass]="toastType">
+    {{ toastMessage }}
+  </div>
+  <p *ngIf="cart.length === 0">Aucun élément dans le panier</p>
+  <p *ngIf="cart.length > 0">Le panier contient {{ cart.length }} élément(s)</p> 
+  </div>

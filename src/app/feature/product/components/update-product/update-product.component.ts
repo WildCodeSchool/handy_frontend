@@ -22,7 +22,7 @@ export class UpdateProductComponent {
   @Output() closeDetails = new EventEmitter<void>();
 
   isAdmin$ = this._userStore.hasRole$('ROLE_ADMIN');
-  // constructor(private _productService: ApiService) {}
+  
 
   updateProductDetails(): void {
     const updatedProduct = { ...this.product };
