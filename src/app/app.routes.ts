@@ -13,6 +13,8 @@ import { OrderCartComponent } from './feature/cart/components/order-cart/order-c
 import { CreateCartComponent } from './feature/cart/components/create-cart/create-cart.component';
 import { ProvidersListComponent } from './feature/provider/components/providers-list/providers-list.component';
 import { ProviderOneComponent } from './feature/provider/components/provider-one/provider-one.component';
+import { AvailabilityComponent } from './feature/availability/components/availability/availability.component';
+import { CalendarComponent } from './feature/calendar/calendar.component';
 
 export const routes: Routes = [
   {
@@ -26,6 +28,14 @@ export const routes: Routes = [
   {
     path: 'products',
     component: ProductPageComponent,
+  },
+  {
+    path: 'calendar',
+    component: CalendarComponent,
+  },
+  {
+    path: 'availability',
+    component: AvailabilityComponent,
   },
   {
     path: 'signup',

@@ -1,15 +1,3 @@
-<!-- <p>calendar works!</p>
-<div class="calendar">
-  <div class="calendar-header">
-    <button type="button" (click)="previousMonth()">&#10094;</button>
-    <h2>{{ monthName }} {{ currentDate.getFullYear() }}</h2>
-    <button type="button" (click)="nextMonth()">&#10095;</button>
-  </div>
 
-  <div class="calendar-days">
-    <div *ngFor="let day of daysOfWeek" class="calendar-day-header">{{ day }}</div>
-    <div *ngFor="let day of daysInMonth" class="calendar-day" [ngClass]="{ empty: day === null }">
-      <span *ngIf="day">{{ day }}</span>
-    </div>
-  </div>
-</div> -->
+<full-calendar [options]="calendarOptions"></full-calendar>
+

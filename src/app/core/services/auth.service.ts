@@ -33,6 +33,11 @@ export class AuthService {
     return this._http.post<boolean>(`${this._apiBaseUrl}/auth/register`, { email, password });
   }
 
+  public registerProvider$( email: string, password: string): Observable<boolean> {
+    return this._http.post<boolean>(`${this._apiBaseUrl}/auth/registerprovider`, {
+      email, password 
+    });
+  }
   public login$(email: string, password: string): Observable<string> {
     return this._http.post<{ token: string }>(`${this._apiBaseUrl}/auth/login`, { email, password }).pipe(
       tap(res => {
@@ -105,4 +110,10 @@ export class AuthService {
     }
     return [];
   }
+
+  getCurrentUserEmail(): string | null {
+    return this._userPayload ? this._userPayload.email : null; 
+  }
+ 
+  
 }

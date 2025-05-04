@@ -14,9 +14,12 @@ export class CreateUserComponent {
   formBuilder = inject(FormBuilder);
   authService = inject(AuthService);
   router = inject(Router);
+  
 
   MIN_PASSWORD_LENGTH = 12;
   MIN_USERNAME_LENGTH = 3;
+
+ 
 
   signUpForm = this.formBuilder.group({
     username: ['', [Validators.required, Validators.minLength(this.MIN_USERNAME_LENGTH)]],
@@ -30,6 +33,12 @@ export class CreateUserComponent {
       { validators: passwordMatchValidator() }
     ),
   });
+
+  selectedRole: 'client' | 'provider' = 'client';
+
+  selectRole(role: 'client' | 'provider'): void {
+    this.selectedRole = role;
+  }
   passwordMatchValidator(): ValidatorFn {
     return (formGroup: AbstractControl): ValidationErrors | null => {
       const password = formGroup.get('password')?.value;
@@ -37,13 +46,67 @@ export class CreateUserComponent {
       return password === confirmPassword ? null : { passwordsMismatch: true };
     };
   }
+  // onSubmit(): void {
+  //   if (this.signUpForm.valid) {
+  //     this.router.navigate(['/products']);
+  //   } else {
+  //     console.log('Formulaire invalide');
+  //   }
+  // }
+
   onSubmit(): void {
     if (this.signUpForm.valid) {
-      this.router.navigate(['/products']);
+      const email = this.signUpForm.get('email')?.value;
+      const password = this.signUpForm.get('passwords.password')?.value;
+  
+      if (email && password) {
+        
+        this.authService.register$(email, password).subscribe({
+          next: (success) => {
+            if (success) {
+              this.router.navigate(['/products']);
+            } else {
+              console.log('Échec de l\'inscription');
+            }
+          },
+          error: (err) => {
+            console.error('Erreur lors de l\'inscription :', err);
+          }
+        });
+      } else {
+        console.log('Email ou mot de passe invalide');
+      }
     } else {
       console.log('Formulaire invalide');
     }
   }
+  onSubmitProvider(): void {
+    if (this.signUpForm.valid) {
+      const email = this.signUpForm.get('email')?.value;
+      const password = this.signUpForm.get('passwords.password')?.value;
+  
+      if (email && password) {
+        
+        this.authService.registerProvider$(email, password).subscribe({
+          next: (success) => {
+            if (success) {
+              this.router.navigate(['/products']);
+            } else {
+              console.log('Échec de l\'inscription');
+            }
+          },
+          error: (err) => {
+            console.error('Erreur lors de l\'inscription :', err);
+          }
+        });
+      } else {
+        console.log('Email ou mot de passe invalide');
+      }
+    } else {
+      console.log('Formulaire invalide');
+    }
+  }
+
 
   securePasswordValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
