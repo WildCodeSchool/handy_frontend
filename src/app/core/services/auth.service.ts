@@ -33,9 +33,10 @@ export class AuthService {
     return this._http.post<boolean>(`${this._apiBaseUrl}/auth/register`, { email, password });
   }
 
-  public registerProvider$( email: string, password: string): Observable<boolean> {
+  public registerProvider$(email: string, password: string): Observable<boolean> {
     return this._http.post<boolean>(`${this._apiBaseUrl}/auth/registerprovider`, {
-      email, password 
+      email,
+      password,
     });
   }
   public login$(email: string, password: string): Observable<string> {
@@ -112,8 +113,6 @@ export class AuthService {
   }
 
   getCurrentUserEmail(): string | null {
-    return this._userPayload ? this._userPayload.email : null; 
+    return this._userPayload ? this._userPayload.email : null;
   }
- 
-  
 }

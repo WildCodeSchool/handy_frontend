@@ -4,9 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { AvailabilityService } from '../availability/services/availability.service';
 import { CalendarOptions } from '@fullcalendar/core';
-import dayGridPlugin from '@fullcalendar/daygrid'; 
-import interactionPlugin from '@fullcalendar/interaction'
-
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
 
 @Component({
   selector: 'app-calendar',
@@ -22,24 +21,28 @@ export class CalendarComponent implements OnInit {
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
-      right: 'dayGridMonth,dayGridWeek'
+      right: 'dayGridMonth,dayGridWeek',
     },
     plugins: [dayGridPlugin, interactionPlugin],
-    
   };
 
   constructor(private _availabilityService: AvailabilityService) {}
 
   ngOnInit(): void {
     this._availabilityService.getMyAvailability().subscribe({
-      next: (data) => {
-        this.calendarOptions.events = [{
-          title: data.userEmail,
-          start: data.startTime,
-          end: data.endTime
-        }];
+      next: data => {
+        this.calendarOptions.events = [
+          {
+            title: data.userEmail,
+            start: data.startTime,
+            end: data.endTime,
+          },
+        ];
       },
-      error: (err) => console.error('Erreur chargement disponibilité', err)
+      error: err => console.error('Erreur chargement disponibilité', err),
     });
   }
+
+ 
 }
+

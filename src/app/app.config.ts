@@ -6,5 +6,5 @@ import { provideHttpClient } from '@angular/common/http';
 import { FullCalendarModule } from '@fullcalendar/angular';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideHttpClient(),FullCalendarModule],
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideHttpClient(), FullCalendarModule],
 };

@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './availability.component.html',
-  styleUrl: './availability.component.scss'
+  styleUrl: './availability.component.scss',
 })
 export class AvailabilityComponent implements OnInit {
   availability: any;
@@ -16,8 +16,8 @@ export class AvailabilityComponent implements OnInit {
 
   ngOnInit(): void {
     this._availabilityService.getMyAvailability().subscribe({
-      next: (data) => this.availability = data,
-      error: (err) => console.error('Erreur:', err)
+      next: data => (this.availability = data),
+      error: err => console.error('Erreur:', err),
     });
   }
 }

@@ -14,12 +14,9 @@ export class CreateUserComponent {
   formBuilder = inject(FormBuilder);
   authService = inject(AuthService);
   router = inject(Router);
-  
 
   MIN_PASSWORD_LENGTH = 12;
   MIN_USERNAME_LENGTH = 3;
-
- 
 
   signUpForm = this.formBuilder.group({
     username: ['', [Validators.required, Validators.minLength(this.MIN_USERNAME_LENGTH)]],
@@ -58,20 +55,19 @@ export class CreateUserComponent {
     if (this.signUpForm.valid) {
       const email = this.signUpForm.get('email')?.value;
       const password = this.signUpForm.get('passwords.password')?.value;
-  
+
       if (email && password) {
-        
         this.authService.register$(email, password).subscribe({
-          next: (success) => {
+          next: success => {
             if (success) {
               this.router.navigate(['/products']);
             } else {
-              console.log('Échec de l\'inscription');
+              console.log("Échec de l'inscription");
             }
           },
-          error: (err) => {
-            console.error('Erreur lors de l\'inscription :', err);
-          }
+          error: err => {
+            console.error("Erreur lors de l'inscription :", err);
+          },
         });
       } else {
         console.log('Email ou mot de passe invalide');
@@ -84,20 +80,19 @@ export class CreateUserComponent {
     if (this.signUpForm.valid) {
       const email = this.signUpForm.get('email')?.value;
       const password = this.signUpForm.get('passwords.password')?.value;
-  
+
       if (email && password) {
-        
         this.authService.registerProvider$(email, password).subscribe({
-          next: (success) => {
+          next: success => {
             if (success) {
               this.router.navigate(['/products']);
             } else {
-              console.log('Échec de l\'inscription');
+              console.log("Échec de l'inscription");
             }
           },
-          error: (err) => {
-            console.error('Erreur lors de l\'inscription :', err);
-          }
+          error: err => {
+            console.error("Erreur lors de l'inscription :", err);
+          },
         });
       } else {
         console.log('Email ou mot de passe invalide');
@@ -106,7 +101,6 @@ export class CreateUserComponent {
       console.log('Formulaire invalide');
     }
   }
-
 
   securePasswordValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {

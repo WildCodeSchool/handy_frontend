@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { AppProvider } from 'src/app/feature/product/models/provider';
 import { CommonModule } from '@angular/common';
 
+
 export type ProviderWithServicesDTO = {
   providerId: number;
   firstName: string;
@@ -26,11 +27,13 @@ export class OrderCartComponent implements OnInit {
 
   selectedProvider: AppProvider[] = [];
   isSelectedServicesVisible = true;
+  
 
   constructor(
     private _http: HttpClient,
-    private _cartService: CartService
+    private _cartService: CartService,
   ) {}
+
 
   ngOnInit(): void {
     this._cartService.getProvidersWithServices().subscribe({
@@ -39,6 +42,7 @@ export class OrderCartComponent implements OnInit {
           ...provider,
           services: provider.services || [],
         }));
+        
       },
       error: err => {
         console.error('Erreur lors de la récupération des éléments:', err);
@@ -87,4 +91,6 @@ export class OrderCartComponent implements OnInit {
   closeSelectedServices(): void {
     this.isSelectedServicesVisible = false;
   }
+
+ 
 }
