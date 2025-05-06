@@ -36,13 +36,11 @@ export class CalendarComponent implements OnInit {
             title: data.userEmail,
             start: data.startTime,
             end: data.endTime,
+            color: data.status === 'booked' ? 'red' : 'green',
           },
         ];
       },
       error: err => console.error('Erreur chargement disponibilité', err),
     });
   }
-
- 
 }
-

@@ -25,4 +25,11 @@ export class AvailabilityService {
   getAvailabilityByProviderId(userId: number): Observable<Availability[]> {
     return this._http.get<Availability[]>(`http://localhost:8080/availabilities/user/${userId}`);
   }
+
+  updateAvailability(availability: Availability): Observable<any> {
+    return this._http.put(
+      `http://localhost:8080/availabilities/${availability.id}`,
+      availability
+    );
+  }
 }

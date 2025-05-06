@@ -6,11 +6,12 @@ import { ProviderWithServicesDTO } from '../order-cart/order-cart.component';
 import { AppProvider } from 'src/app/feature/product/models/provider';
 import { Availability } from 'src/app/feature/availability/models/Availability';
 import { AvailabilityService } from 'src/app/feature/availability/services/availability.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-create-cart',
   standalone: true,
-  imports: [NgClass, CommonModule],
+  imports: [NgClass, CommonModule, FormsModule],
   templateUrl: './create-cart.component.html',
   styleUrl: './create-cart.component.scss',
 })
@@ -22,46 +23,22 @@ export class CreateCartComponent implements OnInit {
   providerAvailabilities: Record<number, Availability[]> = {};
   selectedSlots: Record<number, Availability> = {};
   providerMap: Record<number, ProviderWithServicesDTO> = {};
-serviceMap: Record<string, AppProvider> = {};
+  serviceMap: Record<string, AppProvider> = {};
 
-
-  constructor(private _cartService: CartService,
+  constructor(
+    private _cartService: CartService,
     private _availabilityService: AvailabilityService
-
   ) {}
-
-  // ngOnInit(): void {
-  //   this._cartService.getProvidersWithServices().subscribe({
-  //     next: data => {
-  //       this.providersWithServices = data.map(provider => ({
-  //         ...provider,
-  //         services: provider.services || [],
-  //       }));
-  //       this.providersWithServices.forEach(provider => {
-  //         this.loadAvailabilityForProvider(provider.providerId);
-  //       });
-  //     },
-  //     error: err => {
-  //       console.error('Erreur lors de la récupération des providers:', err);
-  //     },
-  //   });
-
-  //   this._cartService.cart$.subscribe(cart => {
-  //     this.cart = cart;
-  //   });
-  // }
 
   ngOnInit(): void {
     this._cartService.getProvidersWithServices().subscribe({
       next: data => {
         this.providersWithServices = data.map(p => ({ ...p, services: p.services || [] }));
-        this.providerMap = Object.fromEntries(
-          this.providersWithServices.map(p => [p.providerId, p])
-        );
-  
+        this.providerMap = Object.fromEntries(this.providersWithServices.map(p => [p.providerId, p]));
+
         this._cartService.cart$.subscribe(cart => {
           this.cart = cart;
-  
+
           cart.forEach(item => {
             const provider = this.providerMap[item.userId];
             const service = provider?.services.find(s => s.id === item.provisionId);
@@ -69,7 +46,7 @@ serviceMap: Record<string, AppProvider> = {};
               this.serviceMap[`${item.userId}_${item.provisionId}`] = service;
             }
           });
-  
+
           const uniqueUserIds = [...new Set(cart.map(item => item.userId))];
           uniqueUserIds.forEach(providerId => {
             this.loadAvailabilityForProvider(providerId);
@@ -79,7 +56,7 @@ serviceMap: Record<string, AppProvider> = {};
       error: err => console.error('Erreur lors de la récupération des providers:', err),
     });
   }
-  
+
   showToast(message: string, type: 'success' | 'error'): void {
     this.toastMessage = message;
     this.toastType = type;
@@ -134,25 +111,68 @@ serviceMap: Record<string, AppProvider> = {};
   
     this._availabilityService.getAvailabilityByProviderId(userId).subscribe({
       next: availabilities => {
-        console.log('Dispos chargées pour', userId, availabilities);
-        this.providerAvailabilities[userId] = availabilities;
+        const availableSlots = availabilities.filter(slot => slot.status === 'available');
+        console.log('Dispos disponibles pour', userId, availableSlots);
+        this.providerAvailabilities[userId] = availableSlots;
       },
       error: err => {
         console.error(`Erreur en récupérant les disponibilités du provider ${userId}`, err);
-      }
+      },
     });
   }
-  onSelectAvailability(userId: number, event: Event): void {
-    const selectElement = event.target as HTMLSelectElement;
-    const slotId = Number(selectElement.value);
-    const availabilities = this.providerAvailabilities[userId];
-    const selected = availabilities.find(slot => slot.id === slotId);
-    if (selected) {
-      this.selectedSlots[userId] = selected;
+  onSelectAvailability(userId: number): void {
+    const selected = this.selectedSlots[userId];
+  
+    if (!selected) {
+      return;
     }
-  }
-  trackByProvisionId(index: number, item: ProvisionCartItem): number {
+    const updatedAvailability: Availability = {
+      ...selected,
+      status: 'booked',
+    };
+  
+    this._availabilityService.updateAvailability(updatedAvailability).subscribe({
+      next: () => {
+        selected.status = 'booked';
+        this.providerAvailabilities[userId] = this.providerAvailabilities[userId].filter(a => a.status === 'available');
+        delete this.selectedSlots[userId];  
+      },
+      error: err => {
+        console.error('Erreur lors de la mise à jour', err);
+      },
+    });
+  
+  
+  
+  }  trackByProvisionId(index: number, item: ProvisionCartItem): number {
     return item.provisionId;
   }
- 
+
+  confirmAvailability(userId: number): void {
+    const selected = this.selectedSlots[userId];
+    if (!selected) return;
+  
+    const updatedAvailability: Availability = {
+      ...selected,
+      status: 'booked',
+    };
+  
+    this._availabilityService.updateAvailability(updatedAvailability).subscribe({
+      next: () => {
+        selected.status = 'booked';
+  
+        this.providerAvailabilities[userId] = this.providerAvailabilities[userId].filter(
+          a => a.status === 'available'
+        );
+  
+        delete this.selectedSlots[userId];
+  
+        this.showToast('Créneau réservé avec succès ✅', 'success');
+      },
+      error: err => {
+        console.error('Erreur lors de la mise à jour de la disponibilité', err);
+        this.showToast('Erreur lors de la réservation ❌', 'error');
+      },
+    });
+  }
 }
