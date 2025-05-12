@@ -7,6 +7,7 @@ import { AppProvider } from 'src/app/feature/product/models/provider';
 import { Availability } from 'src/app/feature/availability/models/Availability';
 import { AvailabilityService } from 'src/app/feature/availability/services/availability.service';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-create-cart',
@@ -19,18 +20,19 @@ export class CreateCartComponent implements OnInit {
   cart: ProvisionCartItem[] = [];
   toastMessage: string = '';
   toastType: 'success' | 'error' | '' = '';
+  emailClient: string = '';
   providersWithServices: ProviderWithServicesDTO[] = [];
   providerAvailabilities: Record<number, Availability[]> = {};
-  selectedSlots: Record<number, Availability> = {};
+  selectedSlots: Record<string, Availability> = {};
+  confirmedSlots: Record<string, boolean> = {};
+
   providerMap: Record<number, ProviderWithServicesDTO> = {};
   serviceMap: Record<string, AppProvider> = {};
 
-  constructor(
-    private _cartService: CartService,
-    private _availabilityService: AvailabilityService
-  ) {}
+  constructor(private _cartService: CartService, private _availabilityService: AvailabilityService, private _authService: AuthService) {}
 
   ngOnInit(): void {
+    this.emailClient = this._authService.getCurrentUserEmail()!;
     this._cartService.getProvidersWithServices().subscribe({
       next: data => {
         this.providersWithServices = data.map(p => ({ ...p, services: p.services || [] }));
@@ -53,7 +55,6 @@ export class CreateCartComponent implements OnInit {
           });
         });
       },
-      error: err => console.error('Erreur lors de la récupération des providers:', err),
     });
   }
 
@@ -76,14 +77,13 @@ export class CreateCartComponent implements OnInit {
 
   submitCart(): void {
     this._cartService.submitCart().subscribe({
-      next: response => {
-        console.log('Commande envoyée avec succès ✅', response);
-        alert('Commande envoyée !');
+      next: () => {
+        
         this.clearCart();
+        this.showToast('Commande envoyée avec succès ✅', 'success');
       },
-      error: error => {
-        console.error('Erreur lors de la commande ❌', error);
-        alert('Une erreur est survenue');
+      error: () => {
+        this.showToast('Une erreur est survenue ❌', 'error');
       },
     });
   }
@@ -108,71 +108,72 @@ export class CreateCartComponent implements OnInit {
     if (this.providerAvailabilities[userId]) {
       return;
     }
-  
+
     this._availabilityService.getAvailabilityByProviderId(userId).subscribe({
       next: availabilities => {
         const availableSlots = availabilities.filter(slot => slot.status === 'available');
-        console.log('Dispos disponibles pour', userId, availableSlots);
-        this.providerAvailabilities[userId] = availableSlots;
-      },
-      error: err => {
-        console.error(`Erreur en récupérant les disponibilités du provider ${userId}`, err);
-      },
+        
+      this.providerAvailabilities[userId] = availableSlots;
+
+      const bookedSlots = availabilities.filter(slot => slot.status === 'booked');
+      bookedSlots.forEach(slot => {
+        console.log(`Créneau réservé par : ${slot.bookedByEmail}`);
+      });
+    },
     });
   }
   onSelectAvailability(userId: number): void {
     const selected = this.selectedSlots[userId];
-  
+
     if (!selected) {
       return;
     }
     const updatedAvailability: Availability = {
       ...selected,
       status: 'booked',
+      bookedByEmail: this.emailClient,
+      
     };
-  
+
     this._availabilityService.updateAvailability(updatedAvailability).subscribe({
       next: () => {
         selected.status = 'booked';
         this.providerAvailabilities[userId] = this.providerAvailabilities[userId].filter(a => a.status === 'available');
-        delete this.selectedSlots[userId];  
-      },
-      error: err => {
-        console.error('Erreur lors de la mise à jour', err);
+        delete this.selectedSlots[userId];
       },
     });
-  
-  
-  
-  }  trackByProvisionId(index: number, item: ProvisionCartItem): number {
+  }
+  trackByProvisionId(index: number, item: ProvisionCartItem): number {
     return item.provisionId;
   }
 
-  confirmAvailability(userId: number): void {
-    const selected = this.selectedSlots[userId];
+  confirmAvailability(userId: number, provisionId: number): void {
+    const key = `${userId}_${provisionId}`;
+    const selected = this.selectedSlots[key];
     if (!selected) return;
-  
+
     const updatedAvailability: Availability = {
       ...selected,
       status: 'booked',
     };
-  
+
     this._availabilityService.updateAvailability(updatedAvailability).subscribe({
       next: () => {
         selected.status = 'booked';
-  
-        this.providerAvailabilities[userId] = this.providerAvailabilities[userId].filter(
-          a => a.status === 'available'
-        );
-  
-        delete this.selectedSlots[userId];
-  
-        this.showToast('Créneau réservé avec succès ✅', 'success');
+
+        this.providerAvailabilities[userId] = this.providerAvailabilities[userId].filter(a => a.status === 'available');
+        this.confirmedSlots[key] = true;
+      this.showToast('Créneau réservé avec succès ✅', 'success');
       },
-      error: err => {
-        console.error('Erreur lors de la mise à jour de la disponibilité', err);
+      error: () => {
         this.showToast('Erreur lors de la réservation ❌', 'error');
       },
+    });
+  }
+  allSlotsConfirmed(): boolean {
+    return this.cart.every(item => {
+      const key = `${item.userId}_${item.provisionId}`;
+      return this.confirmedSlots[key];
     });
   }
 }

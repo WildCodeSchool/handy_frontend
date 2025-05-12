@@ -112,7 +112,7 @@ export class AuthService {
     return [];
   }
 
-  getCurrentUserEmail(): string | null {
+  getCurrentUserEmail(): string {
     return this._userPayload ? this._userPayload.email : null;
   }
 }

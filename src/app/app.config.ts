@@ -4,7 +4,9 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideToastr} from 'ngx-toastr';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideHttpClient(), FullCalendarModule],
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideHttpClient(), FullCalendarModule, provideAnimations(), provideToastr() ],
 };

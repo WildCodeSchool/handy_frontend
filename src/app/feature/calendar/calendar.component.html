@@ -1,1 +1,7 @@
+<div class="custom-toast-container">
+    <div *ngFor="let toast of toastMessages; let i = index" class="toast-message">
+        <span>{{ toast.message }}</span>
+        <button type="button"(click)="removeToast(i)" class="close-btn">✖</button>
+      </div>
+  </div>
 <full-calendar [options]="calendarOptions"></full-calendar>

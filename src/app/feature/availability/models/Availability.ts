@@ -4,4 +4,5 @@ export type Availability = {
   endTime: string;
   userEmail: string;
   status: 'available' | 'booked';
+  bookedByEmail?: string;
 };
