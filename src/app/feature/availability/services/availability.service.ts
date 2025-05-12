@@ -30,16 +30,27 @@ export class AvailabilityService {
   //   return this._http.put(`http://localhost:8080/availabilities/${availability.id}`, availability);
   // }
   updateAvailability(availability: Availability): Observable<any> {
-    const token = localStorage.getItem('token'); 
-  
+    const token = localStorage.getItem('token');
+
     const headers = {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     };
-  
-    return this._http.put(
-      `http://localhost:8080/availabilities/${availability.id}`,
-      availability,
-      { headers }
-    );
+
+    return this._http.put(`http://localhost:8080/availabilities/${availability.id}`, availability, { headers });
   }
+
+  createMyAvailability(startTime: string, endTime: string): Observable<any> {
+    const token = localStorage.getItem('token');
+  
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+  
+    return this._http.post('http://localhost:8080/availabilities/me', {
+      startTime,
+      endTime
+    }, { headers });
+  }
+  
 }

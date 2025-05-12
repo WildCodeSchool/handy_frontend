@@ -29,7 +29,11 @@ export class CreateCartComponent implements OnInit {
   providerMap: Record<number, ProviderWithServicesDTO> = {};
   serviceMap: Record<string, AppProvider> = {};
 
-  constructor(private _cartService: CartService, private _availabilityService: AvailabilityService, private _authService: AuthService) {}
+  constructor(
+    private _cartService: CartService,
+    private _availabilityService: AvailabilityService,
+    private _authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.emailClient = this._authService.getCurrentUserEmail()!;
@@ -78,7 +82,6 @@ export class CreateCartComponent implements OnInit {
   submitCart(): void {
     this._cartService.submitCart().subscribe({
       next: () => {
-        
         this.clearCart();
         this.showToast('Commande envoyée avec succès ✅', 'success');
       },
@@ -112,14 +115,14 @@ export class CreateCartComponent implements OnInit {
     this._availabilityService.getAvailabilityByProviderId(userId).subscribe({
       next: availabilities => {
         const availableSlots = availabilities.filter(slot => slot.status === 'available');
-        
-      this.providerAvailabilities[userId] = availableSlots;
 
-      const bookedSlots = availabilities.filter(slot => slot.status === 'booked');
-      bookedSlots.forEach(slot => {
-        console.log(`Créneau réservé par : ${slot.bookedByEmail}`);
-      });
-    },
+        this.providerAvailabilities[userId] = availableSlots;
+
+        const bookedSlots = availabilities.filter(slot => slot.status === 'booked');
+        bookedSlots.forEach(slot => {
+          console.log(`Créneau réservé par : ${slot.bookedByEmail}`);
+        });
+      },
     });
   }
   onSelectAvailability(userId: number): void {
@@ -132,7 +135,6 @@ export class CreateCartComponent implements OnInit {
       ...selected,
       status: 'booked',
       bookedByEmail: this.emailClient,
-      
     };
 
     this._availabilityService.updateAvailability(updatedAvailability).subscribe({
@@ -163,7 +165,7 @@ export class CreateCartComponent implements OnInit {
 
         this.providerAvailabilities[userId] = this.providerAvailabilities[userId].filter(a => a.status === 'available');
         this.confirmedSlots[key] = true;
-      this.showToast('Créneau réservé avec succès ✅', 'success');
+        this.showToast('Créneau réservé avec succès ✅', 'success');
       },
       error: () => {
         this.showToast('Erreur lors de la réservation ❌', 'error');

@@ -1,16 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { AvailabilityService } from '../../services/availability.service';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-availability',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './availability.component.html',
   styleUrl: './availability.component.scss',
 })
 export class AvailabilityComponent implements OnInit {
   availability: any;
+  newStartTime: string = '';
+  newEndTime: string = '';
 
   constructor(private _availabilityService: AvailabilityService) {}
 
@@ -18,6 +21,21 @@ export class AvailabilityComponent implements OnInit {
     this._availabilityService.getMyAvailability().subscribe({
       next: data => (this.availability = data),
       error: err => console.error('Erreur:', err),
+    });
+  }
+  createAvailability(): void {
+    if (!this.newStartTime || !this.newEndTime) return;
+
+    this._availabilityService.createMyAvailability(this.newStartTime, this.newEndTime).subscribe({
+      next: () => {
+        this.newStartTime = '';
+        this.newEndTime = '';
+        this._availabilityService.getMyAvailability().subscribe({
+          next: data => (this.availability = data),
+          error: err => console.error('Erreur:', err),
+        });
+      },
+      error: err => console.error('Erreur lors de la création:', err),
     });
   }
 }

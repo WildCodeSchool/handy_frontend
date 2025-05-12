@@ -17,7 +17,7 @@
           [(ngModel)]="selectedSlots[item.userId + '_' + item.provisionId]"
           [disabled]="confirmedSlots[item.userId + '_' + item.provisionId]">
           <option [ngValue]="null">-- Choisir un créneau --</option>
-          <option *ngFor="let slot of slots" [ngValue]="slot">{{ slot.startTime | date : 'short' }} - {{ slot.endTime | date : 'short' }}</option>
+          <option *ngFor="let slot of slots" [ngValue]="slot">{{ slot.startTime | date: 'short' }} - {{ slot.endTime | date: 'short' }}</option>
         </select>
 
         <button
