@@ -12,7 +12,6 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
         router.navigate(['/login']);
       }
 
-
       return throwError(() => err);
     })
   );

@@ -29,10 +29,9 @@ export class CalendarComponent implements OnInit {
   };
   newBookedCount: number = 0;
   bookedIdsSeen: Set<number> = new Set<number>();
-  toastMessages: { id: number, message: string; type: 'info' | 'success' | 'error' }[] = [];
+  toastMessages: { id: number; message: string; type: 'info' | 'success' | 'error' }[] = [];
 
   dismissedToastIds: Set<number> = new Set<number>();
-
 
   constructor(
     private _availabilityService: AvailabilityService,
@@ -50,15 +49,11 @@ export class CalendarComponent implements OnInit {
       next: data => {
         const availableSlots = Array.isArray(data) ? data.filter(a => a.status === 'available') : [];
         const bookedSlots = Array.isArray(data) ? data.filter(a => a.status === 'booked') : [];
-  
+
         bookedSlots.forEach(slot => {
-          if (
-            slot.id !== undefined &&
-            !this.bookedIdsSeen.has(slot.id) &&
-            !this.dismissedToastIds.has(slot.id) 
-          ) {
+          if (slot.id !== undefined && !this.bookedIdsSeen.has(slot.id) && !this.dismissedToastIds.has(slot.id)) {
             this.bookedIdsSeen.add(slot.id);
-  
+
             const message = `Un créneau du ${new Date(slot.startTime).toLocaleString()} a été réservé`;
             this.toastMessages.push({ id: slot.id, message, type: 'info' });
           }
@@ -80,7 +75,7 @@ export class CalendarComponent implements OnInit {
       },
     });
   }
-  
+
   removeToast(index: number): void {
     const dismissedToast = this.toastMessages[index];
     if (dismissedToast?.id !== undefined) {

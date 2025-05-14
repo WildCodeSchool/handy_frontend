@@ -1,4 +1,4 @@
-import { HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Availability } from '../models/Availability';
@@ -9,7 +9,7 @@ import { Availability } from '../models/Availability';
 export class AvailabilityService {
   private _baseUrl = 'http://localhost:8080/availabilities';
 
-constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient) {}
 
   getMyAvailability(): Observable<Availability[]> {
     return this._http.get<Availability[]>(`${this._baseUrl}/me`);
