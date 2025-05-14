@@ -40,9 +40,6 @@ export class OrderCartComponent implements OnInit {
           services: provider.services || [],
         }));
       },
-      error: err => {
-        console.error('Erreur lors de la récupération des éléments:', err);
-      },
     });
 
     this._cartService.cart$.subscribe(cart => {

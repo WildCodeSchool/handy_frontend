@@ -40,10 +40,14 @@
   <div class="cart-actions">
     <button type="submit" (click)="clearCart()" class="btn-clear">🗑 Vider le panier</button>
     <button type="submit" (click)="submitCart()" [disabled]="cart.length === 0 || !allSlotsConfirmed()" class="btn-submit">✅ Commander</button>
+    <div *ngIf="orderNumber" class="order-info">
+      Numéro de commande : <strong>{{ orderNumber }}</strong>
+    </div>
   </div>
 
   <div class="toast" *ngIf="toastMessage" [ngClass]="toastType">{{ toastMessage }}</div>
 
   <p *ngIf="cart.length === 0">Aucun élément dans le panier</p>
   <p *ngIf="cart.length > 0">Le panier contient {{ cart.length }} élément(s)</p>
+
 </div>

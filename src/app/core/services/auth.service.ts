@@ -34,7 +34,7 @@ export class AuthService {
   }
 
   public registerProvider$(email: string, password: string): Observable<boolean> {
-    return this._http.post<boolean>(`${this._apiBaseUrl}/auth/registerprovider`, {
+    return this._http.post<boolean>(`${this._apiBaseUrl}/auth/register/provider`, {
       email,
       password,
     });
@@ -56,7 +56,7 @@ export class AuthService {
         } else if (roles.includes('ROLE_ADMIN')) {
           this._router.navigate(['/admin']);
         } else {
-          this._router.navigate(['/']);
+          this._router.navigate(['/client']);
         }
       }),
       map(res => res.token)

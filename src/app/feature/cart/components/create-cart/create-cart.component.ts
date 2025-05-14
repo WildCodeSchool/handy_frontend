@@ -25,6 +25,8 @@ export class CreateCartComponent implements OnInit {
   providerAvailabilities: Record<number, Availability[]> = {};
   selectedSlots: Record<string, Availability> = {};
   confirmedSlots: Record<string, boolean> = {};
+  orderNumber: string | null = null;
+
 
   providerMap: Record<number, ProviderWithServicesDTO> = {};
   serviceMap: Record<string, AppProvider> = {};
@@ -32,7 +34,7 @@ export class CreateCartComponent implements OnInit {
   constructor(
     private _cartService: CartService,
     private _availabilityService: AvailabilityService,
-    private _authService: AuthService
+    private _authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -81,9 +83,11 @@ export class CreateCartComponent implements OnInit {
 
   submitCart(): void {
     this._cartService.submitCart().subscribe({
-      next: () => {
+        next: (order) => {
+          console.log('Réponse de commande:', order);
+          this.orderNumber = order.orderNumber;
         this.clearCart();
-        this.showToast('Commande envoyée avec succès ✅', 'success');
+        this.showToast(`Commande envoyée avec succès ✅ (N°: ${this.orderNumber})`, 'success');
       },
       error: () => {
         this.showToast('Une erreur est survenue ❌', 'error');

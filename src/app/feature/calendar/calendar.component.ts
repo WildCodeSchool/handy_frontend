@@ -29,38 +29,38 @@ export class CalendarComponent implements OnInit {
   };
   newBookedCount: number = 0;
   bookedIdsSeen: Set<number> = new Set<number>();
-  toastMessages: { message: string; type: 'info' | 'success' | 'error' }[] = [];
+  toastMessages: { id: number, message: string; type: 'info' | 'success' | 'error' }[] = [];
+
+  dismissedToastIds: Set<number> = new Set<number>();
+
 
   constructor(
     private _availabilityService: AvailabilityService,
     private _toastr: ToastrService
   ) {}
   ngOnInit(): void {
+    const savedDismissed = localStorage.getItem('dismissedToastIds');
+    if (savedDismissed) {
+      this.dismissedToastIds = new Set<number>(JSON.parse(savedDismissed));
+    }
     this.checkBookedSlots();
   }
-
   checkBookedSlots(): void {
     this._availabilityService.getMyAvailability().subscribe({
       next: data => {
         const availableSlots = Array.isArray(data) ? data.filter(a => a.status === 'available') : [];
         const bookedSlots = Array.isArray(data) ? data.filter(a => a.status === 'booked') : [];
-
-        // bookedSlots.forEach(slot => {
-        //   if (slot.id !== undefined && !this.bookedIdsSeen.has(slot.id)) {
-        //     this.bookedIdsSeen.add(slot.id);
-        //     this._toastr.info(
-        //       `Un créneau du ${new Date(slot.startTime).toLocaleString()} a été réservé`,
-        //       '📅 Nouvelle réservation'
-        //     );
-        //   }
-        // });
+  
         bookedSlots.forEach(slot => {
-          if (slot.id !== undefined && !this.bookedIdsSeen.has(slot.id)) {
+          if (
+            slot.id !== undefined &&
+            !this.bookedIdsSeen.has(slot.id) &&
+            !this.dismissedToastIds.has(slot.id) 
+          ) {
             this.bookedIdsSeen.add(slot.id);
-
+  
             const message = `Un créneau du ${new Date(slot.startTime).toLocaleString()} a été réservé`;
-
-            this.toastMessages.push({ message, type: 'info' });
+            this.toastMessages.push({ id: slot.id, message, type: 'info' });
           }
         });
         this.calendarOptions.events = [
@@ -80,7 +80,16 @@ export class CalendarComponent implements OnInit {
       },
     });
   }
+  
   removeToast(index: number): void {
+    const dismissedToast = this.toastMessages[index];
+    if (dismissedToast?.id !== undefined) {
+      this.dismissedToastIds.add(dismissedToast.id);
+      localStorage.setItem('dismissedToastIds', JSON.stringify([...this.dismissedToastIds]));
+    }
     this.toastMessages.splice(index, 1);
+  }
+  getVisibleToasts(): { id: number; message: string; type: 'info' | 'success' | 'error' }[] {
+    return this.toastMessages.filter(toast => !this.dismissedToastIds.has(toast.id));
   }
 }

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Availability } from '../models/Availability';
@@ -7,50 +7,23 @@ import { Availability } from '../models/Availability';
   providedIn: 'root',
 })
 export class AvailabilityService {
-  private _baseUrl = 'http://localhost:8080/availabilities/me';
+  private _baseUrl = 'http://localhost:8080/availabilities';
 
-  constructor(private _http: HttpClient) {}
+constructor(private _http: HttpClient) {}
 
   getMyAvailability(): Observable<Availability[]> {
-    const token = localStorage.getItem('token');
-
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    });
-
-    return this._http.get<Availability[]>(this._baseUrl, { headers });
+    return this._http.get<Availability[]>(`${this._baseUrl}/me`);
   }
 
   getAvailabilityByProviderId(userId: number): Observable<Availability[]> {
-    return this._http.get<Availability[]>(`http://localhost:8080/availabilities/user/${userId}`);
+    return this._http.get<Availability[]>(`${this._baseUrl}/user/${userId}`);
   }
 
-  // updateAvailability(availability: Availability): Observable<any> {
-  //   return this._http.put(`http://localhost:8080/availabilities/${availability.id}`, availability);
-  // }
   updateAvailability(availability: Availability): Observable<any> {
-    const token = localStorage.getItem('token');
-
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-
-    return this._http.put(`http://localhost:8080/availabilities/${availability.id}`, availability, { headers });
+    return this._http.put(`${this._baseUrl}/${availability.id}`, availability);
   }
 
   createMyAvailability(startTime: string, endTime: string): Observable<any> {
-    const token = localStorage.getItem('token');
-  
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    });
-  
-    return this._http.post('http://localhost:8080/availabilities/me', {
-      startTime,
-      endTime
-    }, { headers });
+    return this._http.post(`${this._baseUrl}/me`, { startTime, endTime });
   }
-  
 }
