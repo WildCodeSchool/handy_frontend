@@ -2,7 +2,7 @@
   <h2 class="text-center mb-4">Nos Services</h2>
   <div class="row">
     @for (product of products$ | async; track product.id) {
-      <div class="col-md-4 mb-4">
+      <div class="col-md-4 col-lg-4 mb-4">
         <div class="card h-100 shadow-sm border-0">
           <div class="text-center p-3"></div>
           <div class="card-body text-center">
@@ -29,9 +29,6 @@
 
     @if (selectedItem) {
       <app-product [product]="selectedItem" (closeDetails)="CloseDetails()"></app-product>
-      <!-- <app-update-product [product]="selectedItem" (closeDetails)="CloseDetails()"></app-update-product> -->
-      <!-- <app-delete-product [product]="selectedItem" (productDeleted)="onDeleteProduct($event)"></app-delete-product> -->
-      <!-- <app-create-product (productCreated)="onCreateProduct($event)"></app-create-product> -->
     }
   </div>
 </div>

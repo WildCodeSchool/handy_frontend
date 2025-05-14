@@ -3,6 +3,7 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
 import { AppProvider } from '../../models/provider';
+import { UserStoreService } from 'src/app/core/services/user-store.service';
 
 @Component({
   selector: 'app-update-product',
@@ -15,15 +16,12 @@ export class UpdateProductComponent {
   successMessageUpdate: string | null = null;
 
   _productService: ApiService = inject(ApiService);
+  private _userStore = inject(UserStoreService);
+
   @Input() product!: AppProvider;
   @Output() closeDetails = new EventEmitter<void>();
 
-  // isAdmin = this.checkAdminRole();
-  // constructor(private _productService: ApiService) {}
-
-  checkAdminRole(): boolean {
-    return localStorage.getItem('userRole') === 'admin';
-  }
+  isAdmin$ = this._userStore.hasRole$('ROLE_ADMIN');
 
   updateProductDetails(): void {
     const updatedProduct = { ...this.product };

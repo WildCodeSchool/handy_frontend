@@ -1,67 +1,95 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { AvailabilityService } from '../availability/services/availability.service';
+import { CalendarOptions } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import { ToastrService } from 'ngx-toastr';
+import { AvailabilityComponent } from '../availability/components/availability/availability.component';
 
 @Component({
   selector: 'app-calendar',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, FullCalendarModule, AvailabilityComponent],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.scss',
 })
-export class CalendarComponent {
-  // export class CalendarComponent implements OnInit {
-  // currentDate: Date = new Date();
-  // daysOfWeek: string[] = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
-  // daysInMonth: number[] = [];
-  // monthName: string = '';
-  //   constructor() { }
-  // ngOnInit(): void {
-  //   this.updateCalendar(this.currentDate);
-  // }
-  // // Met à jour le calendrier pour le mois de la date donnée
-  // updateCalendar(date: Date): void {
-  //   this.currentDate = date;
-  //   // Nom du mois
-  //   const months: string[] = [
-  //     'Janvier',
-  //     'Février',
-  //     'Mars',
-  //     'Avril',
-  //     'Mai',
-  //     'Juin',
-  //     'Juillet',
-  //     'Août',
-  //     'Septembre',
-  //     'Octobre',
-  //     'Novembre',
-  //     'Décembre',
-  //   ];
-  //   this.monthName = months[this.currentDate.getMonth()];
-  //   // Premier jour du mois
-  //   const firstDayOfMonth = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
-  //   const startingDay = firstDayOfMonth.getDay(); // Le premier jour du mois (0 = Dimanche, 1 = Lundi, etc.)
-  //   // Nombre de jours dans le mois
-  //   const lastDayOfMonth = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 0);
-  //   const totalDaysInMonth = lastDayOfMonth.getDate();
-  //   // Tableau des jours à afficher
-  //   this.daysInMonth = [];
-  //   for (let i = 1; i <= totalDaysInMonth; i++) {
-  //     this.daysInMonth.push(i);
-  //   }
-  //   // Ajouter les cases vides au début pour aligner le premier jour sur le bon jour de la semaine
-  //   while (this.daysInMonth.length < startingDay + totalDaysInMonth) {
-  //     this.daysInMonth.unshift(); // Ajouter une valeur null pour remplir les cases vides
-  //   }
-  // }
-  // // Naviguer vers le mois précédent
-  // previousMonth(): void {
-  //   this.currentDate.setMonth(this.currentDate.getMonth() - 1);
-  //   this.updateCalendar(this.currentDate);
-  // }
-  // // Naviguer vers le mois suivant
-  // nextMonth(): void {
-  //   this.currentDate.setMonth(this.currentDate.getMonth() + 1);
-  //   this.updateCalendar(this.currentDate);
-  // }
+export class CalendarComponent implements OnInit {
+  calendarOptions: CalendarOptions = {
+    initialView: 'dayGridMonth',
+    events: [],
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,dayGridWeek',
+    },
+    plugins: [dayGridPlugin, interactionPlugin],
+  };
+  newBookedCount: number = 0;
+  bookedIdsSeen: Set<number> = new Set<number>();
+  toastMessages: { id: number, message: string; type: 'info' | 'success' | 'error' }[] = [];
+
+  dismissedToastIds: Set<number> = new Set<number>();
+
+
+  constructor(
+    private _availabilityService: AvailabilityService,
+    private _toastr: ToastrService
+  ) {}
+  ngOnInit(): void {
+    const savedDismissed = localStorage.getItem('dismissedToastIds');
+    if (savedDismissed) {
+      this.dismissedToastIds = new Set<number>(JSON.parse(savedDismissed));
+    }
+    this.checkBookedSlots();
+  }
+  checkBookedSlots(): void {
+    this._availabilityService.getMyAvailability().subscribe({
+      next: data => {
+        const availableSlots = Array.isArray(data) ? data.filter(a => a.status === 'available') : [];
+        const bookedSlots = Array.isArray(data) ? data.filter(a => a.status === 'booked') : [];
+  
+        bookedSlots.forEach(slot => {
+          if (
+            slot.id !== undefined &&
+            !this.bookedIdsSeen.has(slot.id) &&
+            !this.dismissedToastIds.has(slot.id) 
+          ) {
+            this.bookedIdsSeen.add(slot.id);
+  
+            const message = `Un créneau du ${new Date(slot.startTime).toLocaleString()} a été réservé`;
+            this.toastMessages.push({ id: slot.id, message, type: 'info' });
+          }
+        });
+        this.calendarOptions.events = [
+          ...bookedSlots.map(a => ({
+            title: `Réservé par: ${a.bookedByEmail}`,
+            start: a.startTime,
+            end: a.endTime,
+            color: 'red',
+          })),
+          ...availableSlots.map(a => ({
+            title: 'Disponible',
+            start: a.startTime,
+            end: a.endTime,
+            color: 'green',
+          })),
+        ];
+      },
+    });
+  }
+  
+  removeToast(index: number): void {
+    const dismissedToast = this.toastMessages[index];
+    if (dismissedToast?.id !== undefined) {
+      this.dismissedToastIds.add(dismissedToast.id);
+      localStorage.setItem('dismissedToastIds', JSON.stringify([...this.dismissedToastIds]));
+    }
+    this.toastMessages.splice(index, 1);
+  }
+  getVisibleToasts(): { id: number; message: string; type: 'info' | 'success' | 'error' }[] {
+    return this.toastMessages.filter(toast => !this.dismissedToastIds.has(toast.id));
+  }
 }

@@ -1,0 +1,29 @@
+<p>availability works!</p>
+
+<h2>Ajouter une disponibilité</h2>
+<form (ngSubmit)="createAvailability()">
+  <div>
+    <label for="startTime">Début :</label>
+    <input type="datetime-local" [(ngModel)]="newStartTime" name="startTime" required id="startTime" />
+  </div>
+  <div>
+    <label for="endTime">Fin :</label>
+    <input type="datetime-local" [(ngModel)]="newEndTime" name="endTime" required id="endTime" />
+  </div>
+
+  <div *ngIf="!newStartTime || !newEndTime" style="color: red">Les deux dates sont requises pour soumettre le formulaire.</div>
+
+  <button type="submit" [disabled]="!newStartTime || !newEndTime">Ajouter</button>
+</form>
+
+<hr />
+
+<h3>Résumé de mes disponibilités</h3>
+<div *ngIf="availability?.length > 0; else noSlots">
+  <div *ngFor="let slot of availability">
+    <p>🕒 {{ slot.startTime | date: 'dd/MM/yyyy HH:mm' }} → {{ slot.endTime | date: 'dd/MM/yyyy HH:mm' }} ({{ slot.status }})</p>
+  </div>
+</div>
+<ng-template #noSlots>
+  <p>Aucune disponibilité enregistrée.</p>
+</ng-template>

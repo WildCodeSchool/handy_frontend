@@ -18,22 +18,12 @@ export class ProviderFacadeService {
   ) {}
 
   getAll$(): Observable<AppProvider[]> {
-    return this._api.getAllProvisions$().pipe(
-      tap(provisions => console.log('Données reçues:', provisions)),
-      switchMap(provisions => this._store.setAll$(provisions))
-    );
+    return this._api.getAllProvisions$().pipe(switchMap(provisions => this._store.setAll$(provisions)));
   }
-  // post$(product: AppProvider):any {
-  //   this._api.createProvision$(product).pipe(
-  //     tap((product: AppProvider) => this._store.add$(product),)
-  //   )
-  //   .subscribe();
-  // }
+
   post$(product: ProductForCreation): any {
-    console.log('Envoi des données au serveur:', product);
     return this._api.createProvision$(product).pipe(
       tap((product: ProductForCreation) => {
-        console.log('Réponse du serveur:', product);
         this._store.add$(product);
       })
     );

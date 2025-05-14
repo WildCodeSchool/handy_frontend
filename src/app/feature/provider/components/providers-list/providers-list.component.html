@@ -1,0 +1,31 @@
+<p>providers-list works!</p>
+<a [routerLink]="'/order'" class="order-button">Passer commande par ici</a>
+
+<div class="provider-container">
+  @for (provider of providersWithServices; track provider.providerId) {
+    <div class="provider-card">
+      <div class="provider-info">
+        <h3>{{ provider.firstName }} {{ provider.lastName }}</h3>
+        <p><strong>Email:</strong> {{ provider.email || 'Email non spécifié' }}</p>
+        <p><strong>Ville:</strong> {{ provider.city || 'Ville non spécifiée' }}</p>
+      </div>
+
+      @if (provider.services.length > 0) {
+        <div class="service-list">
+          <h4>Services disponibles :</h4>
+          <ul>
+            @for (service of provider.services.slice(0, 3); track service.id) {
+              <li class="service-item">
+                <span
+                  >{{ service.name }} <em>(prix: {{ service.coeff }})</em></span
+                >
+              </li>
+            }
+          </ul>
+        </div>
+      } @else {
+        <p class="no-service">Aucun service disponible</p>
+      }
+    </div>
+  }
+</div>
