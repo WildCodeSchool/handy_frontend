@@ -1,8 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { passwordMatchValidator } from 'src/app/core/validators/validators';
+import { passwordMatchValidator, securePasswordValidator } from 'src/app/core/validators/validators';
 @Component({
   selector: 'app-create-user',
   standalone: true,
@@ -25,13 +26,26 @@ export class CreateUserComponent implements OnInit {
     this._initSignUpForm();
   }
 
+  // private _initSignUpForm(): void {
+  //   this.signUpForm = this.formBuilder.group({
+  //     username: ['', [Validators.required, Validators.minLength(this.MIN_USERNAME_LENGTH)]],
+  //     email: ['', [Validators.required, Validators.email]],
+  //     passwords: this.formBuilder.group(
+  //       {
+  //         password: ['', [Validators.required, this.securePasswordValidator()]],
+  //         confirmPassword: [''],
+  //       },
+  //       { validators: passwordMatchValidator() }
+  //     ),
+  //   });
+  // }
   private _initSignUpForm(): void {
     this.signUpForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(this.MIN_USERNAME_LENGTH)]],
       email: ['', [Validators.required, Validators.email]],
       passwords: this.formBuilder.group(
         {
-          password: ['', [Validators.required, this.securePasswordValidator()]],
+          password: ['', [Validators.required, securePasswordValidator(this.MIN_PASSWORD_LENGTH)]],
           confirmPassword: [''],
         },
         { validators: passwordMatchValidator() }
@@ -43,38 +57,59 @@ export class CreateUserComponent implements OnInit {
     this.selectedRole = role;
   }
 
-  onSubmit(): void {
+  // onSubmit(): void {
+  //   if (this.signUpForm.valid) {
+  //     const email = this.signUpForm.get('email')?.value;
+  //     const password = this.signUpForm.get('passwords.password')?.value;
+
+  //     if (email && password) {
+  //       const register$ =
+  //         this.selectedRole === 'client' ? this.authService.register$(email, password) : this.authService.registerProvider$(email, password);
+
+  //       register$.subscribe({
+  //         next: success => {
+  //           if (success) {
+  //             this.router.navigate(['/products']);
+  //           }
+  //         },
+  //       });
+  //     }
+  //   }
+  // }
+  async onSubmit(): Promise<void> {
     if (this.signUpForm.valid) {
       const email = this.signUpForm.get('email')?.value;
       const password = this.signUpForm.get('passwords.password')?.value;
-
+  
       if (email && password) {
-        const register$ =
-          this.selectedRole === 'client' ? this.authService.register$(email, password) : this.authService.registerProvider$(email, password);
-
-        register$.subscribe({
-          next: success => {
-            if (success) {
-              this.router.navigate(['/products']);
-            }
-          },
-        });
+        const register$ = this.selectedRole === 'client'
+          ? this.authService.register$(email, password)
+          : this.authService.registerProvider$(email, password);
+  
+        try {
+          const success = await firstValueFrom(register$);
+          if (success) {
+            this.router.navigate(['/products']);
+          }
+        } catch (error) {
+          console.error('Erreur lors de l’inscription :', error);
+        }
       }
     }
   }
-  securePasswordValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const value = control.value || '';
+  // securePasswordValidator(): ValidatorFn {
+  //   return (control: AbstractControl): ValidationErrors | null => {
+  //     const value = control.value || '';
 
-      const hasUpperCase = /[A-Z]/.test(value);
-      const hasLowerCase = /[a-z]/.test(value);
-      const hasNumber = /\d/.test(value);
-      const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
-      const isValidLength = value.length >= this.MIN_PASSWORD_LENGTH;
+  //     const hasUpperCase = /[A-Z]/.test(value);
+  //     const hasLowerCase = /[a-z]/.test(value);
+  //     const hasNumber = /\d/.test(value);
+  //     const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+  //     const isValidLength = value.length >= this.MIN_PASSWORD_LENGTH;
 
-      const passwordValid = hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar && isValidLength;
+  //     const passwordValid = hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar && isValidLength;
 
-      return passwordValid ? null : { securePassword: true };
-    };
-  }
+  //     return passwordValid ? null : { securePassword: true };
+  //   };
+  // }
 }

@@ -12,3 +12,18 @@ export function passwordMatchValidator(): ValidatorFn {
     return password === confirmPassword ? null : { passwordsMismatch: true };
   };
 }
+export function securePasswordValidator(minLength: number = 12): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value || '';
+
+    const hasUpperCase = /[A-Z]/.test(value);
+    const hasLowerCase = /[a-z]/.test(value);
+    const hasNumber = /\d/.test(value);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+    const isValidLength = value.length >= minLength;
+
+    const passwordValid = hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar && isValidLength;
+
+    return passwordValid ? null : { securePassword: true };
+  };
+}
