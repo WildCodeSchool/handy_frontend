@@ -5,8 +5,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './client-sign-up.component.html',
-  styleUrl: './client-sign-up.component.scss'
+  styleUrl: './client-sign-up.component.scss',
 })
-export class ClientSignUpComponent {
-
-}
+export class ClientSignUpComponent {}

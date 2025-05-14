@@ -4,10 +4,10 @@ import { Observable } from 'rxjs';
 import { UserProfil } from '../models/UserProfil';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsersService {
-  private _apiUrl = 'http://localhost:8080/users'; 
+  private _apiUrl = 'http://localhost:8080/users';
 
   constructor(private _http: HttpClient) {}
 

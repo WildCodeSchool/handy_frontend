@@ -9,10 +9,10 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './user-profil.component.html',
-  styleUrl: './user-profil.component.scss'
+  styleUrl: './user-profil.component.scss',
 })
 export class UserProfilComponent implements OnInit {
-  userProfile: UserProfil | null = null; 
+  userProfile: UserProfil | null = null;
   isLoading = true;
   error: string | null = null;
 
@@ -24,22 +24,20 @@ export class UserProfilComponent implements OnInit {
 
   loadUserProfile(): void {
     this._userService.getUserProfile().subscribe({
-      next: (data) => {
+      next: data => {
         this.userProfile = data;
         this.isLoading = false;
       },
-      
     });
   }
 
   updateProfile(): void {
     if (this.userProfile) {
       this._userService.updateUserProfile(this.userProfile).subscribe({
-        next: (data) => {
+        next: data => {
           this.userProfile = data;
           alert('Profil mis à jour avec succès');
         },
-    
       });
     }
   }

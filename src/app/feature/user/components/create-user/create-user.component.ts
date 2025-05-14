@@ -80,12 +80,11 @@ export class CreateUserComponent implements OnInit {
     if (this.signUpForm.valid) {
       const email = this.signUpForm.get('email')?.value;
       const password = this.signUpForm.get('passwords.password')?.value;
-  
+
       if (email && password) {
-        const register$ = this.selectedRole === 'client'
-          ? this.authService.register$(email, password)
-          : this.authService.registerProvider$(email, password);
-  
+        const register$ =
+          this.selectedRole === 'client' ? this.authService.register$(email, password) : this.authService.registerProvider$(email, password);
+
         try {
           const success = await firstValueFrom(register$);
           if (success) {
