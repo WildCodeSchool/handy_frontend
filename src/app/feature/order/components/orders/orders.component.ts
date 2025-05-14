@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './orders.component.html',
-  styleUrl: './orders.component.scss'
+  styleUrl: './orders.component.scss',
 })
 export class OrdersComponent implements OnInit {
   orders: Orders[] = [];
@@ -18,7 +18,7 @@ export class OrdersComponent implements OnInit {
 
   ngOnInit(): void {
     this._ordersService.getMyOrders().subscribe({
-      next: (data) => {
+      next: data => {
         this.orders = data;
       },
     });

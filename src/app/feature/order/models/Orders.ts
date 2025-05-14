@@ -1,7 +1,7 @@
 export type Orders = {
-    id: number;
+  id: number;
   dateOrder: string;
   userEmail: string;
   status: string;
-  orderNumber: string
-  };
+  orderNumber: string;
+};

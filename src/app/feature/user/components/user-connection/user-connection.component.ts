@@ -17,7 +17,6 @@ export class UserConnectionComponent implements OnDestroy {
   private _router: Router = inject(Router);
   private _subscription = new Subscription();
 
-
   loginForm = this.formBuilder.group({
     email: [''],
     password: [''],
@@ -34,13 +33,11 @@ export class UserConnectionComponent implements OnDestroy {
         next: token => {
           localStorage.setItem('token', token);
         },
-        
       });
     }
   }
- 
+
   ngOnDestroy(): void {
     this._subscription.unsubscribe();
   }
-  
 }

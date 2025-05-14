@@ -27,14 +27,13 @@ export class CreateCartComponent implements OnInit {
   confirmedSlots: Record<string, boolean> = {};
   orderNumber: string | null = null;
 
-
   providerMap: Record<number, ProviderWithServicesDTO> = {};
   serviceMap: Record<string, AppProvider> = {};
 
   constructor(
     private _cartService: CartService,
     private _availabilityService: AvailabilityService,
-    private _authService: AuthService,
+    private _authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -83,9 +82,9 @@ export class CreateCartComponent implements OnInit {
 
   submitCart(): void {
     this._cartService.submitCart().subscribe({
-        next: (order) => {
-          console.log('Réponse de commande:', order);
-          this.orderNumber = order.orderNumber;
+      next: order => {
+        console.log('Réponse de commande:', order);
+        this.orderNumber = order.orderNumber;
         this.clearCart();
         this.showToast(`Commande envoyée avec succès ✅ (N°: ${this.orderNumber})`, 'success');
       },

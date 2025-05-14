@@ -1,23 +1,22 @@
 <div class="orders-container">
-    <h2>Mes Commandes</h2>
-  
-    <table *ngIf="orders.length > 0" class="orders-table">
-      <thead>
-        <tr>
-          <th>Numéro</th>
-          <th>Date</th>
-          <th>Status</th>
-          <th>Utilisateur</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let order of orders">
-          <td>{{ order.orderNumber }}</td>
-          <td>{{ order.dateOrder }}</td>
-          <td>{{ order.status }}</td>
-          <td>{{ order.userEmail }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
+  <h2>Mes Commandes</h2>
+
+  <table *ngIf="orders.length > 0" class="orders-table">
+    <thead>
+      <tr>
+        <th>Numéro</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Utilisateur</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders">
+        <td>{{ order.orderNumber }}</td>
+        <td>{{ order.dateOrder }}</td>
+        <td>{{ order.status }}</td>
+        <td>{{ order.userEmail }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

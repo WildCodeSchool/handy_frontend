@@ -47,23 +47,21 @@ export class CreateUserComponent implements OnInit {
     if (this.signUpForm.valid) {
       const email = this.signUpForm.get('email')?.value;
       const password = this.signUpForm.get('passwords.password')?.value;
-  
+
       if (email && password) {
         const register$ =
-          this.selectedRole === 'client'
-            ? this.authService.register$(email, password)
-            : this.authService.registerProvider$(email, password);
-  
-            register$.subscribe({
-              next: success => {
-                if (success) {
-                  this.router.navigate(['/products']);
-                }
-              },
-            });
-          }
-        }
+          this.selectedRole === 'client' ? this.authService.register$(email, password) : this.authService.registerProvider$(email, password);
+
+        register$.subscribe({
+          next: success => {
+            if (success) {
+              this.router.navigate(['/products']);
+            }
+          },
+        });
       }
+    }
+  }
   securePasswordValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value || '';
