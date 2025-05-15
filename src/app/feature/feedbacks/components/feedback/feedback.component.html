@@ -1,0 +1,8 @@
+<p>feedback works!</p>
+<div class="feedback-section" *ngIf="provider.feedbacks?.length > 0">
+    <h4>Commentaires :</h4>
+    <ul>
+      <li *ngFor="let fb of provider.feedbacks">{{ fb.content }}</li>
+    </ul>
+  </div>
+  
