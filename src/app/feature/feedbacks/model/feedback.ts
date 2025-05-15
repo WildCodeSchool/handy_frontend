@@ -1,6 +1,5 @@
 export type Feedback = {
-    id: number;
-    content: string;
-    userId: number;
-  };
-  
+  id: number;
+  content: string;
+  userId: number;
+};

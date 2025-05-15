@@ -4,10 +4,9 @@ import { Observable } from 'rxjs';
 import { Feedback } from '../model/feedback';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FeedbackService {
-
   private readonly _baseUrl = 'http://localhost:8080/feedbacks';
 
   constructor(private _http: HttpClient) {}

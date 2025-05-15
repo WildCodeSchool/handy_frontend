@@ -10,7 +10,7 @@ export class AvailabilityService {
   private _baseUrl = 'http://localhost:8080/availabilities';
   private _bookedIdsSeen = new Set<number>();
   private _dismissedToastIds = new Set<number>();
-  private _toastMessagesSubject = new BehaviorSubject<{ id: number, message: string, type: string }[]>([]);
+  private _toastMessagesSubject = new BehaviorSubject<{ id: number; message: string; type: string }[]>([]);
   toastMessages$ = this._toastMessagesSubject.asObservable();
 
   constructor(private _http: HttpClient) {}
