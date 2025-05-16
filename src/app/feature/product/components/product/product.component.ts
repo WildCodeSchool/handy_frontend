@@ -6,6 +6,7 @@ import { CreateProductComponent } from '../create-product/create-product.compone
 import { DeleteProductComponent } from '../delete-product/delete-product.component';
 import { ProductForCreation } from '../../models/productCreation';
 
+
 @Component({
   selector: 'app-product',
   standalone: true,
@@ -13,10 +14,10 @@ import { ProductForCreation } from '../../models/productCreation';
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss',
 })
-export class ProductComponent {
+export class ProductComponent{
   @Input() product!: AppProvider | null;
   @Output() closeDetails = new EventEmitter<void>();
-
+ 
   CloseDetails(): void {
     this.closeDetails.emit();
   }

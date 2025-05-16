@@ -1,7 +1,11 @@
-<p>feedback works!</p>
-<div class="feedback-section" *ngIf="provider.feedbacks?.length > 0">
-  <h4>Commentaires :</h4>
-  <ul>
-    <li *ngFor="let fb of provider.feedbacks">{{ fb.content }}</li>
-  </ul>
-</div>
+<div class="feedback-section" *ngIf="feedbacks.length > 0; else noFeedback">
+    <h4>Commentaires :</h4>
+    <ul>
+      <li *ngFor="let fb of feedbacks">{{ fb.content }}</li>
+    </ul>
+  </div>
+  
+  <ng-template #noFeedback>
+    <p>Aucun commentaire disponible.</p>
+  </ng-template>
+  

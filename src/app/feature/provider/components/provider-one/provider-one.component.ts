@@ -3,11 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { ProvidersService } from '../../service/providers.service';
 import { ProviderWithServicesDTO } from 'src/app/feature/cart/models/ProviderWithServicesDTO';
 import { CommonModule } from '@angular/common';
+import { FeedbackComponent } from 'src/app/feature/feedbacks/components/feedback/feedback.component';
+import { FeedbackFormComponent } from 'src/app/feature/feedbacks/components/feedback-form/feedback-form.component';
 
 @Component({
   selector: 'app-provider-one',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FeedbackComponent, FeedbackFormComponent],
   templateUrl: './provider-one.component.html',
   styleUrl: './provider-one.component.scss',
 })

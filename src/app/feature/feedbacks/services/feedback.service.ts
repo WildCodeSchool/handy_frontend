@@ -14,4 +14,10 @@ export class FeedbackService {
   getFeedbacksByUserId(userId: number): Observable<Feedback[]> {
     return this._http.get<Feedback[]>(`${this._baseUrl}/user/${userId}`);
   }
+  createFeedback(feedback: { content: string; userId: number }): Observable<Feedback> {
+    return this._http.post<Feedback>(`${this._baseUrl}/user/${feedback.userId}`, {
+      content: feedback.content,
+      userId: feedback.userId 
+    });
+  }
 }

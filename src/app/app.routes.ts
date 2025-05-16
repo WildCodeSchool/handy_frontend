@@ -50,6 +50,10 @@ export const routes: Routes = [
     canActivate: [isProviderGuard],
   },
   {
+    path: 'provider/:id',
+    loadComponent: () => import('./feature/provider/components/provider-one/provider-one.component').then(m => m.ProviderOneComponent)
+  },
+  {
     path: 'admin',
     component: AdminHomeComponent,
     canActivate: [isAdminGuard],

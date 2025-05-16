@@ -3,6 +3,9 @@
 
 <div class="provider-container">
   @for (provider of providersWithServices; track provider.providerId) {
+    <a
+      [routerLink]="['/provider', provider.providerId]"
+      class="provider-card">
     <div class="provider-card">
       <div class="provider-info">
         <h3>{{ provider.firstName }} {{ provider.lastName }}</h3>
@@ -27,5 +30,7 @@
         <p class="no-service">Aucun service disponible</p>
       }
     </div>
+  </a>
+
   }
 </div>
