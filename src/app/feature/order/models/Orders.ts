@@ -2,6 +2,6 @@ export type Orders = {
   id: number;
   dateOrder: string;
   userEmail: string;
-  status: string;
+  statusLabel: string;
   orderNumber: string;
 };

@@ -38,7 +38,7 @@ export class ProductService {
   searchProvisions$(keyword: string): Observable<AppProvider[]> {
     const url = `${this._BASE_API_URL}/search?keyword=${encodeURIComponent(keyword)}`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  
+
     return this._http.get<AppProvider[]>(url, {
       headers,
       withCredentials: true,

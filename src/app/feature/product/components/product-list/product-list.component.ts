@@ -15,7 +15,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss',
 })
-export class ProductListComponent implements OnInit{
+export class ProductListComponent implements OnInit {
   private _facadeProvisionService: ProviderFacadeService = inject(ProviderFacadeService);
   private _route: ActivatedRoute = inject(ActivatedRoute);
 
@@ -32,9 +32,7 @@ export class ProductListComponent implements OnInit{
   ngOnInit(): void {
     this._route.queryParams.subscribe(params => {
       const keyword = params['search'];
-      this.products$ = keyword
-        ? this._facadeProvisionService.searchProvisions$(keyword)
-        : this._facadeProvisionService.getAll$();
+      this.products$ = keyword ? this._facadeProvisionService.searchProvisions$(keyword) : this._facadeProvisionService.getAll$();
     });
   }
 
