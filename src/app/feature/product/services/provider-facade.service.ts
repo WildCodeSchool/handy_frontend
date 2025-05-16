@@ -28,4 +28,7 @@ export class ProviderFacadeService {
       })
     );
   }
+  searchProvisions$(keyword: string): Observable<AppProvider[]> {
+    return this._api.searchProvisions$(keyword);
+  }
 }
