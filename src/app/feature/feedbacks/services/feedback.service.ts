@@ -17,7 +17,7 @@ export class FeedbackService {
   createFeedback(feedback: { content: string; userId: number }): Observable<Feedback> {
     return this._http.post<Feedback>(`${this._baseUrl}/user/${feedback.userId}`, {
       content: feedback.content,
-      userId: feedback.userId 
+      userId: feedback.userId,
     });
   }
 }

@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './feedback-form.component.html',
-  styleUrl: './feedback-form.component.scss'
+  styleUrl: './feedback-form.component.scss',
 })
 export class FeedbackFormComponent {
   @Input() userId!: number;
@@ -28,18 +28,20 @@ export class FeedbackFormComponent {
       return;
     }
 
-    this._feedbackService.createFeedback({
-      content: this.content,
-      userId: this.userId,
-    }).subscribe({
-      next: () => {
-        this.successMessage = 'Feedback envoyé avec succès !';
-        this.content = '';
-      },
-      error: err => {
-        console.error('Erreur lors de l’envoi du feedback :', err);
-        this.errorMessage = 'Échec de l’envoi du feedback.';
-      }
-    });
+    this._feedbackService
+      .createFeedback({
+        content: this.content,
+        userId: this.userId,
+      })
+      .subscribe({
+        next: () => {
+          this.successMessage = 'Feedback envoyé avec succès !';
+          this.content = '';
+        },
+        error: err => {
+          console.error('Erreur lors de l’envoi du feedback :', err);
+          this.errorMessage = 'Échec de l’envoi du feedback.';
+        },
+      });
   }
 }

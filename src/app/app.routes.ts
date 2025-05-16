@@ -51,7 +51,7 @@ export const routes: Routes = [
   },
   {
     path: 'provider/:id',
-    loadComponent: () => import('./feature/provider/components/provider-one/provider-one.component').then(m => m.ProviderOneComponent)
+    loadComponent: () => import('./feature/provider/components/provider-one/provider-one.component').then(m => m.ProviderOneComponent),
   },
   {
     path: 'admin',
