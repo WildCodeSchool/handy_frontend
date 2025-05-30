@@ -1,29 +1,53 @@
+
 <p>signup-form works!</p>
-<div class="container d-flex">
-  <div class="form-container text-center">
-    <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="w-100 p-4 border rounded shadow-sm bg-light mt-5">
-      <fieldset>
-        <div class="mb-3">
-          <label for="loginEmail" class="form-label">Email</label>
-          <input id="loginEmail" formControlName="email" type="email" class="form-control" />
+
+<div class="container-fluid">
+  <div class="row vh-100">
+    
+    <div class="col-12 col-md-6 d-flex align-items-center justify-content-center p-5">
+      <div class="form-container w-100">
+        
+        <div class="mb-5 text-center text-md-start">
+          <img src="assets/logo.png" alt="Logo" height="50" class="mb-3">
+          <h2 class="text-dark fw-bold mb-3">Bienvenue</h2>
+          <p class="text-muted">
+            Pas de compte ?
+            <a [routerLink]="'/signup'" class="text-primary text-decoration-none fw-medium">S'inscrire</a>
+          </p>
         </div>
 
-        <div class="mb-3">
-          <label for="loginPassword" class="form-label">Mot de passe</label>
-          <input id="loginPassword" formControlName="password" type="password" class="form-control" />
-        </div>
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="bg-light p-4 border rounded shadow-sm">
+          <fieldset>
+            <div class="mb-3">
+              <label for="loginEmail" class="form-label fw-medium">Email</label>
+              <input id="loginEmail" formControlName="email" type="email" class="form-control p-3" placeholder="Email address" />
+            </div>
 
-        <button type="submit" class="btn btn-success" [disabled]="loginForm.invalid">Se connecter</button>
-      </fieldset>
-      <div class="mt-3">
-        <p class="mb-0">
-          Pas de compte ?
-          <a [routerLink]="'/signup'" class="link-primary">S'inscrire</a>
-        </p>
+            <div class="mb-3">
+              <label for="loginPassword" class="form-label fw-medium">Mot de passe</label>
+              <input id="loginPassword" formControlName="password" type="password" class="form-control p-3" placeholder="Mot de passe" />
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="rememberMe">
+                <label class="form-check-label" for="rememberMe">Se souvenir de moi</label>
+              </div>
+              <a href="#" class="text-primary text-decoration-none">Mot de passe oublié ?</a>
+            </div>
+
+            <button type="submit" class="btn btn-success btn-lg w-100" [disabled]="loginForm.invalid">
+              <i class="bi bi-person-fill me-2"></i> Se connecter
+            </button>
+          </fieldset>
+        </form>
+
       </div>
-    </form>
-  </div>
-  <div class="image-container">
-    <img src="/assets/call.jpg" alt="Image" class="img-fluid" />
+    </div>
+
+    <div class="d-none d-md-block col-md-6 image-container p-0">
+      <img src="/assets/call.jpg" alt="Illustration" class="img-fluid h-100 w-100 object-fit-cover">
+    </div>
+
   </div>
 </div>
