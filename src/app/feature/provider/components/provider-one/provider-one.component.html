@@ -18,17 +18,12 @@
   <p *ngIf="error()">{{ error() }}</p>
 </ng-template>
 
-
 <div class="container py-5 px-3 px-md-4 px-lg-5">
-
   <div *ngIf="provider() as p; else errorBlock" class="mb-5">
-
     <div class="card shadow-sm rounded-4 p-4 max-w-600">
       <div class="d-flex mb-3">
         <div class="flex-grow-1 pe-3">
-          <div class="fw-semibold mb-2">
-            {{ p.firstName }} {{ p.lastName }}
-          </div>
+          <div class="fw-semibold mb-2">{{ p.firstName }} {{ p.lastName }}</div>
 
           <div class="mb-3 text-warning">
             <i class="bi bi-star-fill"></i>
@@ -38,33 +33,21 @@
             <i class="bi bi-star"></i>
           </div>
 
-          <p class="mb-0 text-secondary lh-sm">
-            Prestataire basé à {{ p.city }}.
-          </p>
+          <p class="mb-0 text-secondary lh-sm">Prestataire basé à {{ p.city }}.</p>
         </div>
 
-        <img
-          src="assets/testimonials/testimonials-2.png"
-          alt="Image prestataire"
-          class="img-fluid rounded custom-img-75"
-        />
+        <img src="assets/testimonials/testimonials-2.png" alt="Image prestataire" class="img-fluid rounded custom-img-75" />
       </div>
 
-      <hr>
+      <hr />
 
       <div class="d-flex align-items-center">
-        <img
-          src="assets/images/blocks/ecommerce/review/review-1-2.png"
-          alt="Produit"
-          class="img-fluid me-3 rounded custom-img-48"
-        />
+        <img src="assets/images/blocks/ecommerce/review/review-1-2.png" alt="Produit" class="img-fluid me-3 rounded custom-img-48" />
         <div>
           <div class="fw-semibold">Services proposés :</div>
 
           <ul class="mb-0">
-            <li *ngFor="let service of p.services?.slice(0, 3)">
-              {{ service.name }} (Coeff: {{ service.coeff }})
-            </li>
+            <li *ngFor="let service of p.services?.slice(0, 3)">{{ service.name }} (Coeff: {{ service.coeff }})</li>
           </ul>
         </div>
       </div>
@@ -77,5 +60,4 @@
   <ng-template #errorBlock>
     <p *ngIf="error()">{{ error() }}</p>
   </ng-template>
-
 </div>

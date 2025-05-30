@@ -9,13 +9,13 @@
   <p>Aucun commentaire disponible.</p>
 </ng-template>
 
-  <div class="feedback-section mt-5" *ngIf="feedbacks.length > 0; else noFeedback">
-    <h4 class="mb-3">Commentaires :</h4>
-    <ul class="list-group">
-      <li class="list-group-item" *ngFor="let fb of feedbacks">{{ fb.content }}</li>
-    </ul>
-  </div>
+<div class="feedback-section mt-5" *ngIf="feedbacks.length > 0; else noFeedback">
+  <h4 class="mb-3">Commentaires :</h4>
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let fb of feedbacks">{{ fb.content }}</li>
+  </ul>
+</div>
 
-  <ng-template #noFeedback>
-    <p class="text-muted fst-italic">Aucun commentaire disponible.</p>
-  </ng-template>
+<ng-template #noFeedback>
+  <p class="text-muted fst-italic">Aucun commentaire disponible.</p>
+</ng-template>

@@ -112,3 +112,10 @@ h2 {
 .order-button:hover {
   background-color: #0056b3;
 }
+
+.banner-background {
+  background-image: url("/assets/speed.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
