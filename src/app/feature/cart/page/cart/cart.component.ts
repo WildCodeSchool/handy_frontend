@@ -15,6 +15,5 @@ export class CartComponent {
 
   toggleCartVisibility(): void {
     this.isCartVisible = !this.isCartVisible;
-    console.log('Panier visible ?', this.isCartVisible);
   }
 }

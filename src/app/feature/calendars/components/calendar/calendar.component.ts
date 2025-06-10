@@ -34,20 +34,23 @@ export class CalendarComponent implements OnInit {
 
   dismissedToastIds: Set<number> = new Set<number>();
 
-  constructor(private _availabilityService: AvailabilityService, private _toastr: ToastrService) {}
-  
+  constructor(
+    private _availabilityService: AvailabilityService,
+    private _toastr: ToastrService
+  ) {}
+
   ngOnInit(): void {
     const savedDismissed = localStorage.getItem('dismissedToastIds');
     if (savedDismissed) {
       const ids = JSON.parse(savedDismissed);
-      this.dismissedToastIds = new Set<number>(ids); 
-      this._availabilityService.setDismissedToastIds(ids); 
+      this.dismissedToastIds = new Set<number>(ids);
+      this._availabilityService.setDismissedToastIds(ids);
     }
-  
+
     this._availabilityService.getCalendarOptions().subscribe(options => {
       this.calendarOptions = options;
     });
-  
+
     this._availabilityService.toastMessages$.subscribe(messages => {
       this.toastMessages = messages.filter(toast => !this.dismissedToastIds.has(toast.id));
     });

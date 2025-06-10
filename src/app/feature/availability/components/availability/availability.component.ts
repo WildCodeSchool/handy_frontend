@@ -22,32 +22,30 @@ export class AvailabilityComponent implements OnInit {
 
   ngOnInit(): void {
     this._availabilityService.getMyAvailability().subscribe({
-      next: data => (this.availability = data)
+      next: data => (this.availability = data),
     });
   }
- 
+
   createAvailability(): void {
     this.successMessage = '';
     this.errorMessage = '';
 
-  const newStart = new Date(this.newStartTime).getTime();
-  const newEnd = new Date(this.newEndTime).getTime();
+    const newStart = new Date(this.newStartTime).getTime();
+    const newEnd = new Date(this.newEndTime).getTime();
 
-  const isTaken = this.availability?.some((slot: any) => {
-    const slotStart = new Date(slot.startTime).getTime();
-    const slotEnd = new Date(slot.endTime).getTime();
+    const isTaken = this.availability?.some((slot: any) => {
+      const slotStart = new Date(slot.startTime).getTime();
+      const slotEnd = new Date(slot.endTime).getTime();
 
-    return (
-      (newStart >= slotStart && newStart < slotEnd) ||
-      (newEnd > slotStart && newEnd <= slotEnd) ||
-      (newStart <= slotStart && newEnd >= slotEnd) 
-    );
-  });
+      return (
+        (newStart >= slotStart && newStart < slotEnd) || (newEnd > slotStart && newEnd <= slotEnd) || (newStart <= slotStart && newEnd >= slotEnd)
+      );
+    });
 
-  if (isTaken) {
-    this.errorMessage = 'Cette plage de disponibilité existe déjà.';
-    return;
-  }
+    if (isTaken) {
+      this.errorMessage = 'Cette plage de disponibilité existe déjà.';
+      return;
+    }
     this._availabilityService
       .createMyAvailability(this.newStartTime, this.newEndTime)
       .pipe(
@@ -62,7 +60,6 @@ export class AvailabilityComponent implements OnInit {
         next: data => {
           this.availability = data;
         },
-        
       });
   }
 }

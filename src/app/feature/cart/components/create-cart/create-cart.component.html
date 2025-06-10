@@ -1,4 +1,4 @@
-<div class="cart-container">
+<!-- <div class="cart-container">
   <ul class="cart-list">
     <li *ngFor="let item of cart; trackBy: trackByProvisionId">
       <ng-container *ngIf="providerMap[item.userId] as provider">
@@ -49,4 +49,54 @@
 
   <p *ngIf="cart.length === 0">Aucun élément dans le panier</p>
   <p *ngIf="cart.length > 0">Le panier contient {{ cart.length }} élément(s)</p>
+</div> -->
+<div class="cart-container">
+  <ul class="cart-list">
+    @for (item of cart; track item.provisionId) {
+    <li>
+      @let provider = providerMap[item.userId]; @if (provider) {
+      <strong>{{ provider.firstName }} {{ provider.lastName }}</strong>
+      ({{ provider.email }} – {{ provider.city }})<br />
+      } @let service = serviceMap[item.userId + '_' + item.provisionId]; @if (service) { Service : {{ service.name }} (prix: {{ service.coeff }}) }
+      @let slots = providerAvailabilities[item.userId]; @if (slots) {
+      <label for="availability-{{ item.userId }}">Disponibilité :</label>
+      <select
+        id="availability-{{ item.userId }}-{{ item.provisionId }}"
+        [(ngModel)]="selectedSlots[item.userId + '_' + item.provisionId]"
+        [disabled]="confirmedSlots[item.userId + '_' + item.provisionId]">
+        <option [ngValue]="null">-- Choisir un créneau --</option>
+        @for (slot of slots; track slot.startTime) {
+        <option [ngValue]="slot">{{ slot.startTime | date : 'short' }} - {{ slot.endTime | date : 'short' }}</option>
+        }
+      </select>
+
+      @let selectedSlot = selectedSlots[item.userId + '_' + item.provisionId]; @if (selectedSlot) {
+      <button type="button" (click)="confirmAvailability(item.userId, item.provisionId)" class="btn-confirm">Confirmer le créneau ✅</button>
+      } }
+
+      <button type="button" class="btn-remove" (click)="removeFromCart(item.userId, item.provisionId)">Supprimer</button>
+    </li>
+    }
+  </ul>
+  <div class="total-coeff">
+    <h4>Total à régler : {{ getTotalCoefficient() }}</h4>
+  </div>
+
+  <div class="cart-actions">
+    <button type="submit" (click)="clearCart()" class="btn-clear">🗑 Vider le panier</button>
+    <button type="submit" (click)="submitCart()" [disabled]="cart.length === 0 || !allSlotsConfirmed()" class="btn-submit">✅ Commander</button>
+    @if (orderNumber) {
+    <div class="order-info">
+      Numéro de commande : <strong>{{ orderNumber }}</strong>
+    </div>
+    }
+  </div>
+
+  @if (toastMessage) {
+  <div class="toast" [ngClass]="toastType">{{ toastMessage }}</div>
+  } @if (cart.length === 0) {
+  <p>Aucun élément dans le panier</p>
+  } @if (cart.length > 0) {
+  <p>Le panier contient {{ cart.length }} élément(s)</p>
+  }
 </div>

@@ -3,15 +3,7 @@ import { CartService } from '../../services/cart.service';
 import { HttpClient } from '@angular/common/http';
 import { AppProvider } from 'src/app/feature/product/models/provider';
 import { CommonModule } from '@angular/common';
-
-export type ProviderWithServicesDTO = {
-  providerId: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  city: string;
-  services: AppProvider[];
-};
+import { ProviderWithServicesDTO } from '../../models/ProviderWithServicesDTO';
 
 @Component({
   selector: 'app-order-cart',
@@ -85,3 +77,5 @@ export class OrderCartComponent implements OnInit {
     this.isSelectedServicesVisible = false;
   }
 }
+export type { ProviderWithServicesDTO };
+

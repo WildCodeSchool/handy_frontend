@@ -4,7 +4,6 @@ import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { Availability } from '../models/Availability';
 import { CalendarOptions } from '@fullcalendar/core';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -16,7 +15,6 @@ export class AvailabilityService {
 
   toastMessages$ = this._toastMessagesSubject.asObservable();
   toastMessages: { id: number; message: string; type: 'info' | 'success' | 'error' }[] = [];
-  
 
   constructor(private _http: HttpClient) {}
 
@@ -40,15 +38,12 @@ export class AvailabilityService {
       tap(data => {
         const bookedSlots = Array.isArray(data) ? data.filter(a => a.status === 'booked') : [];
         bookedSlots.forEach(slot => {
-          if (
-            slot.id !== undefined &&
-            !this._bookedIdsSeen.has(slot.id) &&
-            !this._dismissedToastIds.has(slot.id)
-          ) {
+          if (slot.id !== undefined && !this._bookedIdsSeen.has(slot.id) && !this._dismissedToastIds.has(slot.id)) {
             this._bookedIdsSeen.add(slot.id);
             const message = `Un créneau du ${new Date(slot.startTime).toLocaleString()} a été réservé`;
             this.toastMessages = [...this.toastMessages, { id: slot.id, message, type: 'info' }];
-            this._toastMessagesSubject.next(this.toastMessages);          }
+            this._toastMessagesSubject.next(this.toastMessages);
+          }
         });
       }),
       map(data => {
@@ -81,5 +76,4 @@ export class AvailabilityService {
   setDismissedToastIds(ids: number[]): void {
     this._dismissedToastIds = new Set<number>(ids);
   }
- 
 }
