@@ -16,16 +16,20 @@ export class OrdersComponent implements OnInit {
   orders: Orders[] = [];
   error?: string;
 
-  constructor(private _ordersService: OrdersService,
+  constructor(
+    private _ordersService: OrdersService,
     private _destroyRef: DestroyRef
   ) {}
 
   ngOnInit(): void {
-    this._ordersService.getMyOrders().pipe(
-      tap(data => {
-        this.orders = data;
-      }),
-      takeUntilDestroyed(this._destroyRef) 
-    )
-    .subscribe();
-  }}
+    this._ordersService
+      .getMyOrders()
+      .pipe(
+        tap(data => {
+          this.orders = data;
+        }),
+        takeUntilDestroyed(this._destroyRef)
+      )
+      .subscribe();
+  }
+}

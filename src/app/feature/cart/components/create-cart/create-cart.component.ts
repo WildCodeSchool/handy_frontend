@@ -32,6 +32,7 @@ export class CreateCartComponent implements OnInit {
   providerMap: Record<number, ProviderWithServicesDTO> = {};
   serviceMap: Record<string, AppProvider> = {};
 
+
   // constructor(
   //   private _cartService: CartService,
   //   private _availabilityService: AvailabilityService,
@@ -43,34 +44,57 @@ export class CreateCartComponent implements OnInit {
   private _authService = inject(AuthService);
   private _destroyRef = inject(DestroyRef);
 
+  confirmationMessage$ = this._cartService.confirmationMessage$
+  // ngOnInit(): void {
+  //   this.emailClient = this._authService.getCurrentUserEmail()!;
+  //   this._cartService.getProvidersWithServices().subscribe({
+  //     next: data => {
+  //       this.providersWithServices = data.map(p => ({ ...p, services: p.services || [] }));
+  //       this.providerMap = Object.fromEntries(this.providersWithServices.map(p => [p.providerId, p]));
+
+  //       this._cartService.cart$.subscribe(cart => {
+  //         this.cart = cart;
+
+  //         cart.forEach(item => {
+  //           const provider = this.providerMap[item.userId];
+  //           const service = provider?.services.find(s => s.id === item.provisionId);
+  //           if (service) {
+  //             this.serviceMap[`${item.userId}_${item.provisionId}`] = service;
+  //           }
+  //         });
+
+  //         const uniqueUserIds = [...new Set(cart.map(item => item.userId))];
+  //         uniqueUserIds.forEach(providerId => {
+  //           this.loadAvailabilityForProvider(providerId);
+  //         });
+  //       });
+  //     },
+  //   });
+  // }
+
   ngOnInit(): void {
     this.emailClient = this._authService.getCurrentUserEmail()!;
-    this._cartService.getProvidersWithServices().subscribe({
-      next: data => {
-        this.providersWithServices = data.map(p => ({ ...p, services: p.services || [] }));
-        this.providerMap = Object.fromEntries(this.providersWithServices.map(p => [p.providerId, p]));
-
-        this._cartService.cart$.subscribe(cart => {
-          this.cart = cart;
-
-          cart.forEach(item => {
-            const provider = this.providerMap[item.userId];
-            const service = provider?.services.find(s => s.id === item.provisionId);
-            if (service) {
-              this.serviceMap[`${item.userId}_${item.provisionId}`] = service;
-            }
-          });
-
-          const uniqueUserIds = [...new Set(cart.map(item => item.userId))];
-          uniqueUserIds.forEach(providerId => {
-            this.loadAvailabilityForProvider(providerId);
-          });
-        });
-      },
+  
+    this._cartService.initCartState().pipe(
+      tap(cart => {
+        this.cart = cart;
+  
+        const uniqueUserIds = [...new Set(cart.map(item => item.userId))];
+        uniqueUserIds.forEach(providerId => this.loadAvailabilityForProvider(providerId));
+      })
+    )
+    .subscribe();
+  
+    this._cartService.serviceMap$.subscribe(map => {
+      this.serviceMap = map;
+    });
+  
+    this._cartService.providerMap$.subscribe(map => {
+      this.providerMap = map;
     });
   }
-
-  showToast(message: string, type: 'success' | 'error'): void {
+  
+    showToast(message: string, type: 'success' | 'error'): void {
     this.toastMessage = message;
     this.toastType = type;
     setTimeout(() => {
@@ -87,21 +111,20 @@ export class CreateCartComponent implements OnInit {
     this._cartService.clearCart();
   }
 
-  
   submitCart(): void {
-    this._cartService.submitCart().pipe(
-      takeUntilDestroyed(this._destroyRef) 
-    )
-    .subscribe({
-      next: order => {
-        this.orderNumber = order.orderNumber;
-        this.clearCart();
-        this.showToast(`Commande envoyée avec succès ✅ (N°: ${this.orderNumber})`, 'success');
-      },
-      error: () => {
-        this.showToast('Une erreur est survenue ❌', 'error');
-      },
-    });
+    this._cartService
+      .submitCart()
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: order => {
+          this.orderNumber = order.orderNumber;
+          this.clearCart();
+          this.showToast(`Commande envoyée avec succès ✅ (N°: ${this.orderNumber})`, 'success');
+        },
+        error: () => {
+          this.showToast('Une erreur est survenue ❌', 'error');
+        },
+      });
   }
 
   getProviderInfo(userId: number): ProviderWithServicesDTO | undefined {
@@ -113,9 +136,16 @@ export class CreateCartComponent implements OnInit {
     return provider?.services.find(s => s.id === provisionId);
   }
 
+  // getTotalCoefficient(): number {
+  //   return this.cart.reduce((total, item) => {
+  //     const service = this.getServiceInfo(item.userId, item.provisionId);
+  //     return total + (service?.coeff || 0);
+  //   }, 0);
+  // }
   getTotalCoefficient(): number {
     return this.cart.reduce((total, item) => {
-      const service = this.getServiceInfo(item.userId, item.provisionId);
+      const key = `${item.userId}_${item.provisionId}`;
+      const service = this.serviceMap[key];
       return total + (service?.coeff || 0);
     }, 0);
   }
@@ -142,23 +172,25 @@ export class CreateCartComponent implements OnInit {
     if (this.providerAvailabilities[userId]) {
       return;
     }
-  
-    this._availabilityService.getAvailabilityByProviderId(userId).pipe(
-      tap(availabilities => {
-        const availableSlots = availabilities.filter(slot => slot.status === 'available');
-  
-        this.providerAvailabilities[userId] = availableSlots;
-  
-        const bookedSlots = availabilities.filter(slot => slot.status === 'booked');
-        bookedSlots.forEach(slot => {
-          console.log(`Créneau réservé par : ${slot.bookedByEmail}`);
-        });
-      }),
-      takeUntilDestroyed(this._destroyRef)
-    )
-    .subscribe();
+
+    this._availabilityService
+      .getAvailabilityByProviderId(userId)
+      .pipe(
+        tap(availabilities => {
+          const availableSlots = availabilities.filter(slot => slot.status === 'available');
+
+          this.providerAvailabilities[userId] = availableSlots;
+
+          const bookedSlots = availabilities.filter(slot => slot.status === 'booked');
+          bookedSlots.forEach(slot => {
+            console.log(`Créneau réservé par : ${slot.bookedByEmail}`);
+          });
+        }),
+        takeUntilDestroyed(this._destroyRef)
+      )
+      .subscribe();
   }
-  
+
   onSelectAvailability(userId: number): void {
     const selected = this.selectedSlots[userId];
 
@@ -171,14 +203,18 @@ export class CreateCartComponent implements OnInit {
       bookedByEmail: this.emailClient,
     };
 
-  this._availabilityService.updateAvailability(updatedAvailability).pipe(
-    tap(() => {
-      selected.status = 'booked';
-      this.providerAvailabilities[userId] = this.providerAvailabilities[userId].filter(a => a.status === 'available');
-      delete this.selectedSlots[userId];
-    }),takeUntilDestroyed(this._destroyRef)
-  )
-  .subscribe(); }
+    this._availabilityService
+      .updateAvailability(updatedAvailability)
+      .pipe(
+        tap(() => {
+          selected.status = 'booked';
+          this.providerAvailabilities[userId] = this.providerAvailabilities[userId].filter(a => a.status === 'available');
+          delete this.selectedSlots[userId];
+        }),
+        takeUntilDestroyed(this._destroyRef)
+      )
+      .subscribe();
+  }
   trackByProvisionId(index: number, item: ProvisionCartItem): number {
     return item.provisionId;
   }
@@ -193,19 +229,20 @@ export class CreateCartComponent implements OnInit {
       status: 'booked',
     };
 
-  this._availabilityService.updateAvailability(updatedAvailability).pipe(
-    tap(() => {
-      selected.status = 'booked';
-  
-      this.providerAvailabilities[userId] = this.providerAvailabilities[userId].filter(a => a.status === 'available');
-      this.confirmedSlots[key] = true;
-      this.showToast('Créneau réservé avec succès ✅', 'success');
-    }),
-    takeUntilDestroyed(this._destroyRef)
-  )
-  .subscribe();
-  
-  }  
+    this._availabilityService
+      .updateAvailability(updatedAvailability)
+      .pipe(
+        tap(() => {
+          selected.status = 'booked';
+
+          this.providerAvailabilities[userId] = this.providerAvailabilities[userId].filter(a => a.status === 'available');
+          this.confirmedSlots[key] = true;
+          this.showToast('Créneau réservé avec succès ✅', 'success');
+        }),
+        takeUntilDestroyed(this._destroyRef)
+      )
+      .subscribe();
+  }
   allSlotsConfirmed(): boolean {
     return this.cart.every(item => {
       const key = `${item.userId}_${item.provisionId}`;

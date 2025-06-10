@@ -78,4 +78,3 @@ export class OrderCartComponent implements OnInit {
   }
 }
 export type { ProviderWithServicesDTO };
-

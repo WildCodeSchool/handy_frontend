@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ProvisionCartItem } from '../models/ProvisionCartItem';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, switchMap, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ProviderWithServicesDTO } from '../models/ProviderWithServicesDTO';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
-
 export class CartService {
   private _providersUrl = 'http://localhost:8080/users/providers-with-services';
   private _submitUrl = 'http://localhost:8080/provision-users/batch';
@@ -17,8 +17,16 @@ export class CartService {
   cart$ = this._cartSubject.asObservable();
 
   providersWithServices: ProviderWithServicesDTO[] = [];
+  confirmationMessage$ = new Subject<string>()
 
-  constructor(private _http: HttpClient) {}
+  public _providerMap = new BehaviorSubject<Record<number, ProviderWithServicesDTO>>({});
+  public serviceMapSync: Record<string, any> = {};
+
+  private _serviceMap = new BehaviorSubject<Record<string, any>>({});
+  providerMap$ = this._providerMap.asObservable();
+  serviceMap$ = this._serviceMap.asObservable();
+
+  constructor(private _http: HttpClient, private _autservice: AuthService) {}
 
   getProvidersWithServices(): Observable<ProviderWithServicesDTO[]> {
     return this._http.get<ProviderWithServicesDTO[]>(this._providersUrl);
@@ -54,8 +62,33 @@ export class CartService {
 
     return this._http.post(this._submitUrl, this._cartItems, { headers }).pipe(
       tap(() => {
-        alert('✅ Votre commande a été envoyée avec succès.');
+        this.confirmationMessage$.next( '✅ Votre commande a été envoyée avec succès.');
         this.clearCart();
+      })
+    );
+  }
+
+  initCartState(): Observable<ProvisionCartItem[]> {
+    return this.getProvidersWithServices().pipe(
+      tap(providers => {
+        this.providersWithServices = providers.map(p => ({ ...p, services: p.services || [] }));
+        const mapObj = Object.fromEntries(this.providersWithServices.map(p => [p.providerId, p]));
+        this._providerMap.next(mapObj);
+      }),
+      switchMap(() => this.cart$),  // simple flux panier
+      tap(cart => {
+        const serviceMap: Record<string, any> = {};
+  
+        const providerMap = this._providerMap.getValue();
+        cart.forEach(item => {
+          const provider = providerMap[item.userId];
+          const service = provider?.services.find(s => s.id === item.provisionId);
+          if (service) {
+            serviceMap[`${item.userId}_${item.provisionId}`] = service;
+          }
+        });
+        this._serviceMap.next(serviceMap);
+this.serviceMapSync = serviceMap;
       })
     );
   }

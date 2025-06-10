@@ -1,10 +1,10 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProvidersService } from '../../service/providers.service';
-import { ProviderWithServicesDTO } from 'src/app/feature/cart/models/ProviderWithServicesDTO';
 import { CommonModule } from '@angular/common';
 import { FeedbackComponent } from 'src/app/feature/feedbacks/components/feedback/feedback.component';
 import { FeedbackFormComponent } from 'src/app/feature/feedbacks/components/feedback-form/feedback-form.component';
+import { catchError, map, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-provider-one',
@@ -16,22 +16,18 @@ import { FeedbackFormComponent } from 'src/app/feature/feedbacks/components/feed
 export class ProviderOneComponent {
   private _route = inject(ActivatedRoute);
   private _providerService = inject(ProvidersService);
+  error: string | null = null;
 
-  provider = signal<ProviderWithServicesDTO | null>(null);
-  error = signal<string | null>(null);
-
-  id = computed(() => Number(this._route.snapshot.paramMap.get('id')));
-
-  constructor() {
-    effect(() => {
-      const providerId = this.id();
-      this._providerService.getProviderWithServices(providerId).subscribe({
-        next: data => this.provider.set(data),
-        error: err => {
-          this.error.set('Provider not found or server error');
-          console.error(err);
-        },
-      });
-    });
-  }
+provider$ = this._route.paramMap.pipe(
+  map(params => params.get('id')),
+  switchMap(id => {
+    if (!id) return of(null);  
+    return this._providerService.getProviderWithServices(+id).pipe(
+      catchError(err => {
+        console.error(err);
+        return of(null); 
+      })
+    );
+  })
+);
 }

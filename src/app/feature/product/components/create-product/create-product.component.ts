@@ -24,8 +24,6 @@ export class CreateProductComponent {
 
   isAdmin$ = this._userStore.hasRole$('ROLE_ADMIN');
   onSubmit(): void {
-    console.log('Produit avant envoi:', this.newProduct);
-
     this._productFacadeService.post$(this.newProduct).subscribe({
       next: (res: ProductForCreation) => {
         console.log('Produit créé avec succès:', res);
