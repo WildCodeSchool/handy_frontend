@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CalendarComponent } from 'src/app/feature/calendar/calendar.component';
+import { CalendarComponent } from 'src/app/feature/calendars/components/calendar/calendar.component';
 import { UserProfilComponent } from 'src/app/feature/user/components/user-profil/user-profil.component';
 
 @Component({

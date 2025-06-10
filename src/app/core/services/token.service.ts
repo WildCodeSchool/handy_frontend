@@ -13,7 +13,7 @@ export class TokenService {
   setToken(token: string): void {
     this._token = token;
     localStorage.setItem('token', token);
-    console.log('Token sauvegardé dans localStorage:', token);
+    // console.log('Token sauvegardé dans localStorage:', token);
   }
 
   isLogged(): boolean {
@@ -23,7 +23,7 @@ export class TokenService {
   }
 
   getToken(): string | null {
-    console.log('Récupération du token:', this._token);
+    // console.log('Récupération du token:', this._token);
     return localStorage.getItem('token');
   }
 

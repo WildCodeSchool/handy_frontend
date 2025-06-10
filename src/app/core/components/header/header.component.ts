@@ -23,30 +23,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   isAdmin$ = this._userStore.hasRole$('ROLE_ADMIN');
 
-  //   ngOnInit(): void {
-  //     this._authSubscription = this._authService.authStatus$.subscribe((isLoggedIn: boolean) => {
-  //       this.isLoggedIn = isLoggedIn;
-  //     });
-
-  //     this._authSubscription = this._authService.authStatus$.subscribe(status => {
-  //       this.isLoggedIn = status;
-
-  //       if (status) {
-  //         const roles = this._authService.getRoleFromToken();
-  //         this.isProvider = roles.includes('ROLE_PROVIDER');
-  //       } else {
-  //         this.isProvider = false;
-  //       }
-  //     });
-  //   }
-
-  //   navigateToSignUpPage(): void {
-  //     this._router.navigate(['/auth']);
-  //   }
-  //   onLogout(): void {
-  //     this._authService.logout();
-  //   }
-  // }
   ngOnInit(): void {
     this._authSubscription = this._authService.authStatus$
       .pipe(

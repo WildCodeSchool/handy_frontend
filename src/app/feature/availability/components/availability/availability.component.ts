@@ -15,38 +15,46 @@ export class AvailabilityComponent implements OnInit {
   availability: any;
   newStartTime: string = '';
   newEndTime: string = '';
+  successMessage = '';
+  errorMessage = '';
 
   constructor(private _availabilityService: AvailabilityService) {}
 
   ngOnInit(): void {
     this._availabilityService.getMyAvailability().subscribe({
-      next: data => (this.availability = data),
-      error: err => console.error('Erreur:', err),
+      next: data => (this.availability = data)
     });
   }
-  //   createAvailability(): void {
-  //     if (!this.newStartTime || !this.newEndTime) return;
-
-  //     this._availabilityService.createMyAvailability(this.newStartTime, this.newEndTime).subscribe({
-  //       next: () => {
-  //         this.newStartTime = '';
-  //         this.newEndTime = '';
-  //         this._availabilityService.getMyAvailability().subscribe({
-  //           next: data => (this.availability = data),
-  //           error: err => console.error('Erreur:', err),
-  //         });
-  //       },
-  //       error: err => console.error('Erreur lors de la création:', err),
-  //     });
-  //   }
-
+ 
   createAvailability(): void {
+    this.successMessage = '';
+    this.errorMessage = '';
+
+  const newStart = new Date(this.newStartTime).getTime();
+  const newEnd = new Date(this.newEndTime).getTime();
+
+  const isTaken = this.availability?.some((slot: any) => {
+    const slotStart = new Date(slot.startTime).getTime();
+    const slotEnd = new Date(slot.endTime).getTime();
+
+    return (
+      (newStart >= slotStart && newStart < slotEnd) ||
+      (newEnd > slotStart && newEnd <= slotEnd) ||
+      (newStart <= slotStart && newEnd >= slotEnd) 
+    );
+  });
+
+  if (isTaken) {
+    this.errorMessage = 'Cette plage de disponibilité existe déjà.';
+    return;
+  }
     this._availabilityService
       .createMyAvailability(this.newStartTime, this.newEndTime)
       .pipe(
         switchMap(() => {
           this.newStartTime = '';
           this.newEndTime = '';
+          this.successMessage = 'Disponibilité ajoutée avec succès.';
           return this._availabilityService.getMyAvailability().pipe(take(1));
         })
       )
@@ -54,6 +62,7 @@ export class AvailabilityComponent implements OnInit {
         next: data => {
           this.availability = data;
         },
+        
       });
   }
 }
