@@ -18,16 +18,16 @@ export class ProviderOneComponent {
   private _providerService = inject(ProvidersService);
   error: string | null = null;
 
-provider$ = this._route.paramMap.pipe(
-  map(params => params.get('id')),
-  switchMap(id => {
-    if (!id) return of(null);  
-    return this._providerService.getProviderWithServices(+id).pipe(
-      catchError(err => {
-        console.error(err);
-        return of(null); 
-      })
-    );
-  })
-);
+  provider$ = this._route.paramMap.pipe(
+    map(params => params.get('id')),
+    switchMap(id => {
+      if (!id) return of(null);
+      return this._providerService.getProviderWithServices(+id).pipe(
+        catchError(err => {
+          console.error(err);
+          return of(null);
+        })
+      );
+    })
+  );
 }

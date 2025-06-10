@@ -32,7 +32,6 @@ export class CreateCartComponent implements OnInit {
   providerMap: Record<number, ProviderWithServicesDTO> = {};
   serviceMap: Record<string, AppProvider> = {};
 
-
   // constructor(
   //   private _cartService: CartService,
   //   private _availabilityService: AvailabilityService,
@@ -44,7 +43,7 @@ export class CreateCartComponent implements OnInit {
   private _authService = inject(AuthService);
   private _destroyRef = inject(DestroyRef);
 
-  confirmationMessage$ = this._cartService.confirmationMessage$
+  confirmationMessage$ = this._cartService.confirmationMessage$;
   // ngOnInit(): void {
   //   this.emailClient = this._authService.getCurrentUserEmail()!;
   //   this._cartService.getProvidersWithServices().subscribe({
@@ -74,27 +73,29 @@ export class CreateCartComponent implements OnInit {
 
   ngOnInit(): void {
     this.emailClient = this._authService.getCurrentUserEmail()!;
-  
-    this._cartService.initCartState().pipe(
-      tap(cart => {
-        this.cart = cart;
-  
-        const uniqueUserIds = [...new Set(cart.map(item => item.userId))];
-        uniqueUserIds.forEach(providerId => this.loadAvailabilityForProvider(providerId));
-      })
-    )
-    .subscribe();
-  
+
+    this._cartService
+      .initCartState()
+      .pipe(
+        tap(cart => {
+          this.cart = cart;
+
+          const uniqueUserIds = [...new Set(cart.map(item => item.userId))];
+          uniqueUserIds.forEach(providerId => this.loadAvailabilityForProvider(providerId));
+        })
+      )
+      .subscribe();
+
     this._cartService.serviceMap$.subscribe(map => {
       this.serviceMap = map;
     });
-  
+
     this._cartService.providerMap$.subscribe(map => {
       this.providerMap = map;
     });
   }
-  
-    showToast(message: string, type: 'success' | 'error'): void {
+
+  showToast(message: string, type: 'success' | 'error'): void {
     this.toastMessage = message;
     this.toastType = type;
     setTimeout(() => {

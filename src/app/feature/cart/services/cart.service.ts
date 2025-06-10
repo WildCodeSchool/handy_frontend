@@ -17,7 +17,7 @@ export class CartService {
   cart$ = this._cartSubject.asObservable();
 
   providersWithServices: ProviderWithServicesDTO[] = [];
-  confirmationMessage$ = new Subject<string>()
+  confirmationMessage$ = new Subject<string>();
 
   public _providerMap = new BehaviorSubject<Record<number, ProviderWithServicesDTO>>({});
   public serviceMapSync: Record<string, any> = {};
@@ -26,7 +26,10 @@ export class CartService {
   providerMap$ = this._providerMap.asObservable();
   serviceMap$ = this._serviceMap.asObservable();
 
-  constructor(private _http: HttpClient, private _autservice: AuthService) {}
+  constructor(
+    private _http: HttpClient,
+    private _autservice: AuthService
+  ) {}
 
   getProvidersWithServices(): Observable<ProviderWithServicesDTO[]> {
     return this._http.get<ProviderWithServicesDTO[]>(this._providersUrl);
@@ -62,7 +65,7 @@ export class CartService {
 
     return this._http.post(this._submitUrl, this._cartItems, { headers }).pipe(
       tap(() => {
-        this.confirmationMessage$.next( '✅ Votre commande a été envoyée avec succès.');
+        this.confirmationMessage$.next('✅ Votre commande a été envoyée avec succès.');
         this.clearCart();
       })
     );
@@ -75,10 +78,10 @@ export class CartService {
         const mapObj = Object.fromEntries(this.providersWithServices.map(p => [p.providerId, p]));
         this._providerMap.next(mapObj);
       }),
-      switchMap(() => this.cart$),  // simple flux panier
+      switchMap(() => this.cart$), // simple flux panier
       tap(cart => {
         const serviceMap: Record<string, any> = {};
-  
+
         const providerMap = this._providerMap.getValue();
         cart.forEach(item => {
           const provider = providerMap[item.userId];
@@ -88,7 +91,7 @@ export class CartService {
           }
         });
         this._serviceMap.next(serviceMap);
-this.serviceMapSync = serviceMap;
+        this.serviceMapSync = serviceMap;
       })
     );
   }

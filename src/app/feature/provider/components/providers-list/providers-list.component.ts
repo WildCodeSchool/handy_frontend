@@ -42,19 +42,21 @@ export class ProvidersListComponent implements OnInit {
   //   });
   // }
   ngOnInit(): void {
-    this._cartService.getProvidersWithServices().pipe(
-      tap(data => {
-        this.providersWithServices = data.map(provider => ({
-          ...provider,
-          services: provider.services || [],
-        }));
-      }),
-      switchMap(() => this._cartService.cart$),
-      tap(cart => {
-        this.selectedServices = cart;
-      })
-    )
-    .subscribe();
+    this._cartService
+      .getProvidersWithServices()
+      .pipe(
+        tap(data => {
+          this.providersWithServices = data.map(provider => ({
+            ...provider,
+            services: provider.services || [],
+          }));
+        }),
+        switchMap(() => this._cartService.cart$),
+        tap(cart => {
+          this.selectedServices = cart;
+        })
+      )
+      .subscribe();
   }
 
   addToCart(providerId: number, serviceId: number): void {
