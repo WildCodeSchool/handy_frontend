@@ -21,7 +21,10 @@ export class ProviderProfilComponent implements OnInit {
   selectedProvisionId?: number;
   message = '';
 
-  constructor(private _productService: ProductService, private _providersService: ProvidersService) {}
+  constructor(
+    private _productService: ProductService,
+    private _providersService: ProvidersService
+  ) {}
 
   ngOnInit(): void {
     this.loadProvisions();

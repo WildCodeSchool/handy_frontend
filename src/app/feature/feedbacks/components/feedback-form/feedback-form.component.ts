@@ -33,7 +33,8 @@ export class FeedbackFormComponent {
       .createFeedback({
         content: this.content,
         userId: this.userId,
-      }).pipe(take(1))
+      })
+      .pipe(take(1))
       .subscribe({
         next: () => {
           this.successMessage = 'Feedback envoyé avec succès !';

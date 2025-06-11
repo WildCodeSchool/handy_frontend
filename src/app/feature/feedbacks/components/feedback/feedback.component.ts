@@ -19,15 +19,15 @@ export class FeedbackComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['userId'] && this.userId) {
-      this._feedbackService.getFeedbacksByUserId(this.userId)
+      this._feedbackService
+        .getFeedbacksByUserId(this.userId)
         .pipe(
-          tap(feedbacks => this.feedbacks = feedbacks), 
-          tap(() => console.log('Feedbacks chargés avec succès', this.feedbacks)) 
+          tap(feedbacks => (this.feedbacks = feedbacks)),
+          tap(() => console.log('Feedbacks chargés avec succès', this.feedbacks))
         )
         .subscribe({
-          error: err => console.error('Erreur chargement feedbacks:', err)
+          error: err => console.error('Erreur chargement feedbacks:', err),
         });
     }
   }
-
 }
