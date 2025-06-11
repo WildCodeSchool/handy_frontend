@@ -40,8 +40,8 @@
         </div>
       </div>
 
-      <app-feedback [userId]="provider.providerId ?? 0"></app-feedback>
-      <app-feedback-form [userId]="provider.providerId ?? 0"></app-feedback-form>
+      <app-feedback [userId]="provider.providerId"></app-feedback>
+      <app-feedback-form [userId]="provider.providerId"></app-feedback-form>
     </div>
   } @else {
     <p>{{ error }}</p>

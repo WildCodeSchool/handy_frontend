@@ -4,13 +4,16 @@ import { BehaviorSubject, Observable, Subject, switchMap, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ProviderWithServicesDTO } from '../models/ProviderWithServicesDTO';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  private _providersUrl = 'http://localhost:8080/users/providers-with-services';
-  private _submitUrl = 'http://localhost:8080/provision-users/batch';
+  // private _providersUrl = 'http://localhost:8080/users/providers-with-services';
+  // private _submitUrl = 'http://localhost:8080/provision-users/batch';
+  private _providersUrl = `${environment.apiUrl}/users/providers-with-services`;
+private _submitUrl = `${environment.apiUrl}/provision-users/batch`;
 
   private _cartItems: ProvisionCartItem[] = [];
   private _cartSubject = new BehaviorSubject<ProvisionCartItem[]>([]);
@@ -78,7 +81,7 @@ export class CartService {
         const mapObj = Object.fromEntries(this.providersWithServices.map(p => [p.providerId, p]));
         this._providerMap.next(mapObj);
       }),
-      switchMap(() => this.cart$), // simple flux panier
+      switchMap(() => this.cart$), 
       tap(cart => {
         const serviceMap: Record<string, any> = {};
 

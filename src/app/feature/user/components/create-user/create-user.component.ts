@@ -22,6 +22,4 @@ export class CreateUserComponent {
   selectRole(role: 'client' | 'provider'): void {
     this.selectedRole = role;
   }
-
-  
 }
