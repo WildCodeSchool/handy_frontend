@@ -1,6 +1,8 @@
 <header class="bg-dark text-white py-3">
   <div class="container d-flex justify-content-between align-items-center">
-    <!-- Logo -->
+    <div class="col-12 col-md-3 mb-4 mb-md-0">
+      <img src="assets/logo.png" alt="Logo Alfred" class="img-fluid" />
+    </div>
     <span class="header-logo">Handy App</span>
 
     <nav class="d-none d-md-flex gap-4">
@@ -20,6 +22,8 @@
     }
     @if (isAdmin$ | async) {
       <a [routerLink]="'/admin'" class="nav-link">Mon profil (admin)</a>
+    } @else {
+      <a [routerLink]="'/client'" class="nav-link">Mon profil (client)</a>
     }
     <button class="btn btn-light d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu">☰</button>
   </div>

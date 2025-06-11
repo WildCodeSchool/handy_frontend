@@ -1,31 +1,68 @@
 <p>providers-list works!</p>
-<a [routerLink]="'/order'" class="order-button">Passer commande par ici</a>
-
-<div class="provider-container">
-  @for (provider of providersWithServices; track provider.providerId) {
-    <div class="provider-card">
-      <div class="provider-info">
-        <h3>{{ provider.firstName }} {{ provider.lastName }}</h3>
-        <p><strong>Email:</strong> {{ provider.email || 'Email non spécifié' }}</p>
-        <p><strong>Ville:</strong> {{ provider.city || 'Ville non spécifiée' }}</p>
+<div class="container-fluid p-5 text-white banner-background">
+  <div class="row justify-content-md-end justify-content-center">
+    <div class="col-md-6 text-md-end text-center">
+      <h1 class="fw-bold display-4">Prêt pour trouver votre assitant ?</h1>
+      <h1 class="fw-bold display-4 text-primary">Vos attentes?</h1>
+      <p class="lead text-light mt-3 mb-4">Vestibulum sed arcu non odio euismod lacinia at quis risus. Massa massa ultricies mi quis.</p>
+      <a [routerLink]="'/order'" class="btn btn-primary btn-lg fw-bold px-4 py-2">Passer commande par ici</a>
+    </div>
+  </div>
+</div>
+<div class="bg-dark text-white py-3 px-3 px-lg-5">
+  <div class="container-fluid">
+    <div class="row align-items-center justify-content-between">
+      <div class="col-12 col-sm-auto mb-3 mb-sm-0">
+        <span>Sign Up for 15% off your first order</span>
       </div>
 
-      @if (provider.services.length > 0) {
-        <div class="service-list">
-          <h4>Services disponibles :</h4>
-          <ul>
-            @for (service of provider.services.slice(0, 3); track service.id) {
-              <li class="service-item">
-                <span
-                  >{{ service.name }} <em>(prix: {{ service.coeff }})</em></span
-                >
-              </li>
-            }
-          </ul>
-        </div>
-      } @else {
-        <p class="no-service">Aucun service disponible</p>
-      }
+      <div class="col-12 col-sm-auto">
+        <span>EUR</span>
+      </div>
     </div>
-  }
+  </div>
+</div>
+<!-- <div class="w-100">
+  <img src="assets/shopping.jpg" alt="Bannière shopping" class="img-fluid w-100" style="max-height: 400px; object-fit: cover" />
+</div> -->
+<!-- <a [routerLink]="'/order'" class="order-button">Passer commande par ici</a> -->
+
+<div class="container my-5">
+  <h2 class="text-dark display-5 fw-medium mb-4 text-center text-lg-start">Liste des prestataires</h2>
+  <p class="fs-4 text-muted mb-5 text-center text-lg-start">Mata tincidunt dui ut ornare</p>
+
+  <div class="row g-4">
+    @for (provider of providersWithServices; track provider.providerId) {
+      <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+        <a [routerLink]="['/provider', provider.providerId]" class="text-decoration-none">
+          <div class="border rounded h-100 p-3 d-flex flex-column justify-content-between bg-white shadow-sm">
+            <img src="assets/call.jpg" class="img-fluid mb-3" alt="Provider Image" />
+
+            <div class="provider-info">
+              <h5 class="fw-bold text-dark">{{ provider.firstName }} {{ provider.lastName }}</h5>
+              <p class="mb-1 text-muted"><strong>Email:</strong> {{ provider.email || 'Email non spécifié' }}</p>
+              <p class="mb-3 text-muted"><strong>Ville:</strong> {{ provider.city || 'Ville non spécifiée' }}</p>
+            </div>
+
+            @if (provider.services.length > 0) {
+              <div class="service-list border-top pt-2">
+                <h6 class="text-muted">Services disponibles :</h6>
+                <ul class="list-unstyled mb-0">
+                  @for (service of provider.services.slice(0, 3); track service.id) {
+                    <li class="d-flex justify-content-between small text-dark">
+                      <span
+                        >{{ service.name }} <em>(prix: {{ service.coeff }})</em></span
+                      >
+                    </li>
+                  }
+                </ul>
+              </div>
+            } @else {
+              <p class="text-muted fst-italic small mt-2">Aucun service disponible</p>
+            }
+          </div>
+        </a>
+      </div>
+    }
+  </div>
 </div>

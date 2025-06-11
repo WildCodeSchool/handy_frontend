@@ -14,7 +14,7 @@ import { CreateCartComponent } from './feature/cart/components/create-cart/creat
 import { ProvidersListComponent } from './feature/provider/components/providers-list/providers-list.component';
 import { ProviderOneComponent } from './feature/provider/components/provider-one/provider-one.component';
 import { AvailabilityComponent } from './feature/availability/components/availability/availability.component';
-import { CalendarComponent } from './feature/calendar/calendar.component';
+import { CalendarComponent } from './feature/calendars/components/calendar/calendar.component';
 
 export const routes: Routes = [
   {
@@ -48,6 +48,10 @@ export const routes: Routes = [
     component: ProviderHomeComponent,
 
     canActivate: [isProviderGuard],
+  },
+  {
+    path: 'provider/:id',
+    loadComponent: () => import('./feature/provider/components/provider-one/provider-one.component').then(m => m.ProviderOneComponent),
   },
   {
     path: 'admin',

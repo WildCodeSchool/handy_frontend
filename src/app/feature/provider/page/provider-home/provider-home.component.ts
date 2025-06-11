@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { CalendarComponent } from 'src/app/feature/calendar/calendar.component';
+import { CalendarComponent } from 'src/app/feature/calendars/components/calendar/calendar.component';
+import { UserProfilComponent } from 'src/app/feature/user/components/user-profil/user-profil.component';
+import { ProviderProfilComponent } from '../../components/provider-profil/provider-profil.component';
 
 @Component({
   selector: 'app-provider-home',
   standalone: true,
-  imports: [CalendarComponent],
+  imports: [CalendarComponent, UserProfilComponent, ProviderProfilComponent],
   templateUrl: './provider-home.component.html',
   styleUrl: './provider-home.component.scss',
 })

@@ -44,11 +44,9 @@ export class AuthService {
       tap(res => {
         this.saveToken(res.token);
         this.storeToken(res.token);
-        console.log('token stored');
         this._userStore.initializeRoles();
         this._authStatus$.next(true);
 
-        console.log('les roles');
         const roles = this.getRoleFromToken();
 
         if (roles.includes('ROLE_PROVIDER')) {

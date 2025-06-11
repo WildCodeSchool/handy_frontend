@@ -1,15 +1,49 @@
 <p>provider-one works!</p>
-<div *ngIf="provider(); else errorBlock">
-  <h2>{{ provider()?.firstName }} {{ provider()?.lastName }}</h2>
-  <p>Email: {{ provider()?.email }}</p>
-  <p>City: {{ provider()?.city }}</p>
 
-  <h3>Services:</h3>
-  <ul>
-    <li *ngFor="let service of provider()?.services?.slice(0, 3) ?? []">{{ service.name }} (Coeff: {{ service.coeff }})</li>
-  </ul>
+<div class="container py-5 px-3 px-md-4 px-lg-5">
+  @let provider = provider$ | async;
+  @if (provider) {
+    <div class="mb-5">
+      <div class="card shadow-sm rounded-4 p-4 max-w-600">
+        <div class="d-flex mb-3">
+          <div class="flex-grow-1 pe-3">
+            <div class="fw-semibold mb-2">{{ provider.firstName }} {{ provider.lastName }}</div>
+
+            <div class="mb-3 text-warning">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star"></i>
+            </div>
+
+            <p class="mb-0 text-secondary lh-sm">Prestataire basé à {{ provider.city }}.</p>
+            <p class="mb-0 text-secondary lh-sm">Prestataire basé à {{ provider.email }}.</p>
+          </div>
+
+          <img src="assets/testimonials/testimonials-2.png" alt="Image prestataire" class="img-fluid rounded custom-img-75" />
+        </div>
+
+        <hr />
+
+        <div class="d-flex align-items-center">
+          <img src="assets/images/blocks/ecommerce/review/review-1-2.png" alt="Produit" class="img-fluid me-3 rounded custom-img-48" />
+          <div>
+            <div class="fw-semibold">Services proposés :</div>
+
+            <ul class="mb-0">
+              @for (service of provider.services?.slice(0, 3) ?? []; track service.id) {
+                <li>{{ service.name }} (Coeff: {{ service.coeff }})</li>
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <app-feedback [userId]="provider.providerId"></app-feedback>
+      <app-feedback-form [userId]="provider.providerId"></app-feedback-form>
+    </div>
+  } @else {
+    <p>{{ error }}</p>
+  }
 </div>
-
-<ng-template #errorBlock>
-  <p *ngIf="error()">{{ error() }}</p>
-</ng-template>

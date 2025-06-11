@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { Observable, switchMap, tap } from 'rxjs';
 import { ProviderWithServicesDTO } from 'src/app/feature/cart/models/ProviderWithServicesDTO';
 import { CartService } from 'src/app/feature/cart/services/cart.service';
 import { AppProvider } from 'src/app/feature/product/models/provider';
@@ -15,6 +16,7 @@ import { AppProvider } from 'src/app/feature/product/models/provider';
 export class ProvidersListComponent implements OnInit {
   providersWithServices: ProviderWithServicesDTO[] = [];
   selectedServices: { userId: number; provisionId: number }[] = [];
+  providersWithServices$!: Observable<ProviderWithServicesDTO[]>;
 
   selectedProvider: AppProvider[] = [];
   constructor(
@@ -23,21 +25,21 @@ export class ProvidersListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this._cartService.getProvidersWithServices().subscribe({
-      next: data => {
-        this.providersWithServices = data.map(provider => ({
-          ...provider,
-          services: provider.services || [],
-        }));
-      },
-      error: err => {
-        console.error('Erreur lors de la récupération des providers:', err);
-      },
-    });
-
-    this._cartService.cart$.subscribe(cart => {
-      this.selectedServices = cart;
-    });
+    this._cartService
+      .getProvidersWithServices()
+      .pipe(
+        tap(data => {
+          this.providersWithServices = data.map(provider => ({
+            ...provider,
+            services: provider.services || [],
+          }));
+        }),
+        switchMap(() => this._cartService.cart$),
+        tap(cart => {
+          this.selectedServices = cart;
+        })
+      )
+      .subscribe();
   }
 
   addToCart(providerId: number, serviceId: number): void {
@@ -48,17 +50,14 @@ export class ProvidersListComponent implements OnInit {
       const item = { userId, provisionId: serviceId };
       this.selectedServices.push(item);
       this._cartService.addToCart(item);
-      console.log('Ajouté au panier :', item);
     }
   }
 
   clearCart(): void {
     this._cartService.clearCart();
     this.selectedServices = [];
-    console.log('Panier vidé');
   }
   removeFromCart(providerId: number, provisionId: number): void {
     this._cartService.removeFromCart(providerId, provisionId);
-    console.log(`Supprimé du panier: Provider ID = ${providerId}, Service ID = ${provisionId}`);
   }
 }

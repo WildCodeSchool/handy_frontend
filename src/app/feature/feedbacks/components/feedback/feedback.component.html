@@ -1,0 +1,14 @@
+@let hasFeedback = feedbacks.length > 0;
+
+@if (hasFeedback) {
+  <div class="feedback-section mt-5">
+    <h4 class="mb-3">Commentaires :</h4>
+    <ul class="list-group">
+      @for (fb of feedbacks; track fb.id) {
+        <li class="list-group-item">{{ fb.content }}</li>
+      }
+    </ul>
+  </div>
+} @else {
+  <p class="text-muted fst-italic">Aucun commentaire disponible.</p>
+}

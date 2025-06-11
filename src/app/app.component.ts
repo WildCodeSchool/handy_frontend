@@ -14,10 +14,6 @@ import { UserStoreService } from './core/services/user-store.service';
 })
 export class AppComponent implements OnInit {
   constructor(private _userStore: UserStoreService) {}
-
-  // ngOnInit(): void {
-  //   this._userStore.initializeRoles();
-  // }
   ngOnInit(): void {
     if (localStorage.getItem('token')) {
       this._userStore.initializeRoles();

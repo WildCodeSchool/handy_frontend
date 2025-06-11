@@ -3,15 +3,8 @@ import { CartService } from '../../services/cart.service';
 import { HttpClient } from '@angular/common/http';
 import { AppProvider } from 'src/app/feature/product/models/provider';
 import { CommonModule } from '@angular/common';
-
-export type ProviderWithServicesDTO = {
-  providerId: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  city: string;
-  services: AppProvider[];
-};
+import { ProviderWithServicesDTO } from '../../models/ProviderWithServicesDTO';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-order-cart',
@@ -31,20 +24,26 @@ export class OrderCartComponent implements OnInit {
     private _http: HttpClient,
     private _cartService: CartService
   ) {}
-
   ngOnInit(): void {
-    this._cartService.getProvidersWithServices().subscribe({
-      next: data => {
-        this.providersWithServices = data.map(provider => ({
-          ...provider,
-          services: provider.services || [],
-        }));
-      },
-    });
+    this._cartService
+      .getProvidersWithServices()
+      .pipe(
+        tap(data => {
+          this.providersWithServices = data.map(provider => ({
+            ...provider,
+            services: provider.services || [],
+          }));
+        })
+      )
+      .subscribe();
 
-    this._cartService.cart$.subscribe(cart => {
-      this.selectedServices = cart;
-    });
+    this._cartService.cart$
+      .pipe(
+        tap(cart => {
+          this.selectedServices = cart;
+        })
+      )
+      .subscribe();
   }
 
   addToCart(providerId: number, serviceId: number): void {
@@ -85,3 +84,4 @@ export class OrderCartComponent implements OnInit {
     this.isSelectedServicesVisible = false;
   }
 }
+export type { ProviderWithServicesDTO };

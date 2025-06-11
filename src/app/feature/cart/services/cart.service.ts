@@ -1,81 +1,36 @@
 import { Injectable } from '@angular/core';
 import { ProvisionCartItem } from '../models/ProvisionCartItem';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, switchMap, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ProviderWithServicesDTO } from '../models/ProviderWithServicesDTO';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
-// export class CartService {
-//   private _providersUrl = 'http://localhost:8080/users/providers-with-services';
-//   private _submitUrl = 'http://localhost:8080/provision-users';
-
-//   private _cartItems: ProvisionCartItem[] = [];
-//   providersWithServices: ProviderWithServicesDTO[] = [];
-//   private _cartSubject = new BehaviorSubject<ProvisionCartItem[]>([]);
-//   cart$ = this._cartSubject.asObservable();
-
-//   constructor(private _http: HttpClient) {}
-
-//   getProvidersWithServices(): Observable<ProviderWithServicesDTO[]> {
-//     return this._http.get<ProviderWithServicesDTO[]>(this._providersUrl);
-//   }
-
-//   addToCart(item: ProvisionCartItem): void {
-//     const exists = this._cartItems.some(existingItem => existingItem.userId === item.userId && existingItem.provisionId === item.provisionId);
-
-//     if (!exists) {
-//       this._cartItems.push(item);
-//       this._cartSubject.next(this._cartItems);
-//     } else {
-//       console.log('[ Déjà présent dans le panier]', item);
-//     }
-//   }
-
-//   getCartItems(): ProvisionCartItem[] {
-//     return this._cartItems;
-//   }
-
-//   clearCart(): void {
-//     this._cartItems = [];
-//     this._cartSubject.next(this._cartItems);
-//   }
-
-//   removeFromCart(providerId: number, provisionId: number): void {
-//     this._cartItems = this._cartItems.filter(item => item.userId !== providerId || item.provisionId !== provisionId);
-//     this._cartSubject.next(this._cartItems);
-//   }
-//   submitCart(): Observable<any> {
-//     console.log('Données envoyées au serveur:', this._cartItems);
-
-//     const headers = new HttpHeaders({
-//       'Content-Type': 'application/json',
-//     });
-
-//     console.log('[✅ Envoi] Données envoyées :', this._cartItems);
-
-//     const batchUrl = 'http://localhost:8080/provision-users/batch';
-//     return this._http.post(batchUrl, this._cartItems, { headers }).pipe(
-//       catchError(error => {
-//         console.error('Erreur de soumission du panier :', error);
-//         return throwError(() => new Error('Erreur lors de la soumission du panier'));
-//       })
-//     );
-//   }
-
-// }
 export class CartService {
-  private _providersUrl = 'http://localhost:8080/users/providers-with-services';
-  private _submitUrl = 'http://localhost:8080/provision-users/batch';
+  private _providersUrl = `${environment.apiUrl}/users/providers-with-services`;
+  private _submitUrl = `${environment.apiUrl}/provision-users/batch`;
 
   private _cartItems: ProvisionCartItem[] = [];
   private _cartSubject = new BehaviorSubject<ProvisionCartItem[]>([]);
   cart$ = this._cartSubject.asObservable();
 
   providersWithServices: ProviderWithServicesDTO[] = [];
+  confirmationMessage$ = new Subject<string>();
 
-  constructor(private _http: HttpClient) {}
+  public _providerMap = new BehaviorSubject<Record<number, ProviderWithServicesDTO>>({});
+  public serviceMapSync: Record<string, any> = {};
+
+  private _serviceMap = new BehaviorSubject<Record<string, any>>({});
+  providerMap$ = this._providerMap.asObservable();
+  serviceMap$ = this._serviceMap.asObservable();
+
+  constructor(
+    private _http: HttpClient,
+    private _autservice: AuthService
+  ) {}
 
   getProvidersWithServices(): Observable<ProviderWithServicesDTO[]> {
     return this._http.get<ProviderWithServicesDTO[]>(this._providersUrl);
@@ -111,8 +66,33 @@ export class CartService {
 
     return this._http.post(this._submitUrl, this._cartItems, { headers }).pipe(
       tap(() => {
-        alert('✅ Votre commande a été envoyée avec succès.');
+        this.confirmationMessage$.next('✅ Votre commande a été envoyée avec succès.');
         this.clearCart();
+      })
+    );
+  }
+
+  initCartState(): Observable<ProvisionCartItem[]> {
+    return this.getProvidersWithServices().pipe(
+      tap(providers => {
+        this.providersWithServices = providers.map(p => ({ ...p, services: p.services || [] }));
+        const mapObj = Object.fromEntries(this.providersWithServices.map(p => [p.providerId, p]));
+        this._providerMap.next(mapObj);
+      }),
+      switchMap(() => this.cart$),
+      tap(cart => {
+        const serviceMap: Record<string, any> = {};
+
+        const providerMap = this._providerMap.getValue();
+        cart.forEach(item => {
+          const provider = providerMap[item.userId];
+          const service = provider?.services.find(s => s.id === item.provisionId);
+          if (service) {
+            serviceMap[`${item.userId}_${item.provisionId}`] = service;
+          }
+        });
+        this._serviceMap.next(serviceMap);
+        this.serviceMapSync = serviceMap;
       })
     );
   }
