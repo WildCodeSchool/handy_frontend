@@ -15,7 +15,6 @@ export class UsersService {
     return this._http.get<UserProfil>(`${this._apiUrl}/me`);
   }
 
-  // Mettre à jour le profil de l'utilisateur
   updateUserProfile(userProfile: UserProfil): Observable<UserProfil> {
     return this._http.put<UserProfil>(`${this._apiUrl}/update`, userProfile);
   }

@@ -34,17 +34,18 @@ export class DeleteProductComponent {
   // }
 
   deleteProduct(): void {
-    this._productService.deleteProvision$(this.product.id).pipe(
-      take(1),
-      tap({
-        next: () => {
-          console.log('Produit supprimé avec succès');
-          this.productDeleted.emit(this.product.id);
-          this.successMessageUpdate = 'Produit supprimé avec succès !';
-        },
-        
-      })
-    )
-    .subscribe(); 
+    this._productService
+      .deleteProvision$(this.product.id)
+      .pipe(
+        take(1),
+        tap({
+          next: () => {
+            console.log('Produit supprimé avec succès');
+            this.productDeleted.emit(this.product.id);
+            this.successMessageUpdate = 'Produit supprimé avec succès !';
+          },
+        })
+      )
+      .subscribe();
   }
 }

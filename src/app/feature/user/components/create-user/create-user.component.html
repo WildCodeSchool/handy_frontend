@@ -1,4 +1,4 @@
-<p>create-user works!</p>
+<!-- <p>create-user works!</p>
 <div class="mb-4 d-flex justify-content-center">
   <h2>Je suis :</h2>
   <button type="button" class="btn btn-outline-primary me-2" [class.active]="selectedRole === 'client'" (click)="selectRole('client')">Client</button>
@@ -146,4 +146,14 @@
       </fieldset>
     </form>
   </div>
-}
+} -->
+<div class="mb-4 d-flex justify-content-center">
+  <h2>Je suis :</h2>
+  <button type="button" class="btn btn-outline-primary me-2" [class.active]="selectedRole === 'client'" (click)="selectRole('client')">Client</button>
+  <button type="button" class="btn btn-outline-primary" [class.active]="selectedRole === 'provider'" (click)="selectRole('provider')">Prestataire</button>
+</div>
+
+<ng-container [ngSwitch]="selectedRole">
+  <app-client-sign-up *ngSwitchCase="'client'"></app-client-sign-up>
+  <app-provider-sign-up *ngSwitchCase="'provider'"></app-provider-sign-up>
+</ng-container>

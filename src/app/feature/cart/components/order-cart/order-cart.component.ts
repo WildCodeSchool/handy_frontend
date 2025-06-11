@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { AppProvider } from 'src/app/feature/product/models/provider';
 import { CommonModule } from '@angular/common';
 import { ProviderWithServicesDTO } from '../../models/ProviderWithServicesDTO';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-order-cart',
@@ -23,20 +24,22 @@ export class OrderCartComponent implements OnInit {
     private _http: HttpClient,
     private _cartService: CartService
   ) {}
-
   ngOnInit(): void {
-    this._cartService.getProvidersWithServices().subscribe({
-      next: data => {
+    this._cartService.getProvidersWithServices().pipe(
+      tap(data => {
         this.providersWithServices = data.map(provider => ({
           ...provider,
           services: provider.services || [],
         }));
-      },
-    });
-
-    this._cartService.cart$.subscribe(cart => {
-      this.selectedServices = cart;
-    });
+      })
+    )
+    .subscribe();
+  
+    this._cartService.cart$.pipe(
+      tap(cart => {
+        this.selectedServices = cart;
+      })
+    ).subscribe();
   }
 
   addToCart(providerId: number, serviceId: number): void {
