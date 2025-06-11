@@ -22,8 +22,7 @@
     }
     @if (isAdmin$ | async) {
       <a [routerLink]="'/admin'" class="nav-link">Mon profil (admin)</a>
-    }
-    @else {
+    } @else {
       <a [routerLink]="'/client'" class="nav-link">Mon profil (client)</a>
     }
     <button class="btn btn-light d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu">☰</button>

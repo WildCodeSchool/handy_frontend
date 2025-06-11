@@ -23,17 +23,14 @@ export class CreateProductComponent {
   private _userStore = inject(UserStoreService);
 
   isAdmin$ = this._userStore.hasRole$('ROLE_ADMIN');
-  // hasAccess$ = this._userStore
-  //   .hasRole$('ROLE_ADMIN')
-  //   .pipe(switchMap(isAdmin => this._userStore.hasRole$('ROLE_PROVIDER').pipe(map(isProvider => isAdmin || isProvider))));
-
+  
   onSubmit(): void {
     this._productFacadeService.post$(this.newProduct).subscribe({
       next: (res: ProductForCreation) => {
         console.log('Produit créé avec succès:', res);
         this.productCreated.emit(res);
       },
-      error: (err: any) => console.error('Erreur lors de la création du produit', err),
+      
     });
     this.successMessageUpdate = 'Produit créé avec succès !';
   }
