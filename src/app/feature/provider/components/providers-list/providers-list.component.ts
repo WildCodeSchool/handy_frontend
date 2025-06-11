@@ -24,7 +24,6 @@ export class ProvidersListComponent implements OnInit {
     private _cartService: CartService
   ) {}
 
-  
   ngOnInit(): void {
     this._cartService
       .getProvidersWithServices()

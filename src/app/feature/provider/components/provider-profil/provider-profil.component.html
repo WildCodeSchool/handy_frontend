@@ -1,3 +1,29 @@
 <!-- <p>provider-profil works!</p>
 <app-calendar></app-calendar>
 <app-user-profil></app-user-profil> -->
+
+<h3>Liste des services disponibles</h3>
+
+<div *ngIf="provisions.length > 0; else noServices">
+  <ul>
+    <li *ngFor="let provision of provisions">
+      <label>
+        <input
+          type="radio"
+          name="selectedProvision"
+          [value]="provision.id"
+          [(ngModel)]="selectedProvisionId"
+        />
+        {{ provision.name }}
+      </label>
+    </li>
+  </ul>
+
+  <button type= "button"(click)="attachServiceToConnectedProvider()">Ajouter ce service</button>
+
+  <p *ngIf="message">{{ message }}</p>
+</div>
+
+<ng-template #noServices>
+  <p>Aucun service disponible.</p>
+</ng-template>

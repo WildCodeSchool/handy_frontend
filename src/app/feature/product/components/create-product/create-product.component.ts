@@ -25,11 +25,9 @@ export class CreateProductComponent {
 
   // isAdmin$ = this._userStore.hasRole$('ROLE_ADMIN');
   // isProvider$ = this._userStore.hasRole$('ROLE_PROVIDER');
-  hasAccess$ = this._userStore.hasRole$('ROLE_ADMIN').pipe(
-    switchMap(isAdmin => this._userStore.hasRole$('ROLE_PROVIDER').pipe(
-      map(isProvider => isAdmin || isProvider) 
-    ))
-  );
+  hasAccess$ = this._userStore
+    .hasRole$('ROLE_ADMIN')
+    .pipe(switchMap(isAdmin => this._userStore.hasRole$('ROLE_PROVIDER').pipe(map(isProvider => isAdmin || isProvider))));
 
   onSubmit(): void {
     this._productFacadeService.post$(this.newProduct).subscribe({
