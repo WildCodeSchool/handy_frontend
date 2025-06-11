@@ -9,7 +9,7 @@ import { ProvisionDto } from '../../product/models/provisionDto';
 })
 export class ProvidersService {
   private _providersUrl = 'http://localhost:8080/users/providers-with-services';
-  private _providersservicesUrl = 'http://localhost:8080/provision-users/create-service'
+  private _providersservicesUrl = 'http://localhost:8080/provision-users/create-service';
 
   constructor(private _http: HttpClient) {}
   getProviderWithServices(id: number): Observable<ProviderWithServicesDTO> {

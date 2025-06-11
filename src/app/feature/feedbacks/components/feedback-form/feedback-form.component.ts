@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FeedbackService } from '../../services/feedback.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-feedback-form',
@@ -32,7 +33,7 @@ export class FeedbackFormComponent {
       .createFeedback({
         content: this.content,
         userId: this.userId,
-      })
+      }).pipe(take(1))
       .subscribe({
         next: () => {
           this.successMessage = 'Feedback envoyé avec succès !';

@@ -8,18 +8,13 @@
   <ul>
     <li *ngFor="let provision of provisions">
       <label>
-        <input
-          type="radio"
-          name="selectedProvision"
-          [value]="provision.id"
-          [(ngModel)]="selectedProvisionId"
-        />
+        <input type="radio" name="selectedProvision" [value]="provision.id" [(ngModel)]="selectedProvisionId" />
         {{ provision.name }}
       </label>
     </li>
   </ul>
 
-  <button type= "button"(click)="attachServiceToConnectedProvider()">Ajouter ce service</button>
+  <button type="button" (click)="attachServiceToConnectedProvider()">Ajouter ce service</button>
 
   <p *ngIf="message">{{ message }}</p>
 </div>

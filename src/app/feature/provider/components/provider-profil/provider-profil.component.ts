@@ -21,19 +21,17 @@ export class ProviderProfilComponent implements OnInit {
   selectedProvisionId?: number;
   message = '';
 
-  constructor(
-    private _productService: ProductService,
-    private _providersService: ProvidersService
-  ) {}
+  constructor(private _productService: ProductService, private _providersService: ProvidersService) {}
 
   ngOnInit(): void {
     this.loadProvisions();
   }
 
   loadProvisions(): void {
-    this._productService.getAllProvisions$()
+    this._productService
+      .getAllProvisions$()
       .pipe(
-        tap((provisions) => {
+        tap(provisions => {
           this.provisions = provisions;
           this.message = '';
         })
@@ -46,24 +44,24 @@ export class ProviderProfilComponent implements OnInit {
       this.message = 'Veuillez sélectionner un service.';
       return;
     }
-  
+
     const provisionIdNum = Number(this.selectedProvisionId);
     if (isNaN(provisionIdNum)) {
       this.message = 'Veuillez sélectionner un service valide.';
       return;
     }
-  
+
     const dto: ProvisionDto[] = [{ provisionId: provisionIdNum }];
     console.log('Envoi au backend:', dto);
-  
-    this._providersService.attachServiceToConnectedProvider(dto)
+
+    this._providersService
+      .attachServiceToConnectedProvider(dto)
       .pipe(
         tap({
-          next: () => this.message = 'Service ajouté avec succès !',
+          next: () => (this.message = 'Service ajouté avec succès !'),
           error: () => {
-            this.message = 'Erreur lors de l\'ajout du service.';
-           
-          }
+            this.message = "Erreur lors de l'ajout du service.";
+          },
         })
       )
       .subscribe();
