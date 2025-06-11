@@ -1,4 +1,6 @@
-@if (isAdmin$ | async) {
+<!-- @if (isAdmin$ | async) { -->
+@let hasAccess = hasAccess$ | async;
+@if (hasAccess) {
   <div class="order-details-container">
     <form #myForm="ngForm" (ngSubmit)="onSubmit()">
       <h3>Créer un nouveau produit</h3>

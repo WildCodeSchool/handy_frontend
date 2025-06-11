@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ProviderFacadeService } from '../../services/provider-facade.service';
 import { ProductForCreation } from '../../models/productCreation';
 import { UserStoreService } from 'src/app/core/services/user-store.service';
+import { map, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-create-product',
@@ -22,7 +23,14 @@ export class CreateProductComponent {
   private _productFacadeService = inject(ProviderFacadeService);
   private _userStore = inject(UserStoreService);
 
-  isAdmin$ = this._userStore.hasRole$('ROLE_ADMIN');
+  // isAdmin$ = this._userStore.hasRole$('ROLE_ADMIN');
+  // isProvider$ = this._userStore.hasRole$('ROLE_PROVIDER');
+  hasAccess$ = this._userStore.hasRole$('ROLE_ADMIN').pipe(
+    switchMap(isAdmin => this._userStore.hasRole$('ROLE_PROVIDER').pipe(
+      map(isProvider => isAdmin || isProvider) 
+    ))
+  );
+
   onSubmit(): void {
     this._productFacadeService.post$(this.newProduct).subscribe({
       next: (res: ProductForCreation) => {

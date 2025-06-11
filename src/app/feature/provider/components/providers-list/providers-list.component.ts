@@ -24,23 +24,7 @@ export class ProvidersListComponent implements OnInit {
     private _cartService: CartService
   ) {}
 
-  // ngOnInit(): void {
-  //   this._cartService.getProvidersWithServices().subscribe({
-  //     next: data => {
-  //       this.providersWithServices = data.map(provider => ({
-  //         ...provider,
-  //         services: provider.services || [],
-  //       }));
-  //     },
-  //     error: err => {
-  //       console.error('Erreur lors de la récupération des providers:', err);
-  //     },
-  //   });
-
-  //   this._cartService.cart$.subscribe(cart => {
-  //     this.selectedServices = cart;
-  //   });
-  // }
+  
   ngOnInit(): void {
     this._cartService
       .getProvidersWithServices()

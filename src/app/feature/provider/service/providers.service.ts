@@ -13,4 +13,8 @@ export class ProvidersService {
   getProviderWithServices(id: number): Observable<ProviderWithServicesDTO> {
     return this._http.get<ProviderWithServicesDTO>(`${this._providersUrl}/${id}`);
   }
+  attachServiceToConnectedProvider(dto: { provisionId: number }): Observable<any> {
+    return this._http.post('http://localhost:8080/provision-users/provider-adds-new-service', dto);
+  }
+  
 }

@@ -49,6 +49,5 @@ export class UserStoreService {
 
   public clearRoles(): void {
     this._roles.next([]);
-    // console.log('Les rôles ont été réinitialisés dans le store.');
   }
 }
