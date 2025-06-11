@@ -1,6 +1,8 @@
 <p>provider-one works!</p>
 
 <div class="container py-5 px-3 px-md-4 px-lg-5">
+  <a [routerLink]="'/order'" class="btn btn-primary btn-lg fw-bold px-4 py-2">Passer commande par ici</a>
+
   @let provider = provider$ | async;
   @if (provider) {
     <div class="mb-5">
