@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ProvidersService } from '../../service/providers.service';
 import { CommonModule } from '@angular/common';
 import { FeedbackComponent } from 'src/app/feature/feedbacks/components/feedback/feedback.component';
@@ -9,7 +9,7 @@ import { catchError, map, of, switchMap } from 'rxjs';
 @Component({
   selector: 'app-provider-one',
   standalone: true,
-  imports: [CommonModule, FeedbackComponent, FeedbackFormComponent],
+  imports: [CommonModule, FeedbackComponent, FeedbackFormComponent, RouterModule],
   templateUrl: './provider-one.component.html',
   styleUrl: './provider-one.component.scss',
 })

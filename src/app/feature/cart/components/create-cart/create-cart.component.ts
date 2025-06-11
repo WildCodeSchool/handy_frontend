@@ -32,12 +32,6 @@ export class CreateCartComponent implements OnInit {
   providerMap: Record<number, ProviderWithServicesDTO> = {};
   serviceMap: Record<string, AppProvider> = {};
 
-  // constructor(
-  //   private _cartService: CartService,
-  //   private _availabilityService: AvailabilityService,
-  //   private _authService: AuthService,
-  //   private _destroyRef: DestroyRef  ) {}
-
   private _cartService = inject(CartService);
   private _availabilityService = inject(AvailabilityService);
   private _authService = inject(AuthService);
