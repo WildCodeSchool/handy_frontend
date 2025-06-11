@@ -25,21 +25,25 @@ export class OrderCartComponent implements OnInit {
     private _cartService: CartService
   ) {}
   ngOnInit(): void {
-    this._cartService.getProvidersWithServices().pipe(
-      tap(data => {
-        this.providersWithServices = data.map(provider => ({
-          ...provider,
-          services: provider.services || [],
-        }));
-      })
-    )
-    .subscribe();
-  
-    this._cartService.cart$.pipe(
-      tap(cart => {
-        this.selectedServices = cart;
-      })
-    ).subscribe();
+    this._cartService
+      .getProvidersWithServices()
+      .pipe(
+        tap(data => {
+          this.providersWithServices = data.map(provider => ({
+            ...provider,
+            services: provider.services || [],
+          }));
+        })
+      )
+      .subscribe();
+
+    this._cartService.cart$
+      .pipe(
+        tap(cart => {
+          this.selectedServices = cart;
+        })
+      )
+      .subscribe();
   }
 
   addToCart(providerId: number, serviceId: number): void {

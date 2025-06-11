@@ -44,32 +44,6 @@ export class CreateCartComponent implements OnInit {
   private _destroyRef = inject(DestroyRef);
 
   confirmationMessage$ = this._cartService.confirmationMessage$;
-  // ngOnInit(): void {
-  //   this.emailClient = this._authService.getCurrentUserEmail()!;
-  //   this._cartService.getProvidersWithServices().subscribe({
-  //     next: data => {
-  //       this.providersWithServices = data.map(p => ({ ...p, services: p.services || [] }));
-  //       this.providerMap = Object.fromEntries(this.providersWithServices.map(p => [p.providerId, p]));
-
-  //       this._cartService.cart$.subscribe(cart => {
-  //         this.cart = cart;
-
-  //         cart.forEach(item => {
-  //           const provider = this.providerMap[item.userId];
-  //           const service = provider?.services.find(s => s.id === item.provisionId);
-  //           if (service) {
-  //             this.serviceMap[`${item.userId}_${item.provisionId}`] = service;
-  //           }
-  //         });
-
-  //         const uniqueUserIds = [...new Set(cart.map(item => item.userId))];
-  //         uniqueUserIds.forEach(providerId => {
-  //           this.loadAvailabilityForProvider(providerId);
-  //         });
-  //       });
-  //     },
-  //   });
-  // }
 
   ngOnInit(): void {
     this.emailClient = this._authService.getCurrentUserEmail()!;
@@ -137,12 +111,6 @@ export class CreateCartComponent implements OnInit {
     return provider?.services.find(s => s.id === provisionId);
   }
 
-  // getTotalCoefficient(): number {
-  //   return this.cart.reduce((total, item) => {
-  //     const service = this.getServiceInfo(item.userId, item.provisionId);
-  //     return total + (service?.coeff || 0);
-  //   }, 0);
-  // }
   getTotalCoefficient(): number {
     return this.cart.reduce((total, item) => {
       const key = `${item.userId}_${item.provisionId}`;
@@ -151,24 +119,6 @@ export class CreateCartComponent implements OnInit {
     }, 0);
   }
 
-  // loadAvailabilityForProvider(userId: number): void {
-  //   if (this.providerAvailabilities[userId]) {
-  //     return;
-  //   }
-
-  //   this._availabilityService.getAvailabilityByProviderId(userId).subscribe({
-  //     next: availabilities => {
-  //       const availableSlots = availabilities.filter(slot => slot.status === 'available');
-
-  //       this.providerAvailabilities[userId] = availableSlots;
-
-  //       const bookedSlots = availabilities.filter(slot => slot.status === 'booked');
-  //       bookedSlots.forEach(slot => {
-  //         console.log(`Créneau réservé par : ${slot.bookedByEmail}`);
-  //       });
-  //     },
-  //   });
-  // }
   loadAvailabilityForProvider(userId: number): void {
     if (this.providerAvailabilities[userId]) {
       return;
