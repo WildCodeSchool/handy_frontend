@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { AvailabilityService } from '../../services/availability.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { switchMap, take } from 'rxjs';
+import { switchMap, take, tap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-availability',
@@ -17,49 +18,160 @@ export class AvailabilityComponent implements OnInit {
   newEndTime: string = '';
   successMessage = '';
   errorMessage = '';
+  private readonly _destroyRef = inject(DestroyRef);
 
   constructor(private _availabilityService: AvailabilityService) {}
 
   ngOnInit(): void {
-    this._availabilityService.getMyAvailability().subscribe({
-      next: data => (this.availability = data),
-    });
+    this._availabilityService
+      .getMyAvailability()
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: data => (this.availability = data),
+      });
   }
 
+  // createAvailability(): void {
+  //   this.successMessage = '';
+  //   this.errorMessage = '';
+
+  //   const newStart = new Date(this.newStartTime).getTime();
+  //   const newEnd = new Date(this.newEndTime).getTime();
+
+  //   const isTaken = this.availability?.some((slot: any) => {
+  //     const slotStart = new Date(slot.startTime).getTime();
+  //     const slotEnd = new Date(slot.endTime).getTime();
+
+  //     return (
+  //       (newStart >= slotStart && newStart < slotEnd) || (newEnd > slotStart && newEnd <= slotEnd) || (newStart <= slotStart && newEnd >= slotEnd)
+  //     );
+  //   });
+
+  //   if (isTaken) {
+  //     this.errorMessage = 'Cette plage de disponibilité existe déjà.';
+  //     return;
+  //   }
+  //   this._availabilityService
+  //     .createMyAvailability(this.newStartTime, this.newEndTime)
+  //     .pipe(
+  //       switchMap(() => {
+  //         this.newStartTime = '';
+  //         this.newEndTime = '';
+  //         this.successMessage = 'Disponibilité ajoutée avec succès.';
+  //         return this._availabilityService.getMyAvailability().pipe(take(1));
+  //       })
+  //     )
+  //     .subscribe({
+  //       next: data => {
+  //         this.availability = data;
+  //       },
+  //     });
+  // }
+
+  // createAvailability(): void {
+  //   this.successMessage = '';
+  //   this.errorMessage = '';
+
+  //   if (this._isAvailabilityTaken(this.newStartTime, this.newEndTime)) {
+  //     this.errorMessage = 'Cette plage de disponibilité existe déjà.';
+  //     return;
+  //   }
+
+  //   this._availabilityService.createMyAvailability(this.newStartTime, this.newEndTime)
+  //     .pipe(
+  //       switchMap(() => this._availabilityService.getMyAvailability().pipe(take(1))),
+  //       tap(data => {
+  //         this.availability = data;
+  //         this.successMessage = 'Disponibilité ajoutée avec succès.';
+  //         this.newStartTime = '';
+  //         this.newEndTime = '';
+  //       }),
+  //       takeUntilDestroyed(this._destroyRef)
+  //     )
+  //     .subscribe();
+  // }
+
+  // private _isAvailabilityTaken(startTime: string, endTime: string): boolean {
+  //   const newStart = new Date(startTime).getTime();
+  //   const newEnd = new Date(endTime).getTime();
+
+  //   return !!this.availability?.some((slot: any) => {
+  //     const slotStart = new Date(slot.startTime).getTime();
+  //     const slotEnd = new Date(slot.endTime).getTime();
+
+  //     return (newStart < slotEnd && newEnd > slotStart); // ✅ Simplification conditionnelle
+  //   });
+  // }
+
+  // createAvailability(): void {
+  //   this.successMessage = '';
+  //   this.errorMessage = '';
+
+  //   if (this._isAvailabilityTaken(this.newStartTime, this.newEndTime)) {
+  //     this.errorMessage = 'Cette plage de disponibilité existe déjà.';
+  //     return;
+  //   }
+
+  //   this._availabilityService.createMyAvailability(this.newStartTime, this.newEndTime)
+  //     .pipe(
+  //       switchMap(() => this._availabilityService.getMyAvailability().pipe(take(1))), // 🔥 Recharge après ajout
+  //       tap(data => {
+  //         this.availability = data;
+  //         this.successMessage = 'Disponibilité ajoutée avec succès.';
+  //         this.newStartTime = '';
+  //         this.newEndTime = '';
+  //       }),
+  //       takeUntilDestroyed(this._destroyRef)
+  //     )
+  //     .subscribe();
+  // }
+
+  //   private _isAvailabilityTaken(startTime: string, endTime: string): boolean {
+  //     const newStart = new Date(startTime).getTime();
+  //     const newEnd = new Date(endTime).getTime();
+
+  //     return !!this.availability?.some((slot: any) => {
+  //       const slotStart = new Date(slot.startTime).getTime();
+  //       const slotEnd = new Date(slot.endTime).getTime();
+
+  //       return (newStart < slotEnd && newEnd > slotStart);
+  //     });
+  //   }
+  // }
+  // }
   createAvailability(): void {
     this.successMessage = '';
     this.errorMessage = '';
 
-    const newStart = new Date(this.newStartTime).getTime();
-    const newEnd = new Date(this.newEndTime).getTime();
-
-    const isTaken = this.availability?.some((slot: any) => {
-      const slotStart = new Date(slot.startTime).getTime();
-      const slotEnd = new Date(slot.endTime).getTime();
-
-      return (
-        (newStart >= slotStart && newStart < slotEnd) || (newEnd > slotStart && newEnd <= slotEnd) || (newStart <= slotStart && newEnd >= slotEnd)
-      );
-    });
-
-    if (isTaken) {
+    if (this._isAvailabilityTaken(this.newStartTime, this.newEndTime)) {
       this.errorMessage = 'Cette plage de disponibilité existe déjà.';
       return;
     }
+
     this._availabilityService
       .createMyAvailability(this.newStartTime, this.newEndTime)
       .pipe(
-        switchMap(() => {
+        switchMap(() => this._availabilityService.getMyAvailability().pipe(take(1))),
+        tap(data => {
+          this.availability = data;
+          this.successMessage = 'Disponibilité ajoutée avec succès.';
           this.newStartTime = '';
           this.newEndTime = '';
-          this.successMessage = 'Disponibilité ajoutée avec succès.';
-          return this._availabilityService.getMyAvailability().pipe(take(1));
-        })
+        }),
+        takeUntilDestroyed(this._destroyRef)
       )
-      .subscribe({
-        next: data => {
-          this.availability = data;
-        },
-      });
+      .subscribe();
+  }
+
+  private _isAvailabilityTaken(startTime: string, endTime: string): boolean {
+    const newStart = new Date(startTime).getTime();
+    const newEnd = new Date(endTime).getTime();
+
+    return !!this.availability?.some((slot: any) => {
+      const slotStart = new Date(slot.startTime).getTime();
+      const slotEnd = new Date(slot.endTime).getTime();
+
+      return newStart < slotEnd && newEnd > slotStart;
+    });
   }
 }

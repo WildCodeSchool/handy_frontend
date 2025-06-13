@@ -26,7 +26,6 @@ export class AuthService {
   ) {
     this._authStatus$ = new BehaviorSubject<boolean>(this._tokenService.isLogged());
     this._userPayload = this._decodeToken();
-    console.log('User Payload après décode :', this._userPayload);
   }
 
   public register$(email: string, password: string): Observable<boolean> {
@@ -89,7 +88,7 @@ export class AuthService {
     this._router.navigate(['/']);
   }
 
-  private _decodeToken(): unknown {
+  private _decodeToken(): null {
     const token = this._tokenService.getToken();
     if (!token) return null;
 

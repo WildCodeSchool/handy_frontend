@@ -15,13 +15,6 @@ export class ProviderStoreService {
   private _provisions$ = new BehaviorSubject<AppProvider[]>([]);
   private _products$ = new BehaviorSubject<ProductForCreation[]>([]);
 
-  constructor() {
-    // const savedProvisions = localStorage.getItem('providers');
-    // if (savedProvisions) {
-    //   this._provisions$.next(JSON.parse(savedProvisions));
-    // }
-  }
-
   setAll$(provisions: AppProvider[]): Observable<AppProvider[]> {
     this._provisions$.next(provisions);
     return this._provisions$.asObservable();

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { UsersService } from '../../services/users.service';
 import { UserProfil } from '../../models/UserProfil';
 import { CommonModule } from '@angular/common';
@@ -15,9 +15,9 @@ export class UserProfilComponent implements OnInit {
   userProfile: UserProfil | null = null;
   isLoading = true;
   error: string | null = null;
-
-  constructor(private _userService: UsersService) {}
-
+  editableProfile: UserProfil = { email: '', firstName: '', lastName: '', address: '', city: '' };
+  isUpdating = false;
+  private readonly _userService = inject(UsersService);
   ngOnInit(): void {
     this.loadUserProfile();
   }
@@ -42,3 +42,40 @@ export class UserProfilComponent implements OnInit {
     }
   }
 }
+// userProfile$: Observable<UserProfil> = this._userService.getUserProfile().pipe(
+//   takeUntilDestroyed(),
+//   catchError(() => {
+//     this.error = "Erreur lors du chargement du profil.";
+//     return of({ firstName: '', lastName: '', address: '', city: '' } as UserProfil);
+//   })
+// );
+// ngOnInit(): void {
+//   this._userService.getUserProfile()
+//     .pipe(
+//       takeUntilDestroyed(),
+
+//     )
+//     .subscribe(profile => {
+//       if (profile) {
+//         this.userProfile = profile;
+//       }
+//       this.isLoading = false;
+//     });
+// }
+
+// updateProfile(): void {
+//   if (!this.userProfile) return;
+
+//   this.isUpdating = true;
+//   this._userService.updateUserProfile(this.userProfile).subscribe({
+//     next: updated => {
+//       this.userProfile = updated;
+//       this.isUpdating = false;
+//       alert('Profil mis à jour avec succès');
+//     },
+//     error: () => {
+//       this.error = "Erreur lors de la mise à jour.";
+//       this.isUpdating = false;
+//     }
+//   });
+// }}

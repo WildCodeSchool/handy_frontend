@@ -51,7 +51,6 @@ export class ProductListComponent implements OnInit {
   }
 
   onDeleteProduct(productId: number): void {
-    console.log('Produit supprimé:', productId);
     this.products$ = this.products$.pipe(map(products => products.filter(product => product.id !== productId)));
     this.products$ = this._facadeProvisionService.getAll$();
   }

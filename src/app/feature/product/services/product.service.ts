@@ -1,47 +1,34 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppProvider } from './provider-store.service';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  private _BASE_API_URL: string = 'http://localhost:8080/provisions';
+  private _BASE_API_URL = `${environment.apiUrl}/provisions`;
 
   constructor(private _http: HttpClient) {}
   getAllProvisions$(): Observable<AppProvider[]> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-
-    return this._http.get<AppProvider[]>(this._BASE_API_URL, {
-      headers,
-      withCredentials: true,
-    });
+    return this._http.get<AppProvider[]>(this._BASE_API_URL);
   }
 
   getProvisionById$(id: string): Observable<AppProvider> {
     const url = `${this._BASE_API_URL}/${id}`;
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    return this._http.get<AppProvider>(url, {
-      headers,
-      withCredentials: true,
-    });
+    return this._http.get<AppProvider>(url);
   }
 
   updateProvision$(id: number, provision: AppProvider): Observable<AppProvider> {
     const url = `${this._BASE_API_URL}/${id}`;
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    return this._http.put<AppProvider>(url, provision, { headers, withCredentials: true });
+    return this._http.put<AppProvider>(url, provision);
   }
   searchProvisions$(keyword: string): Observable<AppProvider[]> {
     const url = `${this._BASE_API_URL}/search?keyword=${encodeURIComponent(keyword)}`;
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    return this._http.get<AppProvider[]>(url, {
-      headers,
-      withCredentials: true,
-    });
+    return this._http.get<AppProvider[]>(url);
   }
 }

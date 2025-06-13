@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ProvisionCartItem } from '../models/ProvisionCartItem';
 import { BehaviorSubject, Observable, Subject, switchMap, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -20,17 +20,15 @@ export class CartService {
   providersWithServices: ProviderWithServicesDTO[] = [];
   confirmationMessage$ = new Subject<string>();
 
-  public _providerMap = new BehaviorSubject<Record<number, ProviderWithServicesDTO>>({});
-  public serviceMapSync: Record<string, any> = {};
+  _providerMap = new BehaviorSubject<Record<number, ProviderWithServicesDTO>>({});
+  serviceMapSync: Record<string, any> = {};
 
   private _serviceMap = new BehaviorSubject<Record<string, any>>({});
   providerMap$ = this._providerMap.asObservable();
   serviceMap$ = this._serviceMap.asObservable();
 
-  constructor(
-    private _http: HttpClient,
-    private _autservice: AuthService
-  ) {}
+  private readonly _http = inject(HttpClient);
+  private readonly _authService = inject(AuthService);
 
   getProvidersWithServices(): Observable<ProviderWithServicesDTO[]> {
     return this._http.get<ProviderWithServicesDTO[]>(this._providersUrl);

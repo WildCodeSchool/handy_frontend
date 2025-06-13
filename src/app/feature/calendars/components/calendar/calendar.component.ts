@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { AvailabilityService } from '../../../availability/services/availability.service';
@@ -8,6 +8,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { ToastrService } from 'ngx-toastr';
 import { AvailabilityComponent } from '../../../availability/components/availability/availability.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-calendar',
@@ -30,28 +31,55 @@ export class CalendarComponent implements OnInit {
   newBookedCount: number = 0;
   bookedIdsSeen: Set<number> = new Set<number>();
   toastMessages: { id: number; message: string; type: 'info' | 'success' | 'error' }[] = [];
-  // toastMessages: { id: number; message: string; type: string }[] = [];
-
   dismissedToastIds: Set<number> = new Set<number>();
 
-  constructor(
-    private _availabilityService: AvailabilityService,
-    private _toastr: ToastrService
-  ) {}
+  private readonly _availabilityService = inject(AvailabilityService);
+  private readonly _toastr = inject(ToastrService);
+  private readonly _destroyRef = inject(DestroyRef);
 
+  // ngOnInit(): void {
+  //   const savedDismissed = localStorage.getItem('dismissedToastIds');
+  //   if (savedDismissed) {
+  //     const ids = JSON.parse(savedDismissed);
+  //     this.dismissedToastIds = new Set<number>(ids);
+  //     this._availabilityService.setDismissedToastIds(ids);
+  //   }
+
+  //   this._availabilityService.getCalendarOptions().subscribe(options => {
+  //     this.calendarOptions = options;
+  //     this._toastr.info('Calendrier chargé.', 'Info');
+  //   });
+
+  //   this._availabilityService.toastMessages$.subscribe(messages => {
+  //     this.toastMessages = messages.filter(toast => !this.dismissedToastIds.has(toast.id));
+  //   });
+  // }
   ngOnInit(): void {
+    this._loadDismissedToastIds();
+    this._fetchCalendarOptions();
+    this._loadToastMessages();
+  }
+
+  private _loadDismissedToastIds(): void {
     const savedDismissed = localStorage.getItem('dismissedToastIds');
     if (savedDismissed) {
       const ids = JSON.parse(savedDismissed);
       this.dismissedToastIds = new Set<number>(ids);
       this._availabilityService.setDismissedToastIds(ids);
     }
+  }
 
-    this._availabilityService.getCalendarOptions().subscribe(options => {
-      this.calendarOptions = options;
-    });
+  private _fetchCalendarOptions(): void {
+    this._availabilityService
+      .getCalendarOptions()
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe(options => {
+        this.calendarOptions = options;
+      });
+  }
 
-    this._availabilityService.toastMessages$.subscribe(messages => {
+  private _loadToastMessages(): void {
+    this._availabilityService.toastMessages$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(messages => {
       this.toastMessages = messages.filter(toast => !this.dismissedToastIds.has(toast.id));
     });
   }
