@@ -19,6 +19,7 @@ export class AvailabilityComponent implements OnInit {
   successMessage = '';
   errorMessage = '';
   private readonly _destroyRef = inject(DestroyRef);
+  today: Date = new Date();
 
   constructor(private _availabilityService: AvailabilityService) {}
 
@@ -29,6 +30,7 @@ export class AvailabilityComponent implements OnInit {
       .subscribe({
         next: data => (this.availability = data),
       });
+      this.today.setHours(0, 0, 0, 0);
   }
 
   // createAvailability(): void {
@@ -143,8 +145,13 @@ export class AvailabilityComponent implements OnInit {
     this.successMessage = '';
     this.errorMessage = '';
 
+    if (!this._isValidDateRange(this.newStartTime, this.newEndTime)) {
+      this.errorMessage = 'La disponibilité ajoutée doit être à partir de la date d\'aujourd\'hui et les horaires doivent concerner la même journée ';
+      return;
+    }
+
     if (this._isAvailabilityTaken(this.newStartTime, this.newEndTime)) {
-      this.errorMessage = 'Cette plage de disponibilité existe déjà.';
+      this.errorMessage = 'Cette disponibilité existe déjà.';
       return;
     }
 
@@ -161,6 +168,18 @@ export class AvailabilityComponent implements OnInit {
         takeUntilDestroyed(this._destroyRef)
       )
       .subscribe();
+  }
+  private _isValidDateRange(startTime: string, endTime: string): boolean {
+    const start = new Date(startTime);
+    const end = new Date(endTime);
+
+    if (start < this.today || end < this.today || start >= end) {
+      return false;
+    }
+
+    const startDay = start.getDate();
+    const endDay = end.getDate();
+    return startDay === endDay;
   }
 
   private _isAvailabilityTaken(startTime: string, endTime: string): boolean {
