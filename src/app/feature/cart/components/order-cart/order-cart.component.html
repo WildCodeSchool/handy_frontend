@@ -1,7 +1,7 @@
-@if (isSelectedServicesVisible) {
+<!-- @if (isSelectedServicesVisible) {
   <div class="selected-services">
     <button type="button" class="btn-close" (click)="closeSelectedServices()">Fermer</button>
-    <h3>✅ Services sélectionnés</h3>
+    <h3>Services sélectionnés</h3>
     <ul>
       @for (item of selectedServices; track item.provisionId) {
         <li>
@@ -53,4 +53,66 @@
       }
     </div>
   }
-</div>
+</div> -->
+
+
+  <div class="container px-4 py-8">
+      @if (isSelectedServicesVisible) {
+          <div class="selected-services bg-light p-4 rounded shadow">
+              <button type="button" class="btn btn-close" (click)="closeSelectedServices()">Fermer</button>
+              <h3 class="mb-3">Services sélectionnés</h3>
+              <ul class="list-group">
+                  @for (item of selectedServices; track item.provisionId) {
+                      <li class="list-group-item d-flex justify-content-between align-items-center">
+                          <ng-container *ngIf="getProviderInfo(item.userId) as provider">
+                              <strong>{{ provider.firstName }} {{ provider.lastName }}</strong>
+                              <br />
+                              <small>{{ provider.email }} – {{ provider.city }}</small>
+                          </ng-container>
+
+                          <ng-container *ngIf="getServiceInfo(item.userId, item.provisionId) as service">
+                              <div>Service : {{ service.name }} <small>(prix: {{ service.coeff | currency: 'EUR' }})</small></div>
+                          </ng-container>
+
+                          <button type="button" class="btn btn-danger btn-sm" (click)="removeFromCart(item.userId, item.provisionId)">Supprimer</button>
+                      </li>
+                  }
+              </ul>
+              <div class="total-coeff mt-3">
+                  <h4>Total à régler : {{ getTotalCoefficient() | currency: 'EUR' }}</h4>
+              </div>
+          </div>
+      }
+
+      <div class="row mt-4">
+          @for (provider of providersWithServices; track provider.providerId) {
+              <div class="col-12 col-md-6 col-lg-3 mb-5">
+                  <div class="card shadow-sm">
+                      <img src="assets/shopping2.png" class="card-img-top" alt="Fournisseur Image" />
+
+                      <div class="card-body text-center">
+                          <h5 class="card-title">{{ provider.firstName }} {{ provider.lastName }}</h5>
+                          <p><strong>Email:</strong> {{ provider.email || 'Email non spécifié' }}</p>
+                          <p><strong>Ville:</strong> {{ provider.city || 'Ville non spécifiée' }}</p>
+
+                          @if (provider.services.length > 0) {
+                              <div class="service-list mt-3">
+                                  <h6 class="mb-2">Services disponibles :</h6>
+                                  <ul class="list-unstyled">
+                                      @for (service of provider.services.slice(0, 3); track service.id) {
+                                          <li class="service-item d-flex justify-content-between align-items-center mb-2">
+                                              <span>{{ service.name }} <small>(prix: {{ service.coeff | currency: 'EUR' }})</small></span>
+                                              <button type="button" class="btn btn-primary btn-sm" (click)="addToCart(provider.providerId, service.id)">Ajouter</button>
+                                          </li>
+                                      }
+                                  </ul>
+                              </div>
+                          } @else {
+                              <p class="text-muted">Aucun service disponible</p>
+                          }
+                      </div>
+                  </div>
+              </div>
+          }
+      </div>
+  </div>

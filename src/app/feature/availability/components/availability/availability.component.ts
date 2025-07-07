@@ -30,7 +30,7 @@ export class AvailabilityComponent implements OnInit {
       .subscribe({
         next: data => (this.availability = data),
       });
-      this.today.setHours(0, 0, 0, 0);
+    this.today.setHours(0, 0, 0, 0);
   }
 
   // createAvailability(): void {
@@ -146,7 +146,7 @@ export class AvailabilityComponent implements OnInit {
     this.errorMessage = '';
 
     if (!this._isValidDateRange(this.newStartTime, this.newEndTime)) {
-      this.errorMessage = 'La disponibilité ajoutée doit être à partir de la date d\'aujourd\'hui et les horaires doivent concerner la même journée ';
+      this.errorMessage = "La disponibilité ajoutée doit être à partir de la date d'aujourd'hui et les horaires doivent concerner la même journée ";
       return;
     }
 

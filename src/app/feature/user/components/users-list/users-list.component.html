@@ -1,0 +1,23 @@
+<p>users-list works!</p>
+<div class="users-list">
+    <h2>Liste des utilisateurs</h2>
+  
+    <div *ngIf="!users.length">
+      <p>Chargement des utilisateurs...</p>
+    </div>
+  
+    <ul *ngIf="users.length">
+      <li *ngFor="let user of users" class="user-item">
+        <div class="user-info">
+          <p><strong>Prenom:</strong> {{ user.firstName }}</p>
+          <p><strong>Email:</strong> {{ user.email }}</p>
+          <p><strong>Nom:</strong> {{ user.lastName }}</p>
+        </div>
+      </li>
+    </ul>
+  
+    <div *ngIf="users.length === 0">
+      <p>Il y a eu une erreur lors de la récupération des utilisateurs.</p>
+    </div>
+  </div>
+  
