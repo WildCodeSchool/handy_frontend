@@ -22,4 +22,7 @@ export class UsersService {
   getAllUsers(): Observable<UserProfil[]> {
     return this._http.get<UserProfil[]>(`${this._apiUrl}`);
   }
+  deleteUser(userId: number): Observable<void> {
+    return this._http.delete<void>(`${this._apiUrl}/${userId}`);
+  }
 }

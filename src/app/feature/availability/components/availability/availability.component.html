@@ -32,7 +32,9 @@
 
 @if (availability?.length > 0) {
   @for (slot of availability; track slot.id) {
-    <p>🕒 {{ slot.startTime | date: 'dd/MM/yyyy HH:mm' }} → {{ slot.endTime | date: 'dd/MM/yyyy HH:mm' }} ({{ slot.status }})</p>
+    <p>🕒 {{ slot.startTime | date: 'dd/MM/yyyy HH:mm' }} → {{ slot.endTime | date: 'dd/MM/yyyy HH:mm' }} ({{ slot.status }})
+      <button type="button"class="btn btn-sm btn-danger ms-2" (click)="deleteAvailability(slot.id)">Supprimer</button>
+    </p>
   }
 } @else {
   <p>Aucune disponibilité enregistrée.</p>

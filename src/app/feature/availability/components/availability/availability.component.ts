@@ -33,114 +33,6 @@ export class AvailabilityComponent implements OnInit {
     this.today.setHours(0, 0, 0, 0);
   }
 
-  // createAvailability(): void {
-  //   this.successMessage = '';
-  //   this.errorMessage = '';
-
-  //   const newStart = new Date(this.newStartTime).getTime();
-  //   const newEnd = new Date(this.newEndTime).getTime();
-
-  //   const isTaken = this.availability?.some((slot: any) => {
-  //     const slotStart = new Date(slot.startTime).getTime();
-  //     const slotEnd = new Date(slot.endTime).getTime();
-
-  //     return (
-  //       (newStart >= slotStart && newStart < slotEnd) || (newEnd > slotStart && newEnd <= slotEnd) || (newStart <= slotStart && newEnd >= slotEnd)
-  //     );
-  //   });
-
-  //   if (isTaken) {
-  //     this.errorMessage = 'Cette plage de disponibilité existe déjà.';
-  //     return;
-  //   }
-  //   this._availabilityService
-  //     .createMyAvailability(this.newStartTime, this.newEndTime)
-  //     .pipe(
-  //       switchMap(() => {
-  //         this.newStartTime = '';
-  //         this.newEndTime = '';
-  //         this.successMessage = 'Disponibilité ajoutée avec succès.';
-  //         return this._availabilityService.getMyAvailability().pipe(take(1));
-  //       })
-  //     )
-  //     .subscribe({
-  //       next: data => {
-  //         this.availability = data;
-  //       },
-  //     });
-  // }
-
-  // createAvailability(): void {
-  //   this.successMessage = '';
-  //   this.errorMessage = '';
-
-  //   if (this._isAvailabilityTaken(this.newStartTime, this.newEndTime)) {
-  //     this.errorMessage = 'Cette plage de disponibilité existe déjà.';
-  //     return;
-  //   }
-
-  //   this._availabilityService.createMyAvailability(this.newStartTime, this.newEndTime)
-  //     .pipe(
-  //       switchMap(() => this._availabilityService.getMyAvailability().pipe(take(1))),
-  //       tap(data => {
-  //         this.availability = data;
-  //         this.successMessage = 'Disponibilité ajoutée avec succès.';
-  //         this.newStartTime = '';
-  //         this.newEndTime = '';
-  //       }),
-  //       takeUntilDestroyed(this._destroyRef)
-  //     )
-  //     .subscribe();
-  // }
-
-  // private _isAvailabilityTaken(startTime: string, endTime: string): boolean {
-  //   const newStart = new Date(startTime).getTime();
-  //   const newEnd = new Date(endTime).getTime();
-
-  //   return !!this.availability?.some((slot: any) => {
-  //     const slotStart = new Date(slot.startTime).getTime();
-  //     const slotEnd = new Date(slot.endTime).getTime();
-
-  //     return (newStart < slotEnd && newEnd > slotStart); // ✅ Simplification conditionnelle
-  //   });
-  // }
-
-  // createAvailability(): void {
-  //   this.successMessage = '';
-  //   this.errorMessage = '';
-
-  //   if (this._isAvailabilityTaken(this.newStartTime, this.newEndTime)) {
-  //     this.errorMessage = 'Cette plage de disponibilité existe déjà.';
-  //     return;
-  //   }
-
-  //   this._availabilityService.createMyAvailability(this.newStartTime, this.newEndTime)
-  //     .pipe(
-  //       switchMap(() => this._availabilityService.getMyAvailability().pipe(take(1))), // 🔥 Recharge après ajout
-  //       tap(data => {
-  //         this.availability = data;
-  //         this.successMessage = 'Disponibilité ajoutée avec succès.';
-  //         this.newStartTime = '';
-  //         this.newEndTime = '';
-  //       }),
-  //       takeUntilDestroyed(this._destroyRef)
-  //     )
-  //     .subscribe();
-  // }
-
-  //   private _isAvailabilityTaken(startTime: string, endTime: string): boolean {
-  //     const newStart = new Date(startTime).getTime();
-  //     const newEnd = new Date(endTime).getTime();
-
-  //     return !!this.availability?.some((slot: any) => {
-  //       const slotStart = new Date(slot.startTime).getTime();
-  //       const slotEnd = new Date(slot.endTime).getTime();
-
-  //       return (newStart < slotEnd && newEnd > slotStart);
-  //     });
-  //   }
-  // }
-  // }
   createAvailability(): void {
     this.successMessage = '';
     this.errorMessage = '';
@@ -191,6 +83,24 @@ export class AvailabilityComponent implements OnInit {
       const slotEnd = new Date(slot.endTime).getTime();
 
       return newStart < slotEnd && newEnd > slotStart;
+    });
+  }
+
+  deleteAvailability(id: number): void {
+    this._availabilityService.deleteAvailability(id).pipe(
+      switchMap(() => this._availabilityService.getMyAvailability()),
+      tap(data => {
+        this.availability = data;
+        this.successMessage = 'Disponibilité supprimée avec succès.';
+        this.errorMessage = '';
+      }),
+      takeUntilDestroyed(this._destroyRef)
+    )
+    .subscribe({
+      error: () => {
+        this.errorMessage = "Erreur lors de la suppression de la disponibilité.";
+        this.successMessage = '';
+      }
     });
   }
 }

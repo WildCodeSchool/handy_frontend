@@ -42,40 +42,26 @@ export class UserProfilComponent implements OnInit {
     }
   }
 }
-// userProfile$: Observable<UserProfil> = this._userService.getUserProfile().pipe(
-//   takeUntilDestroyed(),
-//   catchError(() => {
-//     this.error = "Erreur lors du chargement du profil.";
-//     return of({ firstName: '', lastName: '', address: '', city: '' } as UserProfil);
-//   })
-// );
-// ngOnInit(): void {
-//   this._userService.getUserProfile()
-//     .pipe(
-//       takeUntilDestroyed(),
+// export class UserProfilComponent {
+//   private readonly _userService = inject(UsersService);
 
-//     )
-//     .subscribe(profile => {
-//       if (profile) {
-//         this.userProfile = profile;
-//       }
-//       this.isLoading = false;
+//   error: string | null = null;
+//   isUpdating = false;
+
+//   userProfile$: Observable<UserProfil | null> = this._userService.getUserProfile().pipe(
+//     tap(() => (this.error = null)),
+  
+//   );
+
+//   updateProfile(profile: UserProfil):void {
+//     this.isUpdating = true;
+
+//     this._userService.updateUserProfile(profile).subscribe({
+//       next: updated => {
+//         alert('Profil mis à jour !');
+//         this.userProfile$ = of(updated); // ou re-fetch depuis backend si nécessaire
+//         this.isUpdating = false;
+//       },
 //     });
+//   }
 // }
-
-// updateProfile(): void {
-//   if (!this.userProfile) return;
-
-//   this.isUpdating = true;
-//   this._userService.updateUserProfile(this.userProfile).subscribe({
-//     next: updated => {
-//       this.userProfile = updated;
-//       this.isUpdating = false;
-//       alert('Profil mis à jour avec succès');
-//     },
-//     error: () => {
-//       this.error = "Erreur lors de la mise à jour.";
-//       this.isUpdating = false;
-//     }
-//   });
-// }}

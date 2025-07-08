@@ -1,23 +1,26 @@
 <p>users-list works!</p>
 <div class="users-list">
-    <h2>Liste des utilisateurs</h2>
-  
-    <div *ngIf="!users.length">
-      <p>Chargement des utilisateurs...</p>
-    </div>
-  
-    <ul *ngIf="users.length">
-      <li *ngFor="let user of users" class="user-item">
-        <div class="user-info">
-          <p><strong>Prenom:</strong> {{ user.firstName }}</p>
-          <p><strong>Email:</strong> {{ user.email }}</p>
-          <p><strong>Nom:</strong> {{ user.lastName }}</p>
-        </div>
-      </li>
-    </ul>
-  
-    <div *ngIf="users.length === 0">
-      <p>Il y a eu une erreur lors de la récupération des utilisateurs.</p>
-    </div>
-  </div>
-  
+  <h2>Liste des utilisateurs</h2>
+
+  @if (users$ | async; as users) {
+    @if (users.length > 0) {
+      <ul>
+        @for (user of users; track user.id) {
+          <li class="user-item">
+            <div class="user-info">
+                <p>{{ user.id }}</p>
+              <p><strong>Prénom:</strong> {{ user.firstName }}</p>
+              <p><strong>Nom:</strong> {{ user.lastName }}</p>
+              <p><strong>Email:</strong> {{ user.email }}</p>
+              <button type="button" (click)="deleteUser(user.id!)">Supprimer</button>            </div>
+          </li>
+        }
+      </ul>
+    } @else {
+      <p>Il y a eu une erreur ou aucun utilisateur trouvé.</p>
+    }
+  } @else {
+    <p>Chargement des utilisateurs...</p>
+  }
+</div>
+
