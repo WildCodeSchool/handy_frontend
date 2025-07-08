@@ -2,7 +2,7 @@
   <h2 class="text-center mb-4">Nos Services</h2>
   <div class="row">
     @for (product of products$ | async; track product.id) {
-      <div class="col-md-4 col-lg-4 mb-4">
+      <div class="col-md-6 col-lg-4 mb-4">
         <div class="card h-100 shadow-sm border-0">
           <div class="text-center p-3"></div>
           <div class="card-body text-center">
@@ -29,6 +29,45 @@
 
     @if (selectedItem) {
       <app-product [product]="selectedItem" (closeDetails)="CloseDetails()"></app-product>
+    }
+  </div>
+</div>
+
+<div class="container my-5">
+  <h2 class="text-center mb-4">Nos Services</h2>
+
+  <div class="row">
+    @for (product of products$ | async; track product.id) {
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100 shadow-sm border-0">
+          <div class="card-body text-center">
+            <img
+              [src]="serviceList[product.id % serviceList.length].imgUrl"
+              alt="service"
+              class="rounded-circle mb-3"
+              style="width: 120px; height: 120px; object-fit: cover;"
+            /> ? 
+
+            <strong class="d-block mb-2">{{ serviceList[product.id % serviceList.length].nameService }}</strong>
+
+            <h5 class="card-title fw-bold text-black">{{ product.name }}</h5>
+
+            <p class="card-text text-muted mb-4">
+              💰 Prix : <span class="fw-bold">{{ product.coeff | currency: 'EUR' }}</span>
+            </p>
+
+            <button type="button" class="btn btn-success" (click)="onSelectProduct(product)">
+              Voir les détails
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+
+    @if (selectedItem) {
+      <div class="col-12 mt-4">
+        <app-product [product]="selectedItem" (closeDetails)="CloseDetails()"></app-product>
+      </div>
     }
   </div>
 </div>

@@ -15,7 +15,7 @@ import { ProvidersListComponent } from './feature/provider/components/providers-
 import { ProviderOneComponent } from './feature/provider/components/provider-one/provider-one.component';
 import { AvailabilityComponent } from './feature/availability/components/availability/availability.component';
 import { CalendarComponent } from './feature/calendars/components/calendar/calendar.component';
-import { UsersListComponent } from './feature/user/components/users-list/users-list.component';
+import { CrudUserComponent } from './feature/user/page/crud-user/crud-user.component';
 
 export const routes: Routes = [
   {
@@ -61,7 +61,7 @@ export const routes: Routes = [
   },
   {
     path: 'users-list',
-    component: UsersListComponent,
+    component: CrudUserComponent,
     canActivate: [isAdminGuard],
   },
   {

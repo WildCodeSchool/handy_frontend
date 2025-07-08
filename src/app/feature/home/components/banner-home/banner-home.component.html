@@ -1,4 +1,4 @@
-<section id="bannerHome" class="py-12 position-relative">
+<!-- <section id="bannerHome" class="py-12 position-relative">
   <div class="cover-container">
     <div class="row justify-content-center">
       <div class="col-md-12">
@@ -15,4 +15,35 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
+
+<div class="container-fluid bg-light text-dark py-5">
+  <div class="row align-items-center">
+    <div class="col-12 col-md-6 text-center text-md-start px-5">
+      <h1 class="display-4 fw-bold mb-2">Besoin d'accompagnement</h1>
+      <h1 class="display-4 text-primary fw-bold mb-3">pour avancer avec confiance</h1>
+      <p class="lead mb-4 text-muted">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      </p>
+      <div class="d-flex justify-content-center mb-4">
+        <input type="text" class="form-control w-75 rounded-pill px-4 py-3 fs-5" placeholder="Rechercher..." [(ngModel)]="keyword" />
+        <button class="btn btn-dark rounded-pill ms-2 px-4 fs-5" type="button" (click)="onSearch()">🔍</button>
+      </div>
+      <div class="d-flex justify-content-center justify-content-md-start gap-3">
+        
+        <a href="#features" class="btn btn-primary btn-lg">Learn More</a>        
+        <a href="#features" class="btn btn-outline-primary btn-lg">Live Demo</a>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6 text-center overflow-hidden">
+
+      <img
+      src="assets/unsized3.jpg"
+        alt="Image"
+        class="img-fluid"
+        style="clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%)"
+      />
+    </div>
+  </div>
+</div>
