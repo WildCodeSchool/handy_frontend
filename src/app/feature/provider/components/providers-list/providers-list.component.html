@@ -36,8 +36,7 @@
       <div class="col-12 col-md-6 col-lg-4 col-xl-3">
         <a [routerLink]="['/provider', provider.providerId]" class="text-decoration-none">
           <div class="border rounded h-100 p-3 d-flex flex-column justify-content-between bg-white shadow-sm">
-            <img src="assets/call.jpg" class="img-fluid mb-3" alt="Provider Image" />
-
+            <img [src]="imageUrls[$index % imageUrls.length]" alt="service" class="img-fluid mb-3" />
             <div class="provider-info">
               <h5 class="fw-bold text-dark">{{ provider.firstName }} {{ provider.lastName }}</h5>
               <p class="mb-1 text-muted"><strong>Email:</strong> {{ provider.email || 'Email non spécifié' }}</p>

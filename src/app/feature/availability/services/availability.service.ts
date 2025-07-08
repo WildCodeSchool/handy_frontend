@@ -35,7 +35,7 @@ export class AvailabilityService {
   createMyAvailability(startTime: string, endTime: string): Observable<any> {
     return this._http.post(`${this._baseUrl}/me`, { startTime, endTime });
   }
-  
+
   getCalendarOptions(): Observable<CalendarOptions> {
     return this.getMyAvailability().pipe(
       tap(data => this._handleNewBookedSlots(data)),

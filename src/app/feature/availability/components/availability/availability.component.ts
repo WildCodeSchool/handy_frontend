@@ -87,20 +87,22 @@ export class AvailabilityComponent implements OnInit {
   }
 
   deleteAvailability(id: number): void {
-    this._availabilityService.deleteAvailability(id).pipe(
-      switchMap(() => this._availabilityService.getMyAvailability()),
-      tap(data => {
-        this.availability = data;
-        this.successMessage = 'Disponibilité supprimée avec succès.';
-        this.errorMessage = '';
-      }),
-      takeUntilDestroyed(this._destroyRef)
-    )
-    .subscribe({
-      error: () => {
-        this.errorMessage = "Erreur lors de la suppression de la disponibilité.";
-        this.successMessage = '';
-      }
-    });
+    this._availabilityService
+      .deleteAvailability(id)
+      .pipe(
+        switchMap(() => this._availabilityService.getMyAvailability()),
+        tap(data => {
+          this.availability = data;
+          this.successMessage = 'Disponibilité supprimée avec succès.';
+          this.errorMessage = '';
+        }),
+        takeUntilDestroyed(this._destroyRef)
+      )
+      .subscribe({
+        error: () => {
+          this.errorMessage = 'Erreur lors de la suppression de la disponibilité.';
+          this.successMessage = '';
+        },
+      });
   }
 }

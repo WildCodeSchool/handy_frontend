@@ -19,6 +19,13 @@ export class OrderCartComponent implements OnInit {
 
   selectedProvider: AppProvider[] = [];
   isSelectedServicesVisible = true;
+  imageUrls: string[] = [
+    'assets/lady.jpg',
+    'assets/kitchen.jpg',
+    'assets/together.jpg',
+    'assets/shopping2.png',
+    'assets/speed.jpg',
+  ];
 
   constructor(
     private _http: HttpClient,

@@ -8,11 +8,12 @@
         @for (user of users; track user.id) {
           <li class="user-item">
             <div class="user-info">
-                <p>{{ user.id }}</p>
+              <p>{{ user.id }}</p>
               <p><strong>Prénom:</strong> {{ user.firstName }}</p>
               <p><strong>Nom:</strong> {{ user.lastName }}</p>
               <p><strong>Email:</strong> {{ user.email }}</p>
-              <button type="button" (click)="deleteUser(user.id!)">Supprimer</button>            </div>
+              <button type="button" (click)="deleteUser(user.id!)">Supprimer</button>
+            </div>
           </li>
         }
       </ul>
@@ -23,4 +24,3 @@
     <p>Chargement des utilisateurs...</p>
   }
 </div>
-

@@ -89,7 +89,7 @@
     @for (provider of providersWithServices; track provider.providerId) {
       <div class="col-12 col-md-6 col-lg-3 mb-5">
         <div class="card shadow-sm">
-          <img src="assets/shopping2.png" class="card-img-top" alt="Fournisseur Image" />
+          <img [src]="imageUrls[$index % imageUrls.length]" alt="service" class="img-fluid mb-3 card-img-top" />
 
           <div class="card-body text-center">
             <h5 class="card-title">{{ provider.firstName }} {{ provider.lastName }}</h5>

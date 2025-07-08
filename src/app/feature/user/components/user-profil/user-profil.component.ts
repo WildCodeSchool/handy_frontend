@@ -50,7 +50,7 @@ export class UserProfilComponent implements OnInit {
 
 //   userProfile$: Observable<UserProfil | null> = this._userService.getUserProfile().pipe(
 //     tap(() => (this.error = null)),
-  
+
 //   );
 
 //   updateProfile(profile: UserProfil):void {

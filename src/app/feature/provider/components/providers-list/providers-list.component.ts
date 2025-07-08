@@ -18,6 +18,13 @@ export class ProvidersListComponent implements OnInit {
   selectedServices: { userId: number; provisionId: number }[] = [];
   providersWithServices$!: Observable<ProviderWithServicesDTO[]>;
 
+  imageUrls: string[] = [
+    'assets/parkinson.jpg',
+    'assets/call.jpg',
+    'assets/office.jpg',
+    'assets/working-together.jpg',
+    'assets/mer.jpg',
+  ];
   selectedProvider: AppProvider[] = [];
   constructor(
     private _http: HttpClient,
