@@ -7,8 +7,6 @@ import { CreateUserComponent } from '../../components/create-user/create-user.co
   standalone: true,
   imports: [UsersListComponent, CreateUserComponent],
   templateUrl: './crud-user.component.html',
-  styleUrl: './crud-user.component.scss'
+  styleUrl: './crud-user.component.scss',
 })
-export class CrudUserComponent {
-
-}
+export class CrudUserComponent {}

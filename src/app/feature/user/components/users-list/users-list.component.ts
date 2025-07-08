@@ -13,7 +13,6 @@ import { UpdateUserComponent } from '../update-user/update-user.component';
   styleUrl: './users-list.component.scss',
 })
 export class UsersListComponent {
-  
   private _usersService = inject(UsersService);
   private _refresh$ = new BehaviorSubject<void>(undefined);
 
@@ -26,7 +25,7 @@ export class UsersListComponent {
       error: err => console.error('Erreur suppression utilisateur', err),
     });
   }
-  selectUser(user: UserProfil):void {
+  selectUser(user: UserProfil): void {
     this.selectedUser = user;
   }
 }

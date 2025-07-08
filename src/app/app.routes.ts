@@ -16,6 +16,7 @@ import { ProviderOneComponent } from './feature/provider/components/provider-one
 import { AvailabilityComponent } from './feature/availability/components/availability/availability.component';
 import { CalendarComponent } from './feature/calendars/components/calendar/calendar.component';
 import { CrudUserComponent } from './feature/user/page/crud-user/crud-user.component';
+import { AboutUsComponent } from './feature/home/components/about-us/about-us.component';
 
 export const routes: Routes = [
   {
@@ -33,6 +34,10 @@ export const routes: Routes = [
   {
     path: 'calendar',
     component: CalendarComponent,
+  },
+  {
+    path: 'about-us',
+    component: AboutUsComponent,
   },
   {
     path: 'availability',

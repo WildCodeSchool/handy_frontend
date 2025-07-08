@@ -8,7 +8,7 @@ import { UsersService } from '../../services/users.service';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './update-user.component.html',
-  styleUrl: './update-user.component.scss'
+  styleUrl: './update-user.component.scss',
 })
 export class UpdateUserComponent implements OnChanges {
   @Input() user!: UserProfil;
@@ -29,13 +29,13 @@ export class UpdateUserComponent implements OnChanges {
   updateProfile(): void {
     this.isUpdating = true;
     this._userService.updateUserProfile(this.editableProfile).subscribe({
-      next: (data) => {
+      next: data => {
         this.isUpdating = false;
         this.editableProfile = data;
         alert('Profil mis à jour avec succès');
-        this.updated.emit();  
+        this.updated.emit();
       },
-      error: (err) => {
+      error: err => {
         this.isUpdating = false;
         this.error = 'Erreur lors de la mise à jour.';
         console.error(err);

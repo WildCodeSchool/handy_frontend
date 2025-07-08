@@ -1,4 +1,4 @@
-<div class="container my-5">
+<!-- <div class="container my-5">
   <h2 class="text-center mb-4">Nos Services</h2>
   <div class="row">
     @for (product of products$ | async; track product.id) {
@@ -6,6 +6,7 @@
         <div class="card h-100 shadow-sm border-0">
           <div class="text-center p-3"></div>
           <div class="card-body text-center">
+
             <h5 class="card-title fw-bold text-black">{{ product.name }}</h5>
             <p class="card-text text-muted">
               💰 Prix : <span class="fw-bold">{{ product.coeff | currency: 'EUR' }} </span>
@@ -31,22 +32,23 @@
       <app-product [product]="selectedItem" (closeDetails)="CloseDetails()"></app-product>
     }
   </div>
-</div>
+</div> -->
 
 <div class="container my-5">
   <h2 class="text-center mb-4">Nos Services</h2>
 
-  <div class="row">
+  <div class="row d-flex justify-content-center ">
     @for (product of products$ | async; track product.id) {
-      <div class="col-md-6 col-lg-4 mb-4">
+      <div class="col-12 col-md-4">
+        
         <div class="card h-100 shadow-sm border-0">
           <div class="card-body text-center">
             <img
               [src]="serviceList[product.id % serviceList.length].imgUrl"
               alt="service"
-              class="rounded-circle mb-3"
-              style="width: 120px; height: 120px; object-fit: cover;"
-            /> ? 
+              class="prestation mb-3"
+               />
+            
 
             <strong class="d-block mb-2">{{ serviceList[product.id % serviceList.length].nameService }}</strong>
 
@@ -56,9 +58,7 @@
               💰 Prix : <span class="fw-bold">{{ product.coeff | currency: 'EUR' }}</span>
             </p>
 
-            <button type="button" class="btn btn-success" (click)="onSelectProduct(product)">
-              Voir les détails
-            </button>
+            <button type="button" class="btn btn-success" (click)="onSelectProduct(product)">Voir les détails</button>
           </div>
         </div>
       </div>
@@ -71,3 +71,49 @@
     }
   </div>
 </div>
+
+
+<div class="row d-flex justify-content-center">
+  <ng-container *ngIf="(products$ | async) as products">
+    
+    <div *ngIf="products.length === 1; else multipleProducts" class="col-12 col-md-10 offset-md-1 mb-4">
+      <div class="card h-100 shadow-sm border-0">
+        <div class="card-body text-center">
+          <img
+            [src]="serviceList[products[0].id % serviceList.length].imgUrl"
+            alt="service"
+            class="prestation mb-3"
+          />
+          <!-- Affichage des détails du produit unique -->
+          <h5 class="card-title fw-bold text-black">{{ products[0].name }}</h5>
+          <p class="card-text text-muted mb-4">
+            💰 Prix : <span class="fw-bold">{{ products[0].coeff | currency: 'EUR' }}</span>
+          </p>
+
+          <button type="button" class="btn btn-success" (click)="onSelectProduct(products[0])">Voir les détails</button>        </div>
+      </div>
+    </div>
+
+    <!-- Sinon plusieurs produits -->
+    <ng-template #multipleProducts>
+      @for (product of products$ | async; track product.id){
+        <div class="col-12 col-md-4 mb-4">
+        <div class="card h-100 shadow-sm border-0">
+          <div class="card-body text-center">
+            <img
+              [src]="serviceList[product.id % serviceList.length].imgUrl"
+              alt="service"
+              class="prestation mb-3"
+            />
+            <h5 class="card-title fw-bold text-black">{{ product.name }}</h5>
+            <p class="card-text text-muted mb-4">
+              💰 Prix : <span class="fw-bold">{{ products[0].coeff | currency: 'EUR' }}</span>
+            </p>
+  
+            <button type="button" class="btn btn-success" (click)="onSelectProduct(products[0])">Voir les détails</button>          </div>
+        </div>
+      </div>
+     }
+    </ng-template>
+  
+  </ng-container>

@@ -30,20 +30,13 @@
         <button class="btn btn-dark rounded-pill ms-2 px-4 fs-5" type="button" (click)="onSearch()">🔍</button>
       </div>
       <div class="d-flex justify-content-center justify-content-md-start gap-3">
-        
-        <a href="#features" class="btn btn-primary btn-lg">Learn More</a>        
-        <a href="#features" class="btn btn-outline-primary btn-lg">Live Demo</a>
+        <button type="button" class="btn btn-primary btn-lg" (click)="scrollToSection('about')">En savoir plus</button>
+        <a routerLink="/products"  class="btn btn-outline-primary btn-lg">Commandez</a>
       </div>
     </div>
 
     <div class="col-12 col-md-6 text-center overflow-hidden">
-
-      <img
-      src="assets/unsized3.jpg"
-        alt="Image"
-        class="img-fluid"
-        style="clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%)"
-      />
+      <img src="assets/unsized3.jpg" alt="Image" class="img-fluid" style="clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%)" />
     </div>
   </div>
 </div>

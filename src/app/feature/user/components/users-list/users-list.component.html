@@ -4,31 +4,30 @@
   <h2 class="fw-bold text-primary">Liste des utilisateurs</h2>
   <div class="row mb-4">
     <div class="col">
-  @if (users$ | async; as users) {
-    @if (users.length > 0) {
-      <ul class="list-unstyled d-flex flex-row flex-wrap gap-3">
-        @for (user of users; track user.id) {
-          <li class="user-item border rounded p-3">
-            <div class="user-info">
-              <p>{{ user.id }}</p>
-              <p><strong>Prénom:</strong> {{ user.firstName }}</p>
-              <p><strong>Nom:</strong> {{ user.lastName }}</p>
-              <p><strong>Email:</strong> {{ user.email }}</p>
-              <button type="button" (click)="deleteUser(user.id!)">Supprimer</button>
-              <button type="button" (click)="selectUser(user)">Modifier</button>
-            </div>
-          </li>
+      @if (users$ | async; as users) {
+        @if (users.length > 0) {
+          <ul class="list-unstyled d-flex flex-row flex-wrap gap-3">
+            @for (user of users; track user.id) {
+              <li class="user-item border rounded p-3">
+                <div class="user-info">
+                  <p>{{ user.id }}</p>
+                  <p><strong>Prénom:</strong> {{ user.firstName }}</p>
+                  <p><strong>Nom:</strong> {{ user.lastName }}</p>
+                  <p><strong>Email:</strong> {{ user.email }}</p>
+                  <button type="button" (click)="deleteUser(user.id!)">Supprimer</button>
+                  <button type="button" (click)="selectUser(user)">Modifier</button>
+                </div>
+              </li>
+            }
+          </ul>
+        } @else {
+          <p>Il y a eu une erreur ou aucun utilisateur trouvé.</p>
         }
-      </ul>
-    
-    } @else {
-      <p>Il y a eu une erreur ou aucun utilisateur trouvé.</p>
-    }
-  } @else {
-    <p>Chargement des utilisateurs...</p>
-  }
-</div>
-</div>
+      } @else {
+        <p>Chargement des utilisateurs...</p>
+      }
+    </div>
+  </div>
 </div>
 
 <app-update-user *ngIf="selectedUser" [user]="selectedUser" (updated)="selectedUser = null"></app-update-user>

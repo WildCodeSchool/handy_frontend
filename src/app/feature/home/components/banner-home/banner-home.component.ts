@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AboutUsComponent } from '../about-us/about-us.component';
 
 @Component({
   selector: 'app-banner-home',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, AboutUsComponent],
   templateUrl: './banner-home.component.html',
   styleUrl: './banner-home.component.scss',
 })
@@ -17,6 +18,12 @@ export class BannerHomeComponent {
   onSearch(): void {
     if (this.keyword.trim()) {
       this._router.navigate(['/products'], { queryParams: { search: this.keyword } });
+    }
+  }
+  scrollToSection(sectionId: string): void {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
 }
