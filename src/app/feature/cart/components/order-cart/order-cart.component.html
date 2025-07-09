@@ -70,7 +70,8 @@
             </ng-container>
 
             <ng-container *ngIf="getServiceInfo(item.userId, item.provisionId) as service">
-              <div>
+              <div class=
+              "text-xl text-900 font-medium mb-2">
                 Service : {{ service.name }} <small>(prix: {{ service.coeff | currency: 'EUR' }})</small>
               </div>
             </ng-container>
@@ -101,11 +102,12 @@
                 <h6 class="mb-2">Services disponibles :</h6>
                 <ul class="list-unstyled">
                   @for (service of provider.services.slice(0, 3); track service.id) {
-                    <li class="service-item d-flex justify-content-between align-items-center mb-2">
-                      <span
-                        >{{ service.name }} <small>(prix: {{ service.coeff | currency: 'EUR' }})</small></span
+                    <li class="text-xl text-900 font-medium mb-2 service-item d-flex justify-content-between align-items-center mb-2">
+                      <span class=
+                      "text-xl text-900 font-medium mb-2">{{ service.name }} </span>
+                        <span><small>(prix: {{ service.coeff | currency: 'EUR' }})</small></span
                       >
-                      <button type="button" class="btn btn-primary btn-sm" (click)="addToCart(provider.providerId, service.id)">Ajouter</button>
+                      <button type="button" class="btn btn-success btn-sm" (click)="addToCart(provider.providerId, service.id)">Ajouter</button>
                     </li>
                   }
                 </ul>

@@ -2,7 +2,7 @@
   @if (!isLoading && userProfile) {
     <div class="row mb-4">
       <div class="col">
-        <h2 class="fw-bold text-primary">Profil</h2>
+        <h2 class="fw-bold text-success">Profil</h2>
         <p class="text-muted">Vous pouvez modifier les informations de votre profil ici.</p>
       </div>
     </div>
@@ -29,7 +29,7 @@
       </div>
 
       <div class="col-12 text-end">
-        <button type="submit" class="btn btn-primary mt-3" [disabled]="isUpdating">
+        <button type="submit" class="btn btn-success mt-3" [disabled]="isUpdating">
           {{ isUpdating ? 'Mise à jour...' : 'Mettre à jour le profil' }}
         </button>
       </div>

@@ -1,7 +1,7 @@
 <p>provider-one works!</p>
 
 <div class="container py-5 px-3 px-md-4 px-lg-5">
-  <a [routerLink]="'/order'" class="btn btn-primary btn-lg fw-bold px-4 py-2">Passer commande par ici</a>
+  <a [routerLink]="'/order'" class="btn btn-success btn-lg fw-bold px-4 py-2">Passer commande par ici</a>
 
   @let provider = provider$ | async;
   @if (provider) {
@@ -20,7 +20,7 @@
             </div>
 
             <p class="mb-0 text-secondary lh-sm">Prestataire basé à {{ provider.city }}.</p>
-            <p class="mb-0 text-secondary lh-sm">Prestataire basé à {{ provider.email }}.</p>
+            <p class="mb-0 text-secondary lh-sm">Contact {{ provider.email }}.</p>
           </div>
 
           <img src="assets/testimonials/testimonials-2.png" alt="Image prestataire" class="img-fluid rounded custom-img-75" />

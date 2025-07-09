@@ -35,18 +35,17 @@ export class ProviderProfilComponent implements OnInit {
 
   loadExistingServices(): void {
     this._providersService.getProviderWithServices(this.providerId).subscribe({
-      next: (providerData) => {
+      next: providerData => {
         this.existingServices = providerData.services.map(service => service.id);
       },
       error: () => {
         this.message = 'Erreur lors du chargement des services existants.';
-      }
+      },
     });
   }
   loadProvisions(): void {
     this.provisions$ = this._productService.getAllProvisions$().pipe(tap(() => (this.message = '')));
   }
-  
 
   attachServiceToConnectedProvider(): void {
     if (!this.selectedProvisionId) {
@@ -74,7 +73,7 @@ export class ProviderProfilComponent implements OnInit {
           next: () => {
             this.message = 'Service ajouté avec succès !';
             this.existingServices.push(provisionIdNum);
-            // this.loadExistingServices(); 
+            // this.loadExistingServices();
           },
           error: () => {
             this.message = "Erreur lors de l'ajout du service.";

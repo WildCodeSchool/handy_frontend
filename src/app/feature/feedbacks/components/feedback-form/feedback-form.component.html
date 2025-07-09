@@ -5,7 +5,7 @@
 
   <textarea [(ngModel)]="content" rows="4" placeholder="Votre avis..." class="form-control"></textarea>
   <br />
-  <button type="button" (click)="submitFeedback()" class="btn btn-primary">Envoyer</button>
+  <button type="button" (click)="submitFeedback()" class="btn btn-success">Envoyer</button>
 
   @if (successMessage) {
     <p class="success text-success">{{ successMessage }}</p>
