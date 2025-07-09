@@ -1,15 +1,15 @@
-<p>feedback-form works!</p>
+@if (isAuthenticated$ | async) {
+  <div class="feedback-form">
+    <h4>Laisser un commentaire</h4>
 
-<div class="feedback-form">
-  <h4>Laisser un commentaire</h4>
+    <textarea [(ngModel)]="content" rows="4" placeholder="Votre avis..." class="form-control"></textarea>
+    <br />
+    <button type="button" (click)="submitFeedback()" class="btn btn-success">Envoyer</button>
 
-  <textarea [(ngModel)]="content" rows="4" placeholder="Votre avis..." class="form-control"></textarea>
-  <br />
-  <button type="button" (click)="submitFeedback()" class="btn btn-success">Envoyer</button>
-
-  @if (successMessage) {
-    <p class="success text-success">{{ successMessage }}</p>
-  } @else if (errorMessage) {
-    <p class="error text-danger">{{ errorMessage }}</p>
-  }
-</div>
+    @if (successMessage) {
+      <p class="success text-success">{{ successMessage }}</p>
+    } @else if (errorMessage) {
+      <p class="error text-danger">{{ errorMessage }}</p>
+    }
+  </div>
+}

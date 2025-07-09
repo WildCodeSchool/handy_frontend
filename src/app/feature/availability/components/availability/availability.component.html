@@ -1,6 +1,6 @@
 <p>availability works!</p>
 
-<h3 class="fw-bold text-primary">Ajouter une disponibilité</h3>
+<h3 class="fw-bold text-success">Ajouter une disponibilité</h3>
 
 @if (successMessage) {
   <p style="color: green">{{ successMessage }}</p>
@@ -23,7 +23,7 @@
     <div style="color: red">Les deux dates sont requises pour soumettre le formulaire.</div>
   }
 
-  <button type="submit" class="btn btn-primary mt-3" [disabled]="!newStartTime || !newEndTime">Ajouter</button>
+  <button type="submit" class="btn btn-success mt-3" [disabled]="!newStartTime || !newEndTime">Ajouter</button>
 </form>
 
 <hr />

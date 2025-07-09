@@ -3,11 +3,12 @@ import { FeedbackService } from '../../services/feedback.service';
 import { Feedback } from '../../model/feedback';
 import { CommonModule } from '@angular/common';
 import { tap } from 'rxjs';
+import { DeleteFeedbackComponent } from '../delete-feedback/delete-feedback.component';
 
 @Component({
   selector: 'app-feedback',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, DeleteFeedbackComponent],
   templateUrl: './feedback.component.html',
   styleUrl: './feedback.component.scss',
 })
@@ -29,5 +30,8 @@ export class FeedbackComponent implements OnChanges {
           error: err => console.error('Erreur chargement feedbacks:', err),
         });
     }
+  }
+  onFeedbackDeleted(deletedId: number): void {
+    this.feedbacks = this.feedbacks.filter(fb => fb.id !== deletedId);
   }
 }

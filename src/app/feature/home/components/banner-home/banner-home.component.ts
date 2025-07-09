@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AboutUsComponent } from '../about-us/about-us.component';
 
 @Component({
   selector: 'app-banner-home',
   standalone: true,
-  imports: [FormsModule, AboutUsComponent],
+  imports: [FormsModule],
   templateUrl: './banner-home.component.html',
   styleUrl: './banner-home.component.scss',
 })

@@ -1,4 +1,4 @@
-<h3 class="fw-bold text-primary">Liste des services disponibles</h3>
+<h3 class="fw-bold text-success">Liste des services disponibles</h3>
 <div class="card shadow-sm p-4">
   @if (provisions$ | async; as provisions) {
     @if (provisions.length > 0) {
@@ -14,7 +14,7 @@
       </ul>
 
       <div class="text-center mt-3">
-        <button type="button" class="btn btn-primary mt-3" (click)="attachServiceToConnectedProvider()">Ajouter ce service</button>
+        <button type="button" class="btn btn-success mt-3" (click)="attachServiceToConnectedProvider()">Ajouter ce service</button>
       </div>
 
       @if (message) {

@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { FeedbackService } from '../../services/feedback.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { take } from 'rxjs';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-feedback-form',
@@ -18,8 +19,10 @@ export class FeedbackFormComponent {
   successMessage = '';
   errorMessage = '';
 
-  constructor(private _feedbackService: FeedbackService) {}
+  private _feedbackService = inject(FeedbackService);
+  private _authService = inject(AuthService);
 
+  isAuthenticated$ = this._authService.authStatus$;
   submitFeedback(): void {
     this.successMessage = '';
     this.errorMessage = '';

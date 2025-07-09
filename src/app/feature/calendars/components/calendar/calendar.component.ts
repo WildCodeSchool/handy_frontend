@@ -37,23 +37,6 @@ export class CalendarComponent implements OnInit {
   private readonly _toastr = inject(ToastrService);
   private readonly _destroyRef = inject(DestroyRef);
 
-  // ngOnInit(): void {
-  //   const savedDismissed = localStorage.getItem('dismissedToastIds');
-  //   if (savedDismissed) {
-  //     const ids = JSON.parse(savedDismissed);
-  //     this.dismissedToastIds = new Set<number>(ids);
-  //     this._availabilityService.setDismissedToastIds(ids);
-  //   }
-
-  //   this._availabilityService.getCalendarOptions().subscribe(options => {
-  //     this.calendarOptions = options;
-  //     this._toastr.info('Calendrier chargé.', 'Info');
-  //   });
-
-  //   this._availabilityService.toastMessages$.subscribe(messages => {
-  //     this.toastMessages = messages.filter(toast => !this.dismissedToastIds.has(toast.id));
-  //   });
-  // }
   ngOnInit(): void {
     this._loadDismissedToastIds();
     this._fetchCalendarOptions();

@@ -24,13 +24,13 @@ export class HeaderComponent implements OnInit {
   private readonly _destroyRef = inject(DestroyRef);
 
   isAdmin$ = this._userStore.hasRole$('ROLE_ADMIN');
+  isProvider$ = this._userStore.hasRole$('ROLE_PROVIDER');
 
   ngOnInit(): void {
     this._authSubscription = this._authService.authStatus$
       .pipe(
         tap((status: boolean) => {
           this.isLoggedIn = status;
-          this.isProvider = status && this._authService.getRoleFromToken().includes('ROLE_PROVIDER');
         }),
         takeUntilDestroyed(this._destroyRef)
       )

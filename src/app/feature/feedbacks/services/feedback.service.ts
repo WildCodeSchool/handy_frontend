@@ -20,4 +20,8 @@ export class FeedbackService {
       userId: feedback.userId,
     });
   }
+
+  deleteFeedback(id: number): Observable<void> {
+    return this._http.delete<void>(`${this._baseUrl}/${id}`);
+  }
 }
