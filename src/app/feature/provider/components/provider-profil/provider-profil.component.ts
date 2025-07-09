@@ -21,6 +21,8 @@ export class ProviderProfilComponent implements OnInit {
   provisions$!: Observable<AppProvider[]>;
   selectedProvisionId?: number;
   message = '';
+  existingServices: number[] = [];
+  providerId!: number;
 
   private readonly _productService = inject(ProductService);
   private readonly _providersService = inject(ProvidersService);
@@ -28,11 +30,23 @@ export class ProviderProfilComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProvisions();
+    this.loadExistingServices();
   }
 
+  loadExistingServices(): void {
+    this._providersService.getProviderWithServices(this.providerId).subscribe({
+      next: (providerData) => {
+        this.existingServices = providerData.services.map(service => service.id);
+      },
+      error: () => {
+        this.message = 'Erreur lors du chargement des services existants.';
+      }
+    });
+  }
   loadProvisions(): void {
     this.provisions$ = this._productService.getAllProvisions$().pipe(tap(() => (this.message = '')));
   }
+  
 
   attachServiceToConnectedProvider(): void {
     if (!this.selectedProvisionId) {
@@ -45,6 +59,10 @@ export class ProviderProfilComponent implements OnInit {
       this.message = 'Veuillez sélectionner un service valide.';
       return;
     }
+    if (this.existingServices.includes(provisionIdNum)) {
+      this.message = 'Ce service est déjà associé.';
+      return;
+    }
 
     const dto: ProvisionDto[] = [{ provisionId: provisionIdNum }];
 
@@ -53,7 +71,11 @@ export class ProviderProfilComponent implements OnInit {
       .pipe(
         takeUntilDestroyed(this._destroyRef),
         tap({
-          next: () => (this.message = 'Service ajouté avec succès !'),
+          next: () => {
+            this.message = 'Service ajouté avec succès !';
+            this.existingServices.push(provisionIdNum);
+            // this.loadExistingServices(); 
+          },
           error: () => {
             this.message = "Erreur lors de l'ajout du service.";
           },

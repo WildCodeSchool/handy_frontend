@@ -25,7 +25,7 @@ export class ProductListComponent implements OnInit {
   selectedItem!: AppProvider | null;
 
   serviceList = [
-    { imgUrl: 'assets/clening.jpg',  nameService: 'Services à la personne'},
+    { imgUrl: 'assets/clening.jpg', nameService: 'Services à la personne' },
     { imgUrl: 'assets/shopping.jpg', nameService: 'Services à la personne' },
     { imgUrl: 'assets/speed.jpg', nameService: 'Services à la personne' },
   ];
