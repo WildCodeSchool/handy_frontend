@@ -73,7 +73,6 @@ export class ProviderProfilComponent implements OnInit {
           next: () => {
             this.message = 'Service ajouté avec succès !';
             this.existingServices.push(provisionIdNum);
-            // this.loadExistingServices();
           },
           error: () => {
             this.message = "Erreur lors de l'ajout du service.";

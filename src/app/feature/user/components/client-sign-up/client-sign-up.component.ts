@@ -13,27 +13,29 @@ import { FormErrorComponent } from 'src/app/core/errors/form-error/form-error.co
   templateUrl: './client-sign-up.component.html',
   styleUrl: './client-sign-up.component.scss',
 })
-export class ClientSignUpComponent extends UsersSignUpComponent { private readonly _authService = inject(AuthService);
-private readonly _router = inject(Router);
+export class ClientSignUpComponent extends UsersSignUpComponent {
+  private readonly _authService = inject(AuthService);
+  private readonly _router = inject(Router);
 
-onSubmit(): void {
-  if (this.signUpForm.invalid) {
-    this.signUpForm.markAllAsTouched();
-    return;
+  onSubmit(): void {
+    if (this.signUpForm.invalid) {
+      this.signUpForm.markAllAsTouched();
+      return;
+    }
+
+    const credentials = this.getEmailAndPassword();
+    if (!credentials) return;
+
+    this._authService
+      .registerProvider$(credentials.email, credentials.password)
+      .pipe(take(1))
+      .subscribe({
+        next: success => {
+          if (success) this._router.navigate(['/products']);
+        },
+        error: err => {
+          console.error('Erreur lors de l’inscription du prestataire :', err);
+        },
+      });
   }
-
-  const credentials = this.getEmailAndPassword();
-  if (!credentials) return;
-
-  this._authService
-    .registerProvider$(credentials.email, credentials.password)
-    .pipe(take(1))
-    .subscribe({
-      next: success => {
-        if (success) this._router.navigate(['/products']);
-      },
-      error: err => {
-        console.error('Erreur lors de l’inscription du prestataire :', err);
-      },
-    });
-}}
+}

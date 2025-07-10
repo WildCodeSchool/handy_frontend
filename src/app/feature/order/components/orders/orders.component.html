@@ -1,4 +1,3 @@
-
 <div class="bg-light px-4 py-5 px-md-5">
   <div class="container">
     <div class="text-center mb-5">
@@ -19,9 +18,8 @@
                     [ngClass]="{
                       'bg-warning bg-opacity-25 text-warning': order.statusLabel === 'En cours',
                       'bg-success bg-opacity-25 text-success': order.statusLabel === 'Validée',
-                      'bg-danger bg-opacity-25 text-danger': order.statusLabel === 'Annulée'
-                    }"
-                  >
+                      'bg-danger bg-opacity-25 text-danger': order.statusLabel === 'Annulée',
+                    }">
                     {{ order.statusLabel }}
                   </span>
                 </div>
@@ -32,7 +30,7 @@
                 </div>
               </div>
             </div>
-          }
+          } 
         </div>
       } @else {
         <p class="text-secondary text-center mt-4">Aucune commande disponible.</p>

@@ -16,8 +16,8 @@ export class OrdersComponent {
   error?: string;
 
   private _ordersService = inject(OrdersService);
-  
-  orders$: Observable<Orders[]>  = this._ordersService.getMyOrders().pipe(
+
+  orders$: Observable<Orders[]> = this._ordersService.getMyOrders().pipe(
     catchError(err => {
       console.error('Erreur de chargement des commandes:', err);
       this.error = 'Impossible de charger les commandes.';

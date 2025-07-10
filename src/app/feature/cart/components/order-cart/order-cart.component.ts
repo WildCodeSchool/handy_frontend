@@ -1,10 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { HttpClient } from '@angular/common/http';
 import { AppProvider } from 'src/app/feature/product/models/provider';
 import { CommonModule } from '@angular/common';
 import { ProviderWithServicesDTO } from '../../models/ProviderWithServicesDTO';
 import { tap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-order-cart',
@@ -23,6 +24,7 @@ export class OrderCartComponent implements OnInit {
 
   private readonly _http = inject(HttpClient);
   private readonly _cartService = inject(CartService);
+  private readonly _destroyRef = inject(DestroyRef);
   ngOnInit(): void {
     this._cartService
       .getProvidersWithServices()
@@ -32,7 +34,8 @@ export class OrderCartComponent implements OnInit {
             ...provider,
             services: provider.services || [],
           }));
-        })
+        }),
+        takeUntilDestroyed(this._destroyRef)
       )
       .subscribe();
 
@@ -40,7 +43,8 @@ export class OrderCartComponent implements OnInit {
       .pipe(
         tap(cart => {
           this.selectedServices = cart;
-        })
+        }),
+        takeUntilDestroyed(this._destroyRef)
       )
       .subscribe();
   }
@@ -83,4 +87,3 @@ export class OrderCartComponent implements OnInit {
     this.isSelectedServicesVisible = false;
   }
 }
-export type { ProviderWithServicesDTO };

@@ -14,7 +14,7 @@ import { AppProvider } from 'src/app/feature/product/models/provider';
   templateUrl: './providers-list.component.html',
   styleUrl: './providers-list.component.scss',
 })
-export class ProvidersListComponent  {
+export class ProvidersListComponent {
   providersWithServices: ProviderWithServicesDTO[] = [];
   selectedServices: { userId: number; provisionId: number }[] = [];
   // providersWithServices$!: Observable<ProviderWithServicesDTO[]>;
@@ -50,7 +50,6 @@ export class ProvidersListComponent  {
       }))
     )
   );
-
 
   addToCart(providerId: number, serviceId: number): void {
     const userId = providerId;

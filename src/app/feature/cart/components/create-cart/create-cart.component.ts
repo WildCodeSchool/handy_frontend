@@ -2,7 +2,6 @@ import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { ProvisionCartItem } from '../../models/ProvisionCartItem';
 import { CartService } from '../../services/cart.service';
 import { CommonModule, NgClass } from '@angular/common';
-import { ProviderWithServicesDTO } from '../order-cart/order-cart.component';
 import { AppProvider } from 'src/app/feature/product/models/provider';
 import { Availability } from 'src/app/feature/availability/models/Availability';
 import { AvailabilityService } from 'src/app/feature/availability/services/availability.service';
@@ -11,6 +10,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { catchError, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { ProviderWithServicesDTO } from '../../models/ProviderWithServicesDTO';
 
 @Component({
   selector: 'app-create-cart',

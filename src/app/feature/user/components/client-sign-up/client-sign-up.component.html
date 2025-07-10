@@ -1,5 +1,4 @@
-<p>client-sign-up works!</p>
-<div class="d-flex justify-content-center align-items-center min-vh-100">
+<div class="d-flex justify-content-center align-items-center mb-5">
   <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="w-50 p-4 border rounded shadow-sm bg-light">
     <fieldset>
       <div class="mb-3">
@@ -25,12 +24,12 @@
 
         @if (signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched) {
           <div class="invalid-feedback d-block">
-            @if (signUpForm.get('email')?.errors?.['required']) {
+            <!-- @if (signUpForm.get('email')?.errors?.['required']) {
               <span>L'email est requis.</span>
-            }
-            @if (signUpForm.get('email')?.errors?.['email']) {
+            } -->
+            <!-- @if (signUpForm.get('email')?.errors?.['email']) {
               <span>L'email n'est pas valide.</span>
-            }
+            } -->
             @if (signUpForm.get('email')?.errors?.['minlength']) {
               <span>L'email doit être au format valide.</span>
             }
@@ -43,7 +42,6 @@
           <label for="password" class="form-label">Mot de passe</label>
           <input type="password" id="password" formControlName="password" class="form-control" />
           <app-form-error [control]="signUpForm.get('passwords.password')"></app-form-error>
-
         </div>
         @if (signUpForm.get('passwords.password')?.invalid && signUpForm.get('passwords.password')?.touched) {
           <div class="invalid-feedback d-block">
@@ -60,8 +58,7 @@
         <div class="mb-3">
           <label for="confirmPassword" class="form-label">Confirmer le mot de passe</label>
           <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control" />
-          <app-form-error [control]="signUpForm.get('passwords')"></app-form-error>
-
+          <app-form-error [control]="signUpForm.get('passwords.confirmPassword')"></app-form-error>
         </div>
         <div>
           @if (signUpForm.get('passwords')?.errors?.['passwordsMismatch'] && signUpForm.get('passwords.confirmPassword')?.touched) {

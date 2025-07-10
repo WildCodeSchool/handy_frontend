@@ -7,10 +7,9 @@ import { passwordMatchValidator, securePasswordValidator } from 'src/app/core/va
   standalone: true,
   imports: [],
   templateUrl: './users-sign-up.component.html',
-  styleUrl: './users-sign-up.component.scss'
+  styleUrl: './users-sign-up.component.scss',
 })
 export class UsersSignUpComponent {
-
   protected readonly _MIN_USERNAME_LENGTH = 3;
   protected readonly _MIN_PASSWORD_LENGTH = 12;
 
