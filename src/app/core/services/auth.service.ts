@@ -5,6 +5,7 @@ import { TokenService } from './token.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserStoreService } from './user-store.service';
 import { Router } from '@angular/router';
+import { ROLES, ROUTES } from '../enum/constants';
 
 type Role = {
   authority: string;
@@ -48,12 +49,12 @@ export class AuthService {
 
         const roles = this.getRoleFromToken();
 
-        if (roles.includes('ROLE_PROVIDER')) {
-          this._router.navigate(['/providers']);
-        } else if (roles.includes('ROLE_ADMIN')) {
-          this._router.navigate(['/admin']);
+        if (roles.includes(ROLES.PROVIDER)) {
+          this._router.navigate([ROUTES.PROVIDER]);
+        } else if (roles.includes(ROLES.ADMIN)) {
+          this._router.navigate([ROUTES.ADMIN]);
         } else {
-          this._router.navigate(['/client']);
+          this._router.navigate([ROUTES.CLIENT]);
         }
       }),
       map(res => res.token)

@@ -30,11 +30,32 @@
       </div>
 
       <div class="col-12 text-end">
-        <button type="submit" class="btn btn-primary mt-3" [disabled]="isUpdating">
+        <button type="submit" class="btn btn-success mt-3" [disabled]="isUpdating">
           {{ isUpdating ? 'Mise à jour...' : 'Mettre à jour le profil' }}
         </button>
+        @if (successMessageUpdate) {
+          <div class="alert alert-success mt-2" role="alert">
+            {{ successMessageUpdate }}
+          </div>
+        }
       </div>
+      
     </form>
+    @if (isAdmin$ | async) {<div class="col-12 text-end">
+      <button
+  type="button"
+  class="btn btn-success mt-3"
+  (click)="updateProfileAsAdmin()"
+  [disabled]="isUpdating"
+>
+  {{ isUpdating ? 'Mise à jour...' : 'Mettre à jour (admin)' }}
+</button>
+@if (successMessageUpdate) {
+  <div class="alert alert-success mt-2" role="alert">
+    {{ successMessageUpdate }}
+  </div>
+}
+    </div>}
   }
 
   <ng-template #loadingOrError>

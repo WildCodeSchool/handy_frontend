@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { HttpClient } from '@angular/common/http';
 import { AppProvider } from 'src/app/feature/product/models/provider';
@@ -21,10 +21,8 @@ export class OrderCartComponent implements OnInit {
   isSelectedServicesVisible = true;
   imageUrls: string[] = ['assets/lady.jpg', 'assets/kitchen.jpg', 'assets/together.jpg', 'assets/speed.jpg'];
 
-  constructor(
-    private _http: HttpClient,
-    private _cartService: CartService
-  ) {}
+  private readonly _http = inject(HttpClient);
+  private readonly _cartService = inject(CartService);
   ngOnInit(): void {
     this._cartService
       .getProvidersWithServices()

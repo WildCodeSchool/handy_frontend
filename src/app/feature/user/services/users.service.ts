@@ -19,6 +19,9 @@ export class UsersService {
     return this._http.put<UserProfil>(`${this._apiUrl}/update`, userProfile);
   }
 
+  updateUserByAdmin(userId: number, data: UserProfil): Observable<UserProfil> {
+    return this._http.put<UserProfil>(`${this._apiUrl}/update/${userId}`, data);
+  }
   getAllUsers(): Observable<UserProfil[]> {
     return this._http.get<UserProfil[]>(`${this._apiUrl}`);
   }
