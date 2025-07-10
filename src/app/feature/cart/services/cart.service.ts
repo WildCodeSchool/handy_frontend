@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { ProvisionCartItem } from '../models/ProvisionCartItem';
 import { BehaviorSubject, Observable, Subject, switchMap, tap } from 'rxjs';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { ProviderWithServicesDTO } from '../models/ProviderWithServicesDTO';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { environment } from 'src/environments/environment.development';
@@ -58,7 +58,6 @@ export class CartService {
   }
 
   submitCart(): Observable<any> {
-    
     return this._http.post(this._submitUrl, this._cartItems, {}).pipe(
       tap(() => {
         this.confirmationMessage$.next('✅ Votre commande a été envoyée avec succès.');
@@ -67,7 +66,6 @@ export class CartService {
     );
   }
 
- 
   initCartState(): Observable<ProvisionCartItem[]> {
     return this.getProvidersWithServices().pipe(
       tap(providers => this._setProvidersWithServices(providers)),
@@ -78,29 +76,27 @@ export class CartService {
   private _setProvidersWithServices(providers: ProviderWithServicesDTO[]): void {
     this.providersWithServices = providers.map(p => ({
       ...p,
-      services: p.services || []
+      services: p.services || [],
     }));
-  
-    const mapObj = Object.fromEntries(
-      this.providersWithServices.map(p => [p.providerId, p])
-    );
-  
+
+    const mapObj = Object.fromEntries(this.providersWithServices.map(p => [p.providerId, p]));
+
     this._providerMap.next(mapObj);
   }
-  
+
   private _syncServiceMap(cart: ProvisionCartItem[]): void {
     const serviceMap: Record<string, any> = {};
     const providerMap = this._providerMap.getValue();
-  
+
     for (const item of cart) {
       const provider = providerMap[item.userId];
       const service = provider?.services.find(s => s.id === item.provisionId);
-  
+
       if (service) {
         serviceMap[`${item.userId}_${item.provisionId}`] = service;
       }
     }
-  
+
     this._serviceMap.next(serviceMap);
     this.serviceMapSync = serviceMap;
   }

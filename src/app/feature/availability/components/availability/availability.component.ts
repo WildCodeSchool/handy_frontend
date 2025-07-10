@@ -18,10 +18,9 @@ export class AvailabilityComponent implements OnInit {
   newEndTime: string = '';
   successMessage = '';
   errorMessage = '';
+  private _availabilityService = inject(AvailabilityService);
   private readonly _destroyRef = inject(DestroyRef);
   today: Date = new Date();
-
-  constructor(private _availabilityService: AvailabilityService) {}
 
   ngOnInit(): void {
     this._availabilityService

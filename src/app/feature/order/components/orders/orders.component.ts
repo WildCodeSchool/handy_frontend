@@ -1,4 +1,4 @@
-import { Component, DestroyRef, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { Orders } from '../../models/Orders';
 import { OrdersService } from '../../services/orders.service';
 import { CommonModule } from '@angular/common';
@@ -16,10 +16,9 @@ export class OrdersComponent implements OnInit {
   orders: Orders[] = [];
   error?: string;
 
-  constructor(
-    private _ordersService: OrdersService,
-    private _destroyRef: DestroyRef
-  ) {}
+  
+    private _ordersService = inject(OrdersService);
+    private _destroyRef =inject (DestroyRef);
 
   ngOnInit(): void {
     this._ordersService

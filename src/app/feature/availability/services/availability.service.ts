@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { Availability } from '../models/Availability';
 import { CalendarOptions } from '@fullcalendar/core';
@@ -9,7 +9,6 @@ import { environment } from 'src/environments/environment.development';
   providedIn: 'root',
 })
 export class AvailabilityService {
-  // private _baseUrl = 'http://localhost:8080/availabilities';
   private _baseUrl = `${environment.apiUrl}/availabilities`;
 
   private _bookedIdsSeen = new Set<number>();
@@ -18,8 +17,7 @@ export class AvailabilityService {
   toastMessages$ = this._toastMessagesSubject.asObservable();
   toastMessages: { id: number; message: string; type: 'info' | 'success' | 'error' }[] = [];
 
-  constructor(private _http: HttpClient) {}
-
+  private _http = inject(HttpClient);
   getMyAvailability(): Observable<Availability[]> {
     return this._http.get<Availability[]>(`${this._baseUrl}/me`);
   }

@@ -10,8 +10,10 @@ import { ClientSignUpComponent } from '../../components/client-sign-up/client-si
   templateUrl: './crud-user.component.html',
   styleUrl: './crud-user.component.scss',
 })
-export class CrudUserComponent {activeComponent: 'list' | 'client' | 'provider' | null = null;
+export class CrudUserComponent {
+  activeComponent: 'list' | 'client' | 'provider' | null = null;
 
-  show(component: 'list' | 'client' | 'provider'):void {
+  show(component: 'list' | 'client' | 'provider'): void {
     this.activeComponent = component;
-  }}
+  }
+}

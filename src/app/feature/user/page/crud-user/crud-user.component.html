@@ -1,15 +1,15 @@
 <p>crud-user works!</p>
 <div class="container py-4">
-    <div class="d-flex gap-3 mb-4">
-      <button type="button" class="btn btn-outline-primary" (click)="show('list')">Liste des utilisateurs</button>
-<button type="button" class="btn btn-outline-success" (click)="show('client')">Ajouter client</button>
-<button type="button" class="btn btn-outline-warning" (click)="show('provider')">Ajouter prestataire</button>
-</div>
+  <div class="d-flex gap-3 mb-4">
+    <button type="button" class="btn btn-outline-primary" (click)="show('list')">Liste des utilisateurs</button>
+    <button type="button" class="btn btn-outline-success" (click)="show('client')">Ajouter client</button>
+    <button type="button" class="btn btn-outline-warning" (click)="show('provider')">Ajouter prestataire</button>
+  </div>
 
-<div class="mt-4"> 
+  <div class="mt-4">
     @if (activeComponent === 'list') {
-    <app-users-list></app-users-list>
-  } @else if (activeComponent === 'client') {
+      <app-users-list></app-users-list>
+    } @else if (activeComponent === 'client') {
       <app-client-sign-up></app-client-sign-up>
     } @else if (activeComponent === 'provider') {
       <app-provider-sign-up></app-provider-sign-up>
@@ -17,3 +17,4 @@
       <p class="text-muted">Veuillez sélectionner une action ci-dessus.</p>
     }
   </div>
+</div>

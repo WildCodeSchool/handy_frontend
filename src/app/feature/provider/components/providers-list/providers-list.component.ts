@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Observable, switchMap, tap } from 'rxjs';
 import { ProviderWithServicesDTO } from 'src/app/feature/cart/models/ProviderWithServicesDTO';
@@ -20,10 +20,9 @@ export class ProvidersListComponent implements OnInit {
 
   imageUrls: string[] = ['assets/parkinson.jpg', 'assets/call.jpg', 'assets/office.jpg', 'assets/working-together.jpg', 'assets/mer.jpg'];
   selectedProvider: AppProvider[] = [];
-  constructor(
-    private _http: HttpClient,
-    private _cartService: CartService
-  ) {}
+
+  private _http = inject(HttpClient);
+  private _cartService = inject(CartService);
 
   ngOnInit(): void {
     this._cartService

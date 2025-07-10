@@ -21,9 +21,8 @@ export class UpdateUserComponent implements OnChanges {
   error: string | null = null;
 
   private readonly _userService = inject(UsersService);
-private _userStore = inject(UserStoreService);
-successMessageUpdate: string | null = null;
-
+  private _userStore = inject(UserStoreService);
+  successMessageUpdate: string | null = null;
 
   isAdmin$ = this._userStore.hasRole$('ROLE_ADMIN');
   ngOnChanges(changes: SimpleChanges): void {
@@ -54,9 +53,9 @@ successMessageUpdate: string | null = null;
       this.error = 'ID utilisateur manquant pour la mise à jour admin.';
       return;
     }
-  
+
     this.isUpdating = true;
-  
+
     const updatePayload = {
       email: this.editableProfile.email,
       firstName: this.editableProfile.firstName,
@@ -64,7 +63,7 @@ successMessageUpdate: string | null = null;
       address: this.editableProfile.address,
       city: this.editableProfile.city,
     };
-  
+
     this._userService.updateUserByAdmin(this.editableProfile.id, updatePayload).subscribe({
       next: data => {
         this.isUpdating = false;
