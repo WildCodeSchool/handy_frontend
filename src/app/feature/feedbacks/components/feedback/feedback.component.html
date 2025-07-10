@@ -1,5 +1,3 @@
-
-
 @if (feedbacks$ | async; as feedbacks) {
   @if (feedbacks.length > 0) {
     <div class="feedback-section mt-5">
@@ -8,10 +6,7 @@
         @for (fb of feedbacks; track fb.id) {
           <li class="list-group-item">
             {{ fb.content }}
-            <app-delete-feedback
-              [feedbackId]="fb.id"
-              (deleted)="onFeedbackDeleted(fb.id)">
-            </app-delete-feedback>
+            <app-delete-feedback [feedbackId]="fb.id" (deleted)="onFeedbackDeleted(fb.id)"> </app-delete-feedback>
           </li>
         }
       </ul>

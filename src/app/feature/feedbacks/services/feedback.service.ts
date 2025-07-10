@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment.development';
 export class FeedbackService {
   private readonly _baseUrl = `${environment.apiUrl}/feedbacks`;
 
-private _http = inject(HttpClient);
+  private _http = inject(HttpClient);
 
   getFeedbacksByUserId(userId: number): Observable<Feedback[]> {
     return this._http.get<Feedback[]>(`${this._baseUrl}/user/${userId}`);

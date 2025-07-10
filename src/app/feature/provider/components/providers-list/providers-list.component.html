@@ -20,7 +20,7 @@
     </div>
   </div>
 </div>
-
+@if (providersWithServices$ | async; as providersWithServices) {
 <div class="container my-5">
   <h2 class="text-dark display-5 fw-medium mb-4 text-center text-lg-start">Les pros à votre service</h2>
   <p class="fs-4 text-muted mb-5 text-center text-lg-start">Nous vous proposons des services de qualité</p>
@@ -58,4 +58,4 @@
       </div>
     }
   </div>
-</div>
+</div>}

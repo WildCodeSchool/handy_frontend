@@ -18,7 +18,7 @@ export class FeedbackComponent implements OnChanges {
   feedbacks$!: Observable<Feedback[]>;
 
   private readonly _feedbackService = inject(FeedbackService);
- 
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['userId'] && this.userId) {
       this.feedbacks$ = this._feedbackService.getFeedbacksByUserId(this.userId).pipe(
@@ -35,5 +35,4 @@ export class FeedbackComponent implements OnChanges {
       map(feedbacks => feedbacks.filter(fb => fb.id !== deletedId))
     );
   }
-
 }

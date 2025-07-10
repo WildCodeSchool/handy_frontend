@@ -2,6 +2,7 @@ import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FeedbackService } from '../../services/feedback.service';
 import { CommonModule } from '@angular/common';
 import { UserStoreService } from 'src/app/core/services/user-store.service';
+import { ROLES } from 'src/app/core/enum/constants';
 
 @Component({
   selector: 'app-delete-feedback',
@@ -17,7 +18,7 @@ export class DeleteFeedbackComponent {
   private _feedbackService = inject(FeedbackService);
   private _userStore = inject(UserStoreService);
 
-  isAdmin$ = this._userStore.hasRole$('ROLE_ADMIN');
+  isAdmin$ = this._userStore.hasRole$(ROLES.ADMIN);
 
   deleteFeedback(): void {
     if (confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?')) {

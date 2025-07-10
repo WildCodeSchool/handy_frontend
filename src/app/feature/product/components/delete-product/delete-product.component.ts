@@ -4,6 +4,7 @@ import { ApiService } from '../../services/api.service';
 import { CommonModule } from '@angular/common';
 import { UserStoreService } from 'src/app/core/services/user-store.service';
 import { take, tap } from 'rxjs';
+import { ROLES } from 'src/app/core/enum/constants';
 
 @Component({
   selector: 'app-delete-product',
@@ -21,7 +22,7 @@ export class DeleteProductComponent {
   @Input() product!: AppProvider;
   @Output() productDeleted = new EventEmitter<number>();
 
-  isAdmin$ = this._userStore.hasRole$('ROLE_ADMIN');
+  isAdmin$ = this._userStore.hasRole$(ROLES.ADMIN);
 
   deleteProduct(): void {
     this._productService

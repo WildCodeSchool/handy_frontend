@@ -9,10 +9,9 @@ import { environment } from 'src/environments/environment.development';
 })
 export class OrdersService {
   // private readonly _apiUrl = 'http://localhost:8080/orders/me';
-    private readonly _apiUrl = `${environment.apiUrl}/orders/me`;
-  
-  private _http = inject(HttpClient);
+  private readonly _apiUrl = `${environment.apiUrl}/orders/me`;
 
+  private _http = inject(HttpClient);
 
   getMyOrders(): Observable<Orders[]> {
     return this._http.get<Orders[]>(this._apiUrl);

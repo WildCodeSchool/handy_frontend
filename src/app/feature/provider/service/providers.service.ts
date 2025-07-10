@@ -9,10 +9,6 @@ import { environment } from 'src/environments/environment.development';
   providedIn: 'root',
 })
 export class ProvidersService {
-  // private _providersUrl = 'http://localhost:8080/users/providers-with-services';
-  // private _providersservicesUrl = 'http://localhost:8080/provision-users/create-service';
-  // private readonly _apiUrl = `${environment.}/users`;
-
   private readonly _providersUrl = `${environment.apiUrl}/users/providers-with-services`;
   private readonly _providersservicesUrl = `${environment.apiUrl}/provision-users/create-service`;
   private _http = inject(HttpClient);

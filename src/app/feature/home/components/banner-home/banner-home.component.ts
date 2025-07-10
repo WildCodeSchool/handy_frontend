@@ -12,8 +12,8 @@ import { Router } from '@angular/router';
 export class BannerHomeComponent {
   keyword: string = '';
 
-    private _router = inject(Router);
-  
+  private _router = inject(Router);
+
   onSearch(): void {
     if (this.keyword.trim()) {
       this._router.navigate(['/products'], { queryParams: { search: this.keyword } });

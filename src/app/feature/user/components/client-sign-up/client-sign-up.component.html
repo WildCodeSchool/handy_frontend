@@ -21,6 +21,8 @@
       <div class="mb-3">
         <label for="email" class="form-label">Email</label>
         <input id="email" formControlName="email" type="email" required class="form-control" />
+        <app-form-error [control]="signUpForm.get('email')"></app-form-error>
+
         @if (signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched) {
           <div class="invalid-feedback d-block">
             @if (signUpForm.get('email')?.errors?.['required']) {
@@ -40,6 +42,8 @@
         <div class="mb-3">
           <label for="password" class="form-label">Mot de passe</label>
           <input type="password" id="password" formControlName="password" class="form-control" />
+          <app-form-error [control]="signUpForm.get('passwords.password')"></app-form-error>
+
         </div>
         @if (signUpForm.get('passwords.password')?.invalid && signUpForm.get('passwords.password')?.touched) {
           <div class="invalid-feedback d-block">
@@ -56,6 +60,8 @@
         <div class="mb-3">
           <label for="confirmPassword" class="form-label">Confirmer le mot de passe</label>
           <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control" />
+          <app-form-error [control]="signUpForm.get('passwords')"></app-form-error>
+
         </div>
         <div>
           @if (signUpForm.get('passwords')?.errors?.['passwordsMismatch'] && signUpForm.get('passwords.confirmPassword')?.touched) {
