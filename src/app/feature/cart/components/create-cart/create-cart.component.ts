@@ -84,9 +84,7 @@ export class CreateCartComponent {
 
   private _processAvailability(userId: number, availabilities: Availability[]): void {
     this.providerAvailabilities[userId] = availabilities.filter(slot => slot.status === 'available');
-    availabilities.filter(slot => slot.status === 'booked').forEach(slot =>
-      this._toastr.info(`Créneau réservé par : ${slot.bookedByEmail}`, 'Info')
-    );
+    availabilities.filter(slot => slot.status === 'booked').forEach(slot => this._toastr.info(`Créneau réservé par : ${slot.bookedByEmail}`, 'Info'));
   }
 
   private _handleSlotBookingSuccess(userId: number, key: string, selected: Availability): void {

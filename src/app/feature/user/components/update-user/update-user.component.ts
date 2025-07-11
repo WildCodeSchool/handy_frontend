@@ -4,6 +4,7 @@ import { UserProfil } from '../../models/UserProfil';
 import { UsersService } from '../../services/users.service';
 import { UserStoreService } from 'src/app/core/services/user-store.service';
 import { AsyncPipe } from '@angular/common';
+import { ROLES } from 'src/app/core/enum/constants';
 
 @Component({
   selector: 'app-update-user',
@@ -24,17 +25,28 @@ export class UpdateUserComponent implements OnChanges {
   private _userStore = inject(UserStoreService);
   successMessageUpdate: string | null = null;
 
-  isAdmin$ = this._userStore.hasRole$('ROLE_ADMIN');
+  isAdmin$ = this._userStore.hasRole$(ROLES.ADMIN);
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['user'] && this.user) {
       this.editableProfile = { ...this.user };
     }
   }
 
-  updateProfile(): void {
+    updateProfile(): void {
     this.isUpdating = true;
-    this._userService.updateUserProfile(this.editableProfile).subscribe({
+  
+    const updatePayload = {
+      email: this.editableProfile.email,
+
+      firstName: this.editableProfile.firstName,
+      lastName: this.editableProfile.lastName,
+      address: this.editableProfile.address,
+      city: this.editableProfile.city,
+    };
+  
+    this._userService.updateUserProfile(updatePayload).subscribe({
       next: data => {
+
         this.isUpdating = false;
         this.editableProfile = data;
         this.successMessageUpdate = 'Profil mis à jour avec succès !';
@@ -47,7 +59,7 @@ export class UpdateUserComponent implements OnChanges {
       },
     });
   }
-
+ 
   updateProfileAsAdmin(): void {
     if (!this.editableProfile.id) {
       this.error = 'ID utilisateur manquant pour la mise à jour admin.';
@@ -79,3 +91,7 @@ export class UpdateUserComponent implements OnChanges {
     });
   }
 }
+
+
+
+
