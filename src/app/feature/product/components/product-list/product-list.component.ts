@@ -29,12 +29,10 @@ export class ProductListComponent implements OnInit {
     { imgUrl: 'assets/shopping.jpg', nameService: 'Services à la personne' },
     { imgUrl: 'assets/speed.jpg', nameService: 'Services à la personne' },
   ];
- 
+
   ngOnInit(): void {
     const keyword = this._route.snapshot.queryParamMap.get('search');
-    this.products$ = keyword
-      ? this._facadeProvisionService.searchProvisions$(keyword)
-      : this._facadeProvisionService.getAll$();
+    this.products$ = keyword ? this._facadeProvisionService.searchProvisions$(keyword) : this._facadeProvisionService.getAll$();
   }
 
   CloseDetails(): void {

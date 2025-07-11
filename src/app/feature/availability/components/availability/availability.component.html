@@ -30,7 +30,7 @@
 
 <h3 class="fw-bold text-primary">Résumé de mes disponibilités</h3>
 
-@if (availability?.length > 0) {
+@if (availability.length > 0) {
   @for (slot of availability; track slot.id) {
     <p>
       🕒 {{ slot.startTime | date: 'dd/MM/yyyy HH:mm' }} → {{ slot.endTime | date: 'dd/MM/yyyy HH:mm' }} ({{ slot.status }})

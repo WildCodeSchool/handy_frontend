@@ -1,4 +1,4 @@
-import { Component, inject} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { UsersService } from '../../services/users.service';
 import { UserProfil } from '../../models/UserProfil';
 import { CommonModule } from '@angular/common';
@@ -12,8 +12,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   templateUrl: './user-profil.component.html',
   styleUrl: './user-profil.component.scss',
 })
-
-
 export class UserProfilComponent {
   private readonly _userService = inject(UsersService);
 
@@ -23,17 +21,18 @@ export class UserProfilComponent {
 
   updateProfile(profile: UserProfil): void {
     this.isUpdating = true;
-    this._userService.updateUserProfile(profile)
-    .pipe(takeUntilDestroyed())
-    .subscribe({
-      next: () => {
-        alert('Profil mis à jour avec succès');
-        this.isUpdating = false;
-      },
-      error: () => {
-        alert('Erreur lors de la mise à jour');
-        this.isUpdating = false;
-      },
-    });
+    this._userService
+      .updateUserProfile(profile)
+      .pipe(takeUntilDestroyed())
+      .subscribe({
+        next: () => {
+          alert('Profil mis à jour avec succès');
+          this.isUpdating = false;
+        },
+        error: () => {
+          alert('Erreur lors de la mise à jour');
+          this.isUpdating = false;
+        },
+      });
   }
 }

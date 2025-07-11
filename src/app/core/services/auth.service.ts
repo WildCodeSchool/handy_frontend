@@ -6,6 +6,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserStoreService } from './user-store.service';
 import { Router } from '@angular/router';
 import { ROLES, ROUTES } from '../enum/constants';
+import { environment } from 'src/environments/environment.development';
 
 type Role = {
   authority: string;
@@ -17,8 +18,7 @@ type Role = {
 export class AuthService {
   private _userPayload: any;
   private _authStatus$!: BehaviorSubject<boolean>;
-  // private readonly _apiBaseUrl = environment.apiUrl;
-  private readonly _apiBaseUrl: string = 'http://localhost:8080';
+  private readonly _apiBaseUrl = environment.apiUrl;
   constructor(
     private _http: HttpClient,
     private _tokenService: TokenService,

@@ -1,5 +1,5 @@
 export type Availability = {
-  id?: number;
+  id: number;
   startTime: string;
   endTime: string;
   userEmail: string;
