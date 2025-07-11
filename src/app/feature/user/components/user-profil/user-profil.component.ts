@@ -37,7 +37,6 @@ export class UserProfilComponent {
   }
 }
 
-
 // updateProfile(profile: UserProfil): void {
 //   const payload = {
 //     email: profile.email,
@@ -64,4 +63,3 @@ export class UserProfilComponent {
 //     });
 // }
 // }
-

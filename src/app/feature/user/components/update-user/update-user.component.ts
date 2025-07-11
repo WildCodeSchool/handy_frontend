@@ -32,9 +32,9 @@ export class UpdateUserComponent implements OnChanges {
     }
   }
 
-    updateProfile(): void {
+  updateProfile(): void {
     this.isUpdating = true;
-  
+
     const updatePayload = {
       email: this.editableProfile.email,
 
@@ -43,10 +43,9 @@ export class UpdateUserComponent implements OnChanges {
       address: this.editableProfile.address,
       city: this.editableProfile.city,
     };
-  
+
     this._userService.updateUserProfile(updatePayload).subscribe({
       next: data => {
-
         this.isUpdating = false;
         this.editableProfile = data;
         this.successMessageUpdate = 'Profil mis à jour avec succès !';
@@ -59,7 +58,7 @@ export class UpdateUserComponent implements OnChanges {
       },
     });
   }
- 
+
   updateProfileAsAdmin(): void {
     if (!this.editableProfile.id) {
       this.error = 'ID utilisateur manquant pour la mise à jour admin.';
@@ -91,7 +90,3 @@ export class UpdateUserComponent implements OnChanges {
     });
   }
 }
-
-
-
-

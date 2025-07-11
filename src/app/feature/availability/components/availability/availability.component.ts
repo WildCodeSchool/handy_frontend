@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { switchMap, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Availability } from '../../models/Availability';
 
 @Component({
   selector: 'app-availability',
@@ -17,8 +16,8 @@ export class AvailabilityComponent implements OnInit {
   private readonly _availabilityService = inject(AvailabilityService);
   private readonly _destroyRef = inject(DestroyRef);
 
-  availability:Availability[] = [];
-  newStartTime = '';
+  availability: any[] = [];
+    newStartTime = '';
   newEndTime = '';
   successMessage = '';
   errorMessage = '';
@@ -77,7 +76,10 @@ export class AvailabilityComponent implements OnInit {
     this._availabilityService
       .getMyAvailability()
       .pipe(takeUntilDestroyed(this._destroyRef))
-      .subscribe(data => (this.availability = data));
+      .subscribe(data => {
+        console.log('Données de disponibilité chargées :', data); 
+        this.availability = data ?? [];
+      });
   }
 
   private _isValidRange(): boolean {
@@ -194,4 +196,4 @@ export class AvailabilityComponent implements OnInit {
 //         },
 //       });
 //   }
-// } 
+// }
