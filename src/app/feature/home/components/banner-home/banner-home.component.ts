@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -12,11 +12,17 @@ import { Router } from '@angular/router';
 export class BannerHomeComponent {
   keyword: string = '';
 
-  constructor(private _router: Router) {}
+  private _router = inject(Router);
 
   onSearch(): void {
     if (this.keyword.trim()) {
       this._router.navigate(['/products'], { queryParams: { search: this.keyword } });
+    }
+  }
+  scrollToSection(sectionId: string): void {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
 }

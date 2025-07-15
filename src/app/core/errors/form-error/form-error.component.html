@@ -1,0 +1,19 @@
+@if (control?.invalid && (control?.touched || control?.dirty)) {
+  <div class="text-danger small mt-1">
+    @if (errors?.['required']) {
+      <div>Ce champ est requis.</div>
+    }
+    @if (errors?.['email']) {
+      <div>Adresse email invalide.</div>
+    }
+    @if (errors?.['minlength']) {
+      <div>Minimum {{ errors['minlength'].requiredLength }} caractères requis.</div>
+    }
+    @if (errors?.['passwordMismatch']) {
+      <div>Les mots de passe ne correspondent pas.</div>
+    }
+    @if (errors?.['securePassword']) {
+      <div>Le mot de passe doit contenir majuscules, minuscules, chiffres et caractères spéciaux.</div>
+    }
+  </div>
+}

@@ -17,10 +17,9 @@
     } @else {
       <button type="button" class="header-button btn btn-success" (click)="navigateToSignUpPage()">Se connecter/ s'inscrire</button>
     }
-    @if (isProvider) {
+    @if (isProvider$ | async) {
       <a [routerLink]="'/providers'" class="nav-link">Mon profil (prestataire)</a>
-    }
-    @if (isAdmin$ | async) {
+    } @else if (isAdmin$ | async) {
       <a [routerLink]="'/admin'" class="nav-link">Mon profil (admin)</a>
     } @else {
       <a [routerLink]="'/client'" class="nav-link">Mon profil</a>

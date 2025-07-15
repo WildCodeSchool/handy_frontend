@@ -1,7 +1,8 @@
+import { AsyncPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Observable, switchMap, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { ProviderWithServicesDTO } from 'src/app/feature/cart/models/ProviderWithServicesDTO';
 import { CartService } from 'src/app/feature/cart/services/cart.service';
 import { AppProvider } from 'src/app/feature/product/models/provider';
@@ -9,38 +10,29 @@ import { AppProvider } from 'src/app/feature/product/models/provider';
 @Component({
   selector: 'app-providers-list',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, AsyncPipe],
   templateUrl: './providers-list.component.html',
   styleUrl: './providers-list.component.scss',
 })
-export class ProvidersListComponent implements OnInit {
+export class ProvidersListComponent {
   providersWithServices: ProviderWithServicesDTO[] = [];
   selectedServices: { userId: number; provisionId: number }[] = [];
-  providersWithServices$!: Observable<ProviderWithServicesDTO[]>;
 
+  imageUrls: string[] = ['assets/parkinson.jpg', 'assets/call.jpg', 'assets/office.jpg', 'assets/working-together.jpg', 'assets/mer.jpg'];
   selectedProvider: AppProvider[] = [];
-  constructor(
-    private _http: HttpClient,
-    private _cartService: CartService
-  ) {}
 
-  ngOnInit(): void {
-    this._cartService
-      .getProvidersWithServices()
-      .pipe(
-        tap(data => {
-          this.providersWithServices = data.map(provider => ({
-            ...provider,
-            services: provider.services || [],
-          }));
-        }),
-        switchMap(() => this._cartService.cart$),
-        tap(cart => {
-          this.selectedServices = cart;
-        })
-      )
-      .subscribe();
-  }
+  private _http = inject(HttpClient);
+  private _cartService = inject(CartService);
+
+
+  providersWithServices$: Observable<ProviderWithServicesDTO[]> = this._cartService.getProvidersWithServices().pipe(
+    map(providers =>
+      providers.map(provider => ({
+        ...provider,
+        services: provider.services || [],
+      }))
+    )
+  );
 
   addToCart(providerId: number, serviceId: number): void {
     const userId = providerId;

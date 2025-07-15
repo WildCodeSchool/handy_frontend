@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ProvisionCartItem } from '../models/ProvisionCartItem';
 import { BehaviorSubject, Observable, Subject, switchMap, tap } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { ProviderWithServicesDTO } from '../models/ProviderWithServicesDTO';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { environment } from 'src/environments/environment.development';
@@ -20,17 +20,15 @@ export class CartService {
   providersWithServices: ProviderWithServicesDTO[] = [];
   confirmationMessage$ = new Subject<string>();
 
-  public _providerMap = new BehaviorSubject<Record<number, ProviderWithServicesDTO>>({});
-  public serviceMapSync: Record<string, any> = {};
+  _providerMap = new BehaviorSubject<Record<number, ProviderWithServicesDTO>>({});
+  serviceMapSync: Record<string, any> = {};
 
   private _serviceMap = new BehaviorSubject<Record<string, any>>({});
   providerMap$ = this._providerMap.asObservable();
   serviceMap$ = this._serviceMap.asObservable();
 
-  constructor(
-    private _http: HttpClient,
-    private _autservice: AuthService
-  ) {}
+  private readonly _http = inject(HttpClient);
+  private readonly _authService = inject(AuthService);
 
   getProvidersWithServices(): Observable<ProviderWithServicesDTO[]> {
     return this._http.get<ProviderWithServicesDTO[]>(this._providersUrl);
@@ -60,11 +58,7 @@ export class CartService {
   }
 
   submitCart(): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-
-    return this._http.post(this._submitUrl, this._cartItems, { headers }).pipe(
+    return this._http.post(this._submitUrl, this._cartItems, {}).pipe(
       tap(() => {
         this.confirmationMessage$.next('✅ Votre commande a été envoyée avec succès.');
         this.clearCart();
@@ -74,26 +68,36 @@ export class CartService {
 
   initCartState(): Observable<ProvisionCartItem[]> {
     return this.getProvidersWithServices().pipe(
-      tap(providers => {
-        this.providersWithServices = providers.map(p => ({ ...p, services: p.services || [] }));
-        const mapObj = Object.fromEntries(this.providersWithServices.map(p => [p.providerId, p]));
-        this._providerMap.next(mapObj);
-      }),
+      tap(providers => this._setProvidersWithServices(providers)),
       switchMap(() => this.cart$),
-      tap(cart => {
-        const serviceMap: Record<string, any> = {};
-
-        const providerMap = this._providerMap.getValue();
-        cart.forEach(item => {
-          const provider = providerMap[item.userId];
-          const service = provider?.services.find(s => s.id === item.provisionId);
-          if (service) {
-            serviceMap[`${item.userId}_${item.provisionId}`] = service;
-          }
-        });
-        this._serviceMap.next(serviceMap);
-        this.serviceMapSync = serviceMap;
-      })
+      tap(cart => this._syncServiceMap(cart))
     );
+  }
+  private _setProvidersWithServices(providers: ProviderWithServicesDTO[]): void {
+    this.providersWithServices = providers.map(p => ({
+      ...p,
+      services: p.services || [],
+    }));
+
+    const mapObj = Object.fromEntries(this.providersWithServices.map(p => [p.providerId, p]));
+
+    this._providerMap.next(mapObj);
+  }
+
+  private _syncServiceMap(cart: ProvisionCartItem[]): void {
+    const serviceMap: Record<string, any> = {};
+    const providerMap = this._providerMap.getValue();
+
+    for (const item of cart) {
+      const provider = providerMap[item.userId];
+      const service = provider?.services.find(s => s.id === item.provisionId);
+
+      if (service) {
+        serviceMap[`${item.userId}_${item.provisionId}`] = service;
+      }
+    }
+
+    this._serviceMap.next(serviceMap);
+    this.serviceMapSync = serviceMap;
   }
 }

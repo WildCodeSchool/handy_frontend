@@ -1,0 +1,70 @@
+<p>update-user works!</p>
+<div class="container py-5">
+  @if (!isLoading && editableProfile) {
+    <div class="row mb-4">
+      <div class="col">
+        <h3 class="fw-bold text-success">Profil</h3>
+        <p class="text-muted">Vous pouvez modifier les informations de votre profil ici.</p>
+      </div>
+    </div>
+
+    <form (ngSubmit)="updateProfile()" class="row g-3">
+      <div class="col-md-6">
+        <label for="firstName" class="form-label">Prénom</label>
+        <input type="text" class="form-control" id="firstName" [(ngModel)]="editableProfile.firstName" name="firstName" required />
+      </div>
+
+      <div class="col-md-6">
+        <label for="lastName" class="form-label">Nom</label>
+        <input type="text" class="form-control" id="lastName" [(ngModel)]="editableProfile.lastName" name="lastName" required />
+      </div>
+
+      <div class="col-12">
+        <label for="address" class="form-label">Adresse</label>
+        <input type="text" class="form-control" id="address" [(ngModel)]="editableProfile.address" name="address" required />
+      </div>
+
+      <div class="col-md-6">
+        <label for="city" class="form-label">Ville</label>
+        <input type="text" class="form-control" id="city" [(ngModel)]="editableProfile.city" name="city" required />
+      </div>
+
+      <div class="col-12 text-end">
+        <button type="submit" class="btn btn-success mt-3" [disabled]="isUpdating">
+          {{ isUpdating ? 'Mise à jour...' : 'Mettre à jour le profil' }}
+        </button>
+        @if (successMessageUpdate) {
+          <div class="alert alert-success mt-2" role="alert">
+            {{ successMessageUpdate }}
+          </div>
+        }
+      </div>
+    </form>
+    @if (isAdmin$ | async) {
+      <div class="col-12 text-end">
+        <button type="button" class="btn btn-success mt-3" (click)="updateProfileAsAdmin()" [disabled]="isUpdating">
+          {{ isUpdating ? 'Mise à jour...' : 'Mettre à jour (admin)' }}
+        </button>
+        @if (successMessageUpdate) {
+          <div class="alert alert-success mt-2" role="alert">
+            {{ successMessageUpdate }}
+          </div>
+        }
+      </div>
+    }
+  }
+
+  <ng-template #loadingOrError>
+    <div class="text-center my-5">
+      @if (isLoading) {
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Chargement...</span>
+        </div>
+      } @else if (error) {
+        <div class="alert alert-danger mt-3">
+          {{ error }}
+        </div>
+      }
+    </div>
+  </ng-template>
+</div>

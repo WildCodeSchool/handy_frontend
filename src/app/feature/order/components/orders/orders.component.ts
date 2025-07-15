@@ -1,9 +1,8 @@
-import { Component, DestroyRef, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Orders } from '../../models/Orders';
 import { OrdersService } from '../../services/orders.service';
 import { CommonModule } from '@angular/common';
-import { tap } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { catchError, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-orders',
@@ -12,24 +11,17 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   templateUrl: './orders.component.html',
   styleUrl: './orders.component.scss',
 })
-export class OrdersComponent implements OnInit {
+export class OrdersComponent {
   orders: Orders[] = [];
   error?: string;
 
-  constructor(
-    private _ordersService: OrdersService,
-    private _destroyRef: DestroyRef
-  ) {}
+  private _ordersService = inject(OrdersService);
 
-  ngOnInit(): void {
-    this._ordersService
-      .getMyOrders()
-      .pipe(
-        tap(data => {
-          this.orders = data;
-        }),
-        takeUntilDestroyed(this._destroyRef)
-      )
-      .subscribe();
-  }
+  orders$: Observable<Orders[]> = this._ordersService.getMyOrders().pipe(
+    catchError(err => {
+      console.error('Erreur de chargement des commandes:', err);
+      this.error = 'Impossible de charger les commandes.';
+      return of([]);
+    })
+  );
 }

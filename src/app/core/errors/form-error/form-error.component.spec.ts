@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminHomeComponent } from './admin-home.component';
+import { FormErrorComponent } from './form-error.component';
 
-describe('AdminHomeComponent', () => {
-  let component: AdminHomeComponent;
-  let fixture: ComponentFixture<AdminHomeComponent>;
+describe('FormErrorComponent', () => {
+  let component: FormErrorComponent;
+  let fixture: ComponentFixture<FormErrorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AdminHomeComponent]
+      imports: [FormErrorComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AdminHomeComponent);
+    fixture = TestBed.createComponent(FormErrorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -5,6 +5,8 @@ import { TokenService } from './token.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserStoreService } from './user-store.service';
 import { Router } from '@angular/router';
+import { ROLES, ROUTES } from '../enum/constants';
+import { environment } from 'src/environments/environment.development';
 
 type Role = {
   authority: string;
@@ -16,8 +18,7 @@ type Role = {
 export class AuthService {
   private _userPayload: any;
   private _authStatus$!: BehaviorSubject<boolean>;
-  // private readonly _apiBaseUrl = environment.apiUrl;
-  private readonly _apiBaseUrl: string = 'http://localhost:8080';
+  private readonly _apiBaseUrl = environment.apiUrl;
   constructor(
     private _http: HttpClient,
     private _tokenService: TokenService,
@@ -26,7 +27,6 @@ export class AuthService {
   ) {
     this._authStatus$ = new BehaviorSubject<boolean>(this._tokenService.isLogged());
     this._userPayload = this._decodeToken();
-    console.log('User Payload après décode :', this._userPayload);
   }
 
   public register$(email: string, password: string): Observable<boolean> {
@@ -49,12 +49,12 @@ export class AuthService {
 
         const roles = this.getRoleFromToken();
 
-        if (roles.includes('ROLE_PROVIDER')) {
-          this._router.navigate(['/providers']);
-        } else if (roles.includes('ROLE_ADMIN')) {
-          this._router.navigate(['/admin']);
+        if (roles.includes(ROLES.PROVIDER)) {
+          this._router.navigate([ROUTES.PROVIDER]);
+        } else if (roles.includes(ROLES.ADMIN)) {
+          this._router.navigate([ROUTES.ADMIN]);
         } else {
-          this._router.navigate(['/client']);
+          this._router.navigate([ROUTES.CLIENT]);
         }
       }),
       map(res => res.token)
@@ -89,7 +89,7 @@ export class AuthService {
     this._router.navigate(['/']);
   }
 
-  private _decodeToken(): unknown {
+  private _decodeToken(): null {
     const token = this._tokenService.getToken();
     if (!token) return null;
 

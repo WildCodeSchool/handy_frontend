@@ -1,49 +1,47 @@
-<p>user-profil works!</p>
-
-<div class="container py-5" *ngIf="userProfile; else loadingOrError">
-  <div class="row mb-4">
-    <div class="col">
-      <h2 class="fw-bold text-primary">Profil du Fournisseur</h2>
-      <p class="text-muted">Vous pouvez modifier les informations de votre profil ici.</p>
-    </div>
-  </div>
-
-  <form (ngSubmit)="updateProfile()" class="row g-3">
-    <div class="col-md-6">
-      <label for="firstName" class="form-label">Prénom</label>
-      <input type="text" class="form-control" id="firstName" [(ngModel)]="userProfile.firstName" name="firstName" required />
+<div class="container py-5">
+  @if (userProfile$ | async; as userProfile) {
+    <div class="row mb-4">
+      <div class="col">
+        <h2 class="fw-bold text-success">Profil</h2>
+        <p class="text-muted">Vous pouvez modifier les informations de votre profil ici.</p>
+      </div>
     </div>
 
-    <div class="col-md-6">
-      <label for="lastName" class="form-label">Nom</label>
-      <input type="text" class="form-control" id="lastName" [(ngModel)]="userProfile.lastName" name="lastName" required />
-    </div>
+    <form (ngSubmit)="updateProfile(userProfile)" class="row g-3">
+      <div class="col-md-6">
+        <label for="firstName" class="form-label">Prénom</label>
+        <input type="text" class="form-control" id="firstName" [(ngModel)]="userProfile.firstName" name="firstName" required />
+      </div>
 
-    <div class="col-12">
-      <label for="address" class="form-label">Adresse</label>
-      <input type="text" class="form-control" id="address" [(ngModel)]="userProfile.address" name="address" required />
-    </div>
+      <div class="col-md-6">
+        <label for="lastName" class="form-label">Nom</label>
+        <input type="text" class="form-control" id="lastName" [(ngModel)]="userProfile.lastName" name="lastName" required />
+      </div>
 
-    <div class="col-md-6">
-      <label for="city" class="form-label">Ville</label>
-      <input type="text" class="form-control" id="city" [(ngModel)]="userProfile.city" name="city" required />
-    </div>
+      <div class="col-12">
+        <label for="address" class="form-label">Adresse</label>
+        <input type="text" class="form-control" id="address" [(ngModel)]="userProfile.address" name="address" required />
+      </div>
 
-    <div class="col-12 text-end">
-      <button type="submit" class="btn btn-primary mt-3" [disabled]="isLoading">
-        {{ isLoading ? 'Mise à jour...' : 'Mettre à jour le profil' }}
-      </button>
+      <div class="col-md-6">
+        <label for="city" class="form-label">Ville</label>
+        <input type="text" class="form-control" id="city" [(ngModel)]="userProfile.city" name="city" required />
+      </div>
+
+      <div class="col-12 text-end">
+        <button type="submit" class="btn btn-success mt-3" [disabled]="isUpdating">
+          {{ isUpdating ? 'Mise à jour...' : 'Mettre à jour le profil' }}
+        </button>
+      </div>
+    </form>
+  }
+
+  <ng-template #loadingOrError>
+    <div class="text-center my-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Chargement...</span>
+      </div>
     </div>
-  </form>
+  </ng-template>
 </div>
-
-<ng-template #loadingOrError>
-  <div class="text-center my-5">
-    <div *ngIf="isLoading" class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Chargement...</span>
-    </div>
-    <div *ngIf="error" class="alert alert-danger mt-3">
-      {{ error }}
-    </div>
-  </div>
-</ng-template>
+--> -->

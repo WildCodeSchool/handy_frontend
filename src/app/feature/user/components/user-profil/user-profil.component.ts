@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { UsersService } from '../../services/users.service';
 import { UserProfil } from '../../models/UserProfil';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-user-profil',
@@ -11,34 +12,27 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './user-profil.component.html',
   styleUrl: './user-profil.component.scss',
 })
-export class UserProfilComponent implements OnInit {
-  userProfile: UserProfil | null = null;
-  isLoading = true;
-  error: string | null = null;
+export class UserProfilComponent {
+  private readonly _userService = inject(UsersService);
 
-  constructor(private _userService: UsersService) {}
+  isUpdating = false;
 
-  ngOnInit(): void {
-    this.loadUserProfile();
-  }
+  userProfile$ = this._userService.getUserProfile();
 
-  loadUserProfile(): void {
-    this._userService.getUserProfile().subscribe({
-      next: data => {
-        this.userProfile = data;
-        this.isLoading = false;
-      },
-    });
-  }
-
-  updateProfile(): void {
-    if (this.userProfile) {
-      this._userService.updateUserProfile(this.userProfile).subscribe({
-        next: data => {
-          this.userProfile = data;
+  updateProfile(profile: UserProfil): void {
+    this.isUpdating = true;
+    this._userService
+      .updateUserProfile(profile)
+      .pipe(takeUntilDestroyed())
+      .subscribe({
+        next: () => {
           alert('Profil mis à jour avec succès');
+          this.isUpdating = false;
+        },
+        error: () => {
+          alert('Erreur lors de la mise à jour');
+          this.isUpdating = false;
         },
       });
-    }
   }
 }

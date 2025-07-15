@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ProviderFacadeService } from '../../services/provider-facade.service';
 import { ProductForCreation } from '../../models/productCreation';
 import { UserStoreService } from 'src/app/core/services/user-store.service';
+import { ROLES } from 'src/app/core/enum/constants';
 
 @Component({
   selector: 'app-create-product',
@@ -22,12 +23,11 @@ export class CreateProductComponent {
   private _productFacadeService = inject(ProviderFacadeService);
   private _userStore = inject(UserStoreService);
 
-  isAdmin$ = this._userStore.hasRole$('ROLE_ADMIN');
+  isAdmin$ = this._userStore.hasRole$(ROLES.ADMIN);
 
   onSubmit(): void {
     this._productFacadeService.post$(this.newProduct).subscribe({
       next: (res: ProductForCreation) => {
-        console.log('Produit créé avec succès:', res);
         this.productCreated.emit(res);
       },
     });
