@@ -37,29 +37,3 @@ export class UserProfilComponent {
   }
 }
 
-// updateProfile(profile: UserProfil): void {
-//   const payload = {
-//     email: profile.email,
-//     firstName: profile.firstName,
-//     lastName: profile.lastName,
-//     address: profile.address,
-//     city: profile.city,
-//   };
-
-//   this.isUpdating = true;
-//   this._userService
-//     .updateUserProfile(payload)
-//     .pipe(takeUntilDestroyed())
-//     .subscribe({
-//       next: () => {
-//         alert('Profil mis à jour avec succès');
-//         this.isUpdating = false;
-//       },
-//       error: (err) => {
-//         console.error('Erreur exacte :', err);
-//         alert('Erreur lors de la mise à jour');
-//         this.isUpdating = false;
-//       },
-//     });
-// }
-// }
