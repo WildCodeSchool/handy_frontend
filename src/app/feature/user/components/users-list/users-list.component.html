@@ -29,4 +29,6 @@
   </div>
 </div>
 
-<app-update-user *ngIf="selectedUser" [user]="selectedUser" (updated)="selectedUser = null"></app-update-user>
+@if (selectedUser) {
+  <app-update-user [user]="selectedUser" (updated)="selectedUser = null"></app-update-user>
+}

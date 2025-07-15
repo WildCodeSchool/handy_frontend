@@ -17,7 +17,6 @@ import { AppProvider } from 'src/app/feature/product/models/provider';
 export class ProvidersListComponent {
   providersWithServices: ProviderWithServicesDTO[] = [];
   selectedServices: { userId: number; provisionId: number }[] = [];
-  // providersWithServices$!: Observable<ProviderWithServicesDTO[]>;
 
   imageUrls: string[] = ['assets/parkinson.jpg', 'assets/call.jpg', 'assets/office.jpg', 'assets/working-together.jpg', 'assets/mer.jpg'];
   selectedProvider: AppProvider[] = [];
@@ -25,23 +24,7 @@ export class ProvidersListComponent {
   private _http = inject(HttpClient);
   private _cartService = inject(CartService);
 
-  // ngOnInit(): void {
-  //   this._cartService
-  //     .getProvidersWithServices()
-  //     .pipe(
-  //       tap(data => {
-  //         this.providersWithServices = data.map(provider => ({
-  //           ...provider,
-  //           services: provider.services || [],
-  //         }));
-  //       }),
-  //       switchMap(() => this._cartService.cart$),
-  //       tap(cart => {
-  //         this.selectedServices = cart;
-  //       })
-  //     )
-  //     .subscribe();
-  // }
+
   providersWithServices$: Observable<ProviderWithServicesDTO[]> = this._cartService.getProvidersWithServices().pipe(
     map(providers =>
       providers.map(provider => ({

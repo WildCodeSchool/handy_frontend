@@ -8,7 +8,6 @@ import { environment } from 'src/environments/environment.development';
   providedIn: 'root',
 })
 export class OrdersService {
-  // private readonly _apiUrl = 'http://localhost:8080/orders/me';
   private readonly _apiUrl = `${environment.apiUrl}/orders/me`;
 
   private _http = inject(HttpClient);

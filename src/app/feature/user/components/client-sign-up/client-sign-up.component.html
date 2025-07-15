@@ -24,12 +24,7 @@
 
         @if (signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched) {
           <div class="invalid-feedback d-block">
-            <!-- @if (signUpForm.get('email')?.errors?.['required']) {
-              <span>L'email est requis.</span>
-            } -->
-            <!-- @if (signUpForm.get('email')?.errors?.['email']) {
-              <span>L'email n'est pas valide.</span>
-            } -->
+           
             @if (signUpForm.get('email')?.errors?.['minlength']) {
               <span>L'email doit être au format valide.</span>
             }

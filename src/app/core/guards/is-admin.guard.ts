@@ -3,6 +3,7 @@ import { map, Observable, of, switchMap } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { inject } from '@angular/core';
 import { UserStoreService } from '../services/user-store.service';
+import { ROLES } from '../enum/constants';
 
 export const isAdminGuard: CanActivateFn = (): Observable<boolean | UrlTree> => {
   const authService = inject(AuthService);
@@ -14,7 +15,7 @@ export const isAdminGuard: CanActivateFn = (): Observable<boolean | UrlTree> => 
 
   return userStoreService.getRolesFromStore().pipe(
     switchMap(() => {
-      if (rolesFromToken.includes('ROLE_ADMIN')) {
+      if (rolesFromToken.includes(ROLES.ADMIN)) {
         return authService.isLoggedInObservable().pipe(map(loggedIn => (loggedIn ? true : router.createUrlTree(['/auth']))));
       }
 
