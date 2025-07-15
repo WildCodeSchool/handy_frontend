@@ -1,30 +1,3 @@
-<!-- 
-@if (product) {
-  <div class="order-details-container">
-    <h3>Description</h3>
-    <div class="px-6 py-4">
-      <div class="font-bold text-xl mb-2">
-        {{ product.name }}
-        {{ product.coeff }}
-      </div>
-    </div>
-    <button type="button" class="btn btn-secondary mt-2" (click)="CloseDetails()">Fermer les détails</button>
-    <button type="button" class="btn btn-primary mt-2" (click)="updateProductDetails()">Mettre à jour les détails du produit</button>
-
-    <h3>Description</h3>
-    <div class="px-6 py-4">
-      <div class="font-bold text-xl mb-2">
-        {{ product.name }}
-      </div>
-      <ul class="list-group">
-        <li class="list-group-item">Product ID: {{ product.id }}</li>
-        <li class="list-group-item">Nom: <input type="text" [(ngModel)]="product.name" /></li>
-        <li class="list-group-item">Prix: <input type="number" [(ngModel)]="product.coeff" /></li>
-      </ul>
-    </div>
-  </div>
-} -->
-
 @if (product) {
   <div class="order-details-container">
     <h3>Description</h3>
@@ -33,12 +6,6 @@
     </div>
 
     <button type="button" class="btn btn-secondary mt-2" (click)="CloseDetails()">Fermer les détails</button>
-    <!-- @if (isAdmin) {
-      <app-update-product
-        [product]="product | clone"
-        (productUpdated)="onProductUpdated($event)">
-      </app-update-product>
-    } -->
 
     <app-update-product [product]="product"></app-update-product>
     <app-delete-product [product]="product"></app-delete-product>

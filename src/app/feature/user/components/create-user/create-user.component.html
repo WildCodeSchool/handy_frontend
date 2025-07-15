@@ -1,1 +1,20 @@
-<p>create-user works!</p>
+<div class="mb-2 d-flex justify-content-center align-items-center" id="selection-container">
+  <h2 class="mb-0 me-2">Création profil:</h2>
+  <div>
+    <button type="button" class="btn btn-outline-primary me-2" [class.active]="selectedRole === 'client'" (click)="selectRole('client')">
+      Client
+    </button>
+    <button type="button" class="btn btn-outline-primary" [class.active]="selectedRole === 'provider'" (click)="selectRole('provider')">
+      Prestataire
+    </button>
+  </div>
+</div>
+
+@switch (selectedRole) {
+  @case ('client') {
+    <app-client-sign-up />
+  }
+  @case ('provider') {
+    <app-provider-sign-up />
+  }
+}

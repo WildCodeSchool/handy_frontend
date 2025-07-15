@@ -1,33 +1,39 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ProviderFacadeService } from '../../services/provider-facade.service';
 import { AppProvider } from '../../models/provider';
 import { map, Observable } from 'rxjs';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { ProductComponent } from '../product/product.component';
-import { UpdateProductComponent } from '../update-product/update-product.component';
-import { DeleteProductComponent } from '../delete-product/delete-product.component';
-import { CreateProductComponent } from '../create-product/create-product.component';
+
 import { ProductForCreation } from '../../models/productCreation';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [AsyncPipe, CommonModule, ProductComponent, UpdateProductComponent, DeleteProductComponent, CreateProductComponent],
+  imports: [AsyncPipe, CommonModule, ProductComponent],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss',
 })
-export class ProductListComponent {
+export class ProductListComponent implements OnInit {
   private _facadeProvisionService: ProviderFacadeService = inject(ProviderFacadeService);
+  private _route: ActivatedRoute = inject(ActivatedRoute);
+
   products$: Observable<AppProvider[]> = this._facadeProvisionService.getAll$();
 
   products: AppProvider | undefined;
   selectedItem!: AppProvider | null;
 
   serviceList = [
-    { imgUrl: 'assets/clening.jpg', nameService: 'Service 1' },
-    { imgUrl: 'assets/shopping.jpg', nameService: 'Service 2' },
-    { imgUrl: 'assets/speed.jpg', nameService: 'Service 3' },
+    { imgUrl: 'assets/clening.jpg', nameService: 'Services à la personne' },
+    { imgUrl: 'assets/shopping.jpg', nameService: 'Services à la personne' },
+    { imgUrl: 'assets/speed.jpg', nameService: 'Services à la personne' },
   ];
+
+  ngOnInit(): void {
+    const keyword = this._route.snapshot.queryParamMap.get('search');
+    this.products$ = keyword ? this._facadeProvisionService.searchProvisions$(keyword) : this._facadeProvisionService.getAll$();
+  }
 
   CloseDetails(): void {
     this.selectedItem = null;
@@ -44,9 +50,7 @@ export class ProductListComponent {
   }
 
   onDeleteProduct(productId: number): void {
-    console.log('Produit supprimé:', productId);
     this.products$ = this.products$.pipe(map(products => products.filter(product => product.id !== productId)));
-    // Rechargez les produits depuis l'API
     this.products$ = this._facadeProvisionService.getAll$();
   }
 }
