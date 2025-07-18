@@ -37,11 +37,9 @@ export class ProductListComponent implements OnInit {
 
   CloseDetails(): void {
     this.selectedItem = null;
-    console.log('Bouton cliqué');
   }
   onSelectProduct(product: AppProvider): void {
     this.selectedItem = product;
-    console.log('Item selected:', this.selectedItem);
   }
 
   onCreateProduct(newProduct: ProductForCreation = { name: 'Nouveau produit', coeff: 0 }): void {

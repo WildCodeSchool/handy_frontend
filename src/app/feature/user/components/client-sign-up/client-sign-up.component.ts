@@ -27,7 +27,7 @@ export class ClientSignUpComponent extends UsersSignUpComponent {
     if (!credentials) return;
 
     this._authService
-      .registerProvider$(credentials.email, credentials.password)
+      .register$(credentials.email, credentials.password)
       .pipe(take(1))
       .subscribe({
         next: success => {
