@@ -19,7 +19,7 @@ export class AvailabilityService {
 
   private _http = inject(HttpClient);
   getMyAvailability(): Observable<Availability[]> {
-    return this._http.get<Availability[]>(`${this._baseUrl}/me`);
+    return this._http.get<Availability[]>(`${this._baseUrl}/self`);
   }
 
   getAvailabilityByProviderId(userId: number): Observable<Availability[]> {
@@ -31,7 +31,7 @@ export class AvailabilityService {
   }
 
   createMyAvailability(startTime: string, endTime: string): Observable<any> {
-    return this._http.post(`${this._baseUrl}/me`, { startTime, endTime });
+    return this._http.post(`${this._baseUrl}/self`, { startTime, endTime });
   }
 
   getCalendarOptions(): Observable<CalendarOptions> {

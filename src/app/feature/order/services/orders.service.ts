@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment.development';
   providedIn: 'root',
 })
 export class OrdersService {
-  private readonly _apiUrl = `${environment.apiUrl}/orders/me`;
+  private readonly _apiUrl = `${environment.apiUrl}/orders/self`;
 
   private _http = inject(HttpClient);
 
