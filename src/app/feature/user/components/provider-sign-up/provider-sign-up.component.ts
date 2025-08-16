@@ -14,7 +14,6 @@ import { FormErrorComponent } from 'src/app/core/errors/form-error/form-error.co
   styleUrl: './provider-sign-up.component.scss',
 })
 export class ProviderSignUpComponent extends UsersSignUpComponent {
-  
   private readonly _authService = inject(AuthService);
   private readonly _router = inject(Router);
 

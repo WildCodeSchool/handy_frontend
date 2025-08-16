@@ -29,7 +29,6 @@
         <div class="d-flex align-items-center">
           <img src="assets/images/blocks/ecommerce/review/review-1-2.png" alt="Produit" class="img-fluid me-3 rounded custom-img-48" />
           <div>
-
             <ul class="mb-0">
               @for (service of provider.services?.slice(0, 3) ?? []; track service.id) {
                 <li>{{ service.name }} (Coeff: {{ service.coeff }})</li>
