@@ -1,4 +1,4 @@
-FROM node:20.7-alpine AS builder
+FROM node:22.12-alpine AS builder
 WORKDIR /app
 
 COPY package.json angular.json tsconfig.json tsconfig.app.json ./ 
@@ -10,7 +10,7 @@ COPY . .
 RUN npm install entities@2.2.0
 RUN npx ng build --configuration=staging
 
-FROM node:20.7-alpine
+FROM node:22.12-alpine
 WORKDIR /app
 
 RUN npm install -g serve
