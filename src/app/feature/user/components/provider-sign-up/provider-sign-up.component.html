@@ -27,7 +27,7 @@
             @if (signUpForm.get('email')?.errors?.['required']) {
               <span>L'email est requis.</span>
             }
-           
+
             @if (signUpForm.get('email')?.errors?.['minlength']) {
               <span>L'email doit être au format valide.</span>
             }
