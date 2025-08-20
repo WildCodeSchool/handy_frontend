@@ -24,7 +24,6 @@ export class ProvidersListComponent {
   private _http = inject(HttpClient);
   private _cartService = inject(CartService);
 
-
   providersWithServices$: Observable<ProviderWithServicesDTO[]> = this._cartService.getProvidersWithServices().pipe(
     map(providers =>
       providers.map(provider => ({
