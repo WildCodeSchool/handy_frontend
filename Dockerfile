@@ -8,18 +8,23 @@ RUN npm install
 
 COPY src ./src
 COPY scripts ./scripts
-COPY . .
+COPY public ./public
+
 
 RUN npm install entities@2.2.0
 
-RUN npx ng build --configuration=staging --output-path=dist/frontend
+RUN npx ng build --configuration=staging --output-path=dist/frontend --base-href=/
 
 RUN ls -l /app/dist/frontend
+RUN ls -l /app/dist/frontend/browser
+RUN ls -l /app/dist/frontend/browser/assets
+
 
 FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
 
-COPY --from=builder /app/dist/frontend ./
+COPY --from=builder /app/dist/frontend/browser/. ./
+
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
