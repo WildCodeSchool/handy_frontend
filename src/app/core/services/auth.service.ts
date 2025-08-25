@@ -6,7 +6,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserStoreService } from './user-store.service';
 import { Router } from '@angular/router';
 import { ROLES, ROUTES } from '../enum/constants';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 
 type Role = {
   authority: string;
