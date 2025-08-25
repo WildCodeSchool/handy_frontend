@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { ProviderWithServicesDTO } from '../../cart/models/ProviderWithServicesDTO';
 import { HttpClient } from '@angular/common/http';
 import { ProvisionDto } from '../../product/models/provisionDto';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
