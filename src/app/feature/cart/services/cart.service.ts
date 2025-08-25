@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, Subject, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ProviderWithServicesDTO } from '../models/ProviderWithServicesDTO';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
