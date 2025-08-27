@@ -43,12 +43,13 @@ export class UserConnectionComponent implements OnDestroy {
     this._subscription.unsubscribe();
   }
 
-  togglePasswordVisibility():void {
+  togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
   }
 
-  togglePasswordVisibilityOnKey(event: KeyboardEvent):void {
+  togglePasswordVisibilityOnKey(event: KeyboardEvent): void {
     if (event.key === 'Enter') {
       this.togglePasswordVisibility();
     }
-}}
+  }
+}
