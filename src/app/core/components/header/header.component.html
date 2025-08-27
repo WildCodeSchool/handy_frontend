@@ -8,7 +8,7 @@
       <a [routerLink]="''" class="nav-link">Accueil</a>
       <a [routerLink]="'/products'" class="nav-link">Services</a>
       <a [routerLink]="'/providers-list'" class="nav-link">Prestataires</a>
-      <a [routerLink]="'/contact'" class="nav-link">Contact</a>
+      <a [routerLink]="'/contacts'" class="nav-link">Contact</a>
     </nav>
     @if (isLoggedIn) {
       <button type="button" class="btn btn-danger" (click)="onLogout()">Déconnexion</button>
@@ -31,7 +31,7 @@
       <a [routerLink]="''" class="nav-link text-white">Accueil</a>
       <a [routerLink]="'/products'" class="nav-link text-white">Services</a>
       <a [routerLink]="'/providers-list'" class="nav-link text-white">Prestataires</a>
-      <a [routerLink]="'/contact'" class="nav-link text-white">Contact</a>
+      <a [routerLink]="'/contacts'" class="nav-link text-white">Contact</a>
 
       @if (isProvider$ | async) {
         <a [routerLink]="'/providers'" class="nav-link text-white">Mon profil (prestataire)</a>

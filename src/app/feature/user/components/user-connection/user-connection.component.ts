@@ -40,4 +40,6 @@ export class UserConnectionComponent implements OnDestroy {
   ngOnDestroy(): void {
     this._subscription.unsubscribe();
   }
+
+
 }
