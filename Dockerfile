@@ -10,10 +10,12 @@ COPY src ./src
 COPY scripts ./scripts
 COPY public ./public
 
-
 RUN npm install entities@2.2.0
 
-RUN npx ng build --configuration=staging --output-path=dist/frontend --base-href=/
+ARG BUILD_CONFIGURATION=staging
+RUN echo "Building Angular app with configuration: ${BUILD_CONFIGURATION}"
+
+RUN npx ng build --configuration=${BUILD_CONFIGURATION} --output-path=dist/frontend --base-href=/
 
 RUN ls -l /app/dist/frontend
 RUN ls -l /app/dist/frontend/browser

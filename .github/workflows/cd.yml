@@ -44,6 +44,8 @@ jobs:
           file: Dockerfile
           push: true
           tags: hryssssy/handy-frontend:${{ steps.set_tag.outputs.tag }}
+          build-args: |
+            BUILD_CONFIGURATION=${{ steps.set_tag.outputs.tag }}
 
   deploy:
     name: 🚀 Deploy Angular to VPS

@@ -5,7 +5,6 @@
     </div>
     <span class="header-logo mx-auto mx-md-0 text-center">Handy App</span>
     <nav class="d-none d-md-flex gap-4">
-
       <a [routerLink]="''" class="nav-link">Accueil</a>
       <a [routerLink]="'/products'" class="nav-link">Services</a>
       <a [routerLink]="'/providers-list'" class="nav-link">Prestataires</a>
@@ -33,7 +32,7 @@
       <a [routerLink]="'/products'" class="nav-link text-white">Services</a>
       <a [routerLink]="'/providers-list'" class="nav-link text-white">Prestataires</a>
       <a [routerLink]="'/contact'" class="nav-link text-white">Contact</a>
-  
+
       @if (isProvider$ | async) {
         <a [routerLink]="'/providers'" class="nav-link text-white">Mon profil (prestataire)</a>
       } @else if (isAdmin$ | async) {
@@ -41,11 +40,11 @@
       } @else {
         <a [routerLink]="'/client'" class="nav-link text-white">Mon profil</a>
       }
-  
+
       @if (isLoggedIn) {
-        <button type="button" class="btn btn-danger mt-3"(click)="onLogout()">Déconnexion</button>
+        <button type="button" class="btn btn-danger mt-3" (click)="onLogout()">Déconnexion</button>
       } @else {
-        <button type="button" class="btn btn-success mt-3"(click)="navigateToSignUpPage()">Se connecter / S'inscrire</button>
+        <button type="button" class="btn btn-success mt-3" (click)="navigateToSignUpPage()">Se connecter / S'inscrire</button>
       }
     </nav>
   </div>
