@@ -1,0 +1,121 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 2em;
+  color: #333;
+}
+
+.provider-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+  gap: 20px;
+}
+
+.provider-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 30%;
+  margin-bottom: 20px;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+}
+
+.provider-card:hover {
+  transform: scale(1.05);
+}
+
+.provider-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.provider-info {
+  padding: 15px;
+}
+
+.provider-info h3 {
+  margin-top: 0;
+  font-size: 1.5em;
+  color: #333;
+}
+
+.provider-info p {
+  color: #666;
+  font-size: 1em;
+}
+
+.service-list {
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-top: 1px solid #eee;
+}
+
+.service-list h4 {
+  font-size: 1.2em;
+  color: #333;
+}
+
+.service-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.service-item span {
+  font-size: 1em;
+  color: #444;
+}
+
+.btn-add {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-add:hover {
+  background-color: #218838;
+}
+
+.no-service {
+  color: #999;
+  font-style: italic;
+}
+
+.order-button {
+  display: block;
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  border-radius: 5px;
+  text-decoration: none;
+  margin: 20px auto;
+  width: 200px;
+}
+
+.order-button:hover {
+  background-color: #0056b3;
+}
+
+.banner-background {
+  background-image: url('/assets/speed2.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}

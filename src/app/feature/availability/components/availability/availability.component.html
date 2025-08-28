@@ -1,0 +1,38 @@
+<h3 class="fw-bold text-success">Ajouter une disponibilité</h3>
+
+@if (successMessage) {
+  <p style="color: green">{{ successMessage }}</p>
+}
+@if (errorMessage) {
+  <p style="color: red">{{ errorMessage }}</p>
+}
+
+<form (ngSubmit)="createAvailability()" class="p-4 shadow-sm rounded bg-light">
+  <div class="mb-3">
+    <label for="startTime" class="form-control">Début :</label>
+    <input type="datetime-local" [(ngModel)]="newStartTime" name="startTime" required id="startTime" />
+  </div>
+  <div class="mb-3">
+    <label for="endTime" class="form-control">Fin :</label>
+    <input type="datetime-local" [(ngModel)]="newEndTime" name="endTime" required id="endTime" />
+  </div>
+
+  @if (!newStartTime || !newEndTime) {
+    <div style="color: red">Les deux dates sont requises pour soumettre le formulaire.</div>
+  }
+
+  <button type="submit" class="btn btn-success mt-3">Ajouter</button>
+</form>
+
+<hr />
+
+<h3 class="fw-bold text-success">Résumé de mes disponibilités</h3>
+
+@for (slot of availability; track slot.id) {
+  <p>
+    🕒 {{ slot.startTime | date: 'dd/MM/yyyy HH:mm' }} → {{ slot.endTime | date: 'dd/MM/yyyy HH:mm' }} ({{ slot.status }})
+    <button type="button" class="btn btn-sm btn-danger ms-2" (click)="deleteAvailability(slot.id)">Supprimer</button>
+  </p>
+} @empty {
+  <p>Aucune disponibilité enregistrée.</p>
+}

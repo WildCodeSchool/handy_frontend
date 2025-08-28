@@ -14,7 +14,4 @@ import { ProductListComponent } from '../../../../feature/product/components/pro
 })
 export class HomePageComponent {
   constructor(private _router: Router) {}
-
-  // navigateToSignUpPage() {
-  //   this._router.navigate(['/signup']);
 }

@@ -1,10 +1,10 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
-// import { AppProvider } from '../../models/provider';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProviderFacadeService } from '../../services/provider-facade.service';
 import { ProductForCreation } from '../../models/productCreation';
-
+import { UserStoreService } from '../../../../core/services/user-store.service';
+import { ROLES } from '../../../../core/enum/constants';
 @Component({
   selector: 'app-create-product',
   standalone: true,
@@ -20,20 +20,15 @@ export class CreateProductComponent {
   newProduct: ProductForCreation = { name: '', coeff: 0 };
 
   private _productFacadeService = inject(ProviderFacadeService);
+  private _userStore = inject(UserStoreService);
 
-  // isAdmin = this.checkAdminRole();
-  checkAdminRole(): boolean {
-    return localStorage.getItem('userRole') === 'admin';
-  }
+  isAdmin$ = this._userStore.hasRole$(ROLES.ADMIN);
+
   onSubmit(): void {
-    console.log('Produit avant envoi:', this.newProduct);
-
     this._productFacadeService.post$(this.newProduct).subscribe({
       next: (res: ProductForCreation) => {
-        console.log('Produit créé avec succès:', res);
         this.productCreated.emit(res);
       },
-      error: (err: any) => console.error('Erreur lors de la création du produit', err),
     });
     this.successMessageUpdate = 'Produit créé avec succès !';
   }

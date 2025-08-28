@@ -1,70 +1,55 @@
-import { Component, inject } from '@angular/core';
-import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { NgClass } from '@angular/common';
+import { Component, inject, OnDestroy } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-user-connection',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink, NgClass],
   templateUrl: './user-connection.component.html',
   styleUrl: './user-connection.component.scss',
 })
-export class UserConnectionComponent {
+export class UserConnectionComponent implements OnDestroy {
   formBuilder = inject(FormBuilder);
+  authService = inject(AuthService);
+  private _router: Router = inject(Router);
+  private _subscription = new Subscription();
 
-  signUpForm = this.formBuilder.group({
-    username: ['', [Validators.required, Validators.minLength(3)]],
-    email: ['', [Validators.required, Validators.email]],
+  showPassword = false;
+  loginForm = this.formBuilder.group({
+    email: [''],
+    password: [''],
+  }) as FormGroup<{
+    email: FormControl<string>;
+    password: FormControl<string>;
+  }>;
 
-    passwords: this.formBuilder.group(
-      {
-        password: ['', [Validators.required, this.securePasswordValidator()]],
-        confirmPassword: [''],
-      },
-      { validators: this.passwordMatchValidator() }
-    ),
-  });
-  passwordMatchValidator(): ValidatorFn {
-    return (formGroup: AbstractControl): ValidationErrors | null => {
-      const password = formGroup.get('password')?.value;
-      const confirmPassword = formGroup.get('confirmPassword')?.value;
+  onLogin(): void {
+    if (this.loginForm.valid) {
+      const { email, password } = this.loginForm.getRawValue();
 
-      console.log('Vérification du mot de passe :');
-      console.log('Mot de passe :', password);
-      console.log('Confirmer le mot de passe :', confirmPassword);
-      return password === confirmPassword ? null : { passwordsMismatch: true };
-    };
-  }
-  onSubmit(): void {
-    if (this.signUpForm.valid) {
-      console.log('Formulaire envoyé avec succès', this.signUpForm.value);
-      console.log('Erreurs de validation:', this.signUpForm.errors);
-      console.log('Erreurs des mots de passe:', this.signUpForm.get('passwords')?.errors);
-    } else {
-      console.log('Formulaire invalide');
+      this.authService.login$(email, password).subscribe({
+        next: token => {
+          localStorage.setItem('token', token);
+        },
+      });
     }
   }
 
-  securePasswordValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const value = control.value || '';
-      console.log('Vérification du mot de passe:', value);
+  ngOnDestroy(): void {
+    this._subscription.unsubscribe();
+  }
 
-      const hasUpperCase = /[A-Z]/.test(value);
-      const hasLowerCase = /[a-z]/.test(value);
-      const hasNumber = /\d/.test(value);
-      const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
-      const isValidLength = value.length >= 12;
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
 
-      console.log('Contient une majuscule:', hasUpperCase);
-      console.log('Contient une minuscule:', hasLowerCase);
-      console.log('Contient un chiffre:', hasNumber);
-      console.log('Contient un caractère spécial:', hasSpecialChar);
-      console.log('Longueur valide:', isValidLength);
-
-      const passwordValid = hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar && isValidLength;
-      console.log('Mot de passe valide:', passwordValid);
-
-      return passwordValid ? null : { securePassword: true };
-    };
+  togglePasswordVisibilityOnKey(event: KeyboardEvent): void {
+    if (event.key === 'Enter') {
+      this.togglePasswordVisibility();
+    }
   }
 }
