@@ -3,20 +3,19 @@
     <div class="col-12 col-md-3 mb-4 mb-md-0">
       <img src="assets/logo.png" alt="Logo Alfred" class="img-fluid" />
     </div>
-    <span class="header-logo">Handy App</span>
-
+    <span class="header-logo mx-auto mx-md-0 text-center">Handy App</span>
     <nav class="d-none d-md-flex gap-4">
       <a [routerLink]="''" class="nav-link">Accueil</a>
       <a [routerLink]="'/products'" class="nav-link">Services</a>
       <a [routerLink]="'/providers-list'" class="nav-link">Prestataires</a>
-      <a [routerLink]="'/contact'" class="nav-link">Contact</a>
+      <a [routerLink]="'/contacts'" class="nav-link">Contact</a>
     </nav>
-
     @if (isLoggedIn) {
       <button type="button" class="btn btn-danger" (click)="onLogout()">Déconnexion</button>
     } @else {
       <button type="button" class="header-button btn btn-success" (click)="navigateToSignUpPage()">Se connecter/ s'inscrire</button>
     }
+
     @if (isProvider$ | async) {
       <a [routerLink]="'/providers'" class="nav-link">Mon profil (prestataire)</a>
     } @else if (isAdmin$ | async) {
@@ -27,12 +26,26 @@
     <button class="btn btn-light d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu">☰</button>
   </div>
 
-  <div class="collapse bg-dark p-3" id="mobileMenu">
-    <nav class="d-flex flex-column text-center">
-      <a [routerLink]="''" class="nav-link">Accueil</a>
-      <a [routerLink]="'/products'" class="nav-link">Services</a>
-      <a [routerLink]="'/providers-list'" class="nav-link">Prestataires</a>
-      <a [routerLink]="'/contact'" class="nav-link">Contact</a>
+  <div class="collapse bg-dark p-3 d-md-none d-flex flex-column align-items-center text-center" id="mobileMenu">
+    <nav class="d-flex flex-column gap-2 w-100">
+      <a [routerLink]="''" class="nav-link text-white">Accueil</a>
+      <a [routerLink]="'/products'" class="nav-link text-white">Services</a>
+      <a [routerLink]="'/providers-list'" class="nav-link text-white">Prestataires</a>
+      <a [routerLink]="'/contacts'" class="nav-link text-white">Contact</a>
+
+      @if (isProvider$ | async) {
+        <a [routerLink]="'/providers'" class="nav-link text-white">Mon profil (prestataire)</a>
+      } @else if (isAdmin$ | async) {
+        <a [routerLink]="'/admin'" class="nav-link text-white">Mon profil (admin)</a>
+      } @else {
+        <a [routerLink]="'/client'" class="nav-link text-white">Mon profil</a>
+      }
+
+      @if (isLoggedIn) {
+        <button type="button" class="btn btn-danger mt-3" (click)="onLogout()">Déconnexion</button>
+      } @else {
+        <button type="button" class="btn btn-success mt-3" (click)="navigateToSignUpPage()">Se connecter / S'inscrire</button>
+      }
     </nav>
   </div>
 </header>

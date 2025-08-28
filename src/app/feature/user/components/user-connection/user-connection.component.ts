@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 import { Component, inject, OnDestroy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -7,7 +8,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 @Component({
   selector: 'app-user-connection',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, NgClass],
   templateUrl: './user-connection.component.html',
   styleUrl: './user-connection.component.scss',
 })
@@ -17,6 +18,7 @@ export class UserConnectionComponent implements OnDestroy {
   private _router: Router = inject(Router);
   private _subscription = new Subscription();
 
+  showPassword = false;
   loginForm = this.formBuilder.group({
     email: [''],
     password: [''],
@@ -39,5 +41,15 @@ export class UserConnectionComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this._subscription.unsubscribe();
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  togglePasswordVisibilityOnKey(event: KeyboardEvent): void {
+    if (event.key === 'Enter') {
+      this.togglePasswordVisibility();
+    }
   }
 }

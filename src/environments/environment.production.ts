@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   name: 'production',
-  apiUrl: '',
+  apiUrl: 'https://api.handyapplication.fr',
 };
