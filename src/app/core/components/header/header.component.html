@@ -17,13 +17,14 @@
     }
 
     @if (isLoggedIn) {
-    @if (isProvider$ | async) {
-      <a [routerLink]="'/providers'" class="nav-link">Mon profil (prestataire)</a>
-    } @else if (isAdmin$ | async) {
-      <a [routerLink]="'/admin'" class="nav-link">Mon profil (admin)</a>
-    } @else {
-      <a [routerLink]="'/client'" class="nav-link">Mon profil</a>
-    }}
+      @if (isProvider$ | async) {
+        <a [routerLink]="'/providers'" class="nav-link">Mon profil (prestataire)</a>
+      } @else if (isAdmin$ | async) {
+        <a [routerLink]="'/admin'" class="nav-link">Mon profil (admin)</a>
+      } @else {
+        <a [routerLink]="'/client'" class="nav-link">Mon profil</a>
+      }
+    }
   </div>
 
   <div class="collapse bg-dark p-3 d-md-none d-flex flex-column align-items-center text-center" id="mobileMenu">
@@ -32,8 +33,8 @@
       <a [routerLink]="'/products'" class="nav-link text-white">Services</a>
       <a [routerLink]="'/providers-list'" class="nav-link text-white">Prestataires</a>
       <a [routerLink]="'/contacts'" class="nav-link text-white">Contact</a>
-      
-       @if (isLoggedIn) {
+
+      @if (isLoggedIn) {
         <button type="button" class="btn btn-danger mt-3" (click)="onLogout()">Déconnexion</button>
       } @else {
         <button type="button" class="btn btn-success mt-3" (click)="navigateToSignUpPage()">Se connecter / S'inscrire</button>

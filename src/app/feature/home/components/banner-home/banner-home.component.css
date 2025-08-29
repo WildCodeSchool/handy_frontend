@@ -13,12 +13,6 @@ h2 {
   text-shadow: 2px 2px 5px black;
 }
 
-@media (max-width: 767px) {
-  .cta-buttons {
-    margin-bottom: 1.5rem;
-  }
-}
-
 .image-clipped {
   clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%);
 }

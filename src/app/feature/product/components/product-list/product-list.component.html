@@ -12,8 +12,7 @@
       @if (products.length === 1) {
         <div class="col-12 col-md-10 offset-md-1 mb-4">
           <div class="card h-100 shadow-sm border-0">
-            <div class="card-body text-center">
-            </div>
+            <div class="card-body text-center"></div>
             <div class="text-center">
               <img [src]="serviceList[products[0].id % serviceList.length].imgUrl" alt="service" class="prestation mb-3" />
               <h5 class="card-title fw-bold text-black">{{ products[0].name }}</h5>
@@ -28,8 +27,7 @@
         @for (product of products; track product.id) {
           <div class="col-12 col-md-6 col-lg-4 mb-4">
             <div class="p-4 shadow rounded-4 bg-white h-100 d-flex flex-column justify-content-between">
-              <div class="d-flex justify-content-between text-secondary small mb-3">
-              </div>
+              <div class="d-flex justify-content-between text-secondary small mb-3"></div>
               <div class="text-center">
                 <img [src]="serviceList[product.id % serviceList.length].imgUrl" alt="service" class="prestation" />
                 <h5 class="mt-3 card-title">{{ product.name }}</h5>
