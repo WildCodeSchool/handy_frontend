@@ -1,4 +1,3 @@
-<p>provider-sign-up works!</p>
 <div class="d-flex justify-content-center align-items-center mb-5">
   <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="w-50 p-4 border rounded shadow-sm bg-light">
     <fieldset>
@@ -65,7 +64,7 @@
         </div>
       </div>
 
-      <button type="submit" class="btn btn-primary" [disabled]="signUpForm.invalid">S'inscrire</button>
+      <button type="submit" class="btn btn-success" [disabled]="signUpForm.invalid">S'inscrire</button>
     </fieldset>
   </form>
 </div>
