@@ -4,13 +4,19 @@ h1 {
 
 @media (min-width: 768px) {
   h1 {
-    font-size: 5rem;
+    font-size: 4rem;
   }
 }
 
 h1,
 h2 {
   text-shadow: 2px 2px 5px black;
+}
+
+@media (max-width: 767px) {
+  .cta-buttons {
+    margin-bottom: 1.5rem;
+  }
 }
 
 .image-clipped {
