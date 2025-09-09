@@ -9,6 +9,7 @@ import { ProductService } from 'src/app/feature/product/services/product.service
 import { AppProvider } from 'src/app/feature/product/models/provider';
 import { ProvisionDto } from 'src/app/feature/product/models/provisionDto';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-provider-profil',
@@ -27,13 +28,20 @@ export class ProviderProfilComponent implements OnInit {
   private readonly _productService = inject(ProductService);
   private readonly _providersService = inject(ProvidersService);
   private readonly _destroyRef = inject(DestroyRef);
+  private readonly _authService = inject(AuthService);
+
 
   ngOnInit(): void {
+    
     this.loadProvisions();
     this.loadExistingServices();
-  }
+  } 
 
   loadExistingServices(): void {
+    if (!this.providerId) {
+      this.message = 'ID du fournisseur non défini.';
+      return;
+    }
     this._providersService.getProviderWithServices(this.providerId).subscribe({
       next: providerData => {
         this.existingServices = providerData.services.map(service => service.id);
@@ -73,6 +81,8 @@ export class ProviderProfilComponent implements OnInit {
           next: () => {
             this.message = 'Service ajouté avec succès !';
             this.existingServices.push(provisionIdNum);
+            // this.loadExistingServices();
+
           },
           error: () => {
             this.message = "Erreur lors de l'ajout du service.";
