@@ -8,17 +8,17 @@
           <li class="list-group-item d-flex justify-content-between align-items-center gap-3">
             <div class="flex-grow-1">
               <ng-container *ngIf="getProviderInfo(item.userId) as provider">
-              <strong>{{ provider.firstName }} {{ provider.lastName }}</strong>
-              <br />
-              <small>{{ provider.email }} – {{ provider.city }}</small>
-            </ng-container>
+                <strong>{{ provider.firstName }} {{ provider.lastName }}</strong>
+                <br />
+                <small>{{ provider.email }} – {{ provider.city }}</small>
+              </ng-container>
 
-            <ng-container *ngIf="getServiceInfo(item.userId, item.provisionId) as service">
-              <div class="text-xl text-900 font-medium mb-2">
-                Service : {{ service.name }} <small>(prix: {{ service.coeff | currency: 'EUR' }})</small>
-              </div>
-            </ng-container>
-          </div>
+              <ng-container *ngIf="getServiceInfo(item.userId, item.provisionId) as service">
+                <div class="text-xl text-900 font-medium mb-2">
+                  Service : {{ service.name }} <small>(prix: {{ service.coeff | currency: 'EUR' }})</small>
+                </div>
+              </ng-container>
+            </div>
 
             <button type="button" class="btn btn-danger btn-sm" (click)="removeFromCart(item.userId, item.provisionId)">Supprimer</button>
           </li>
@@ -32,7 +32,7 @@
 
   <div class="row mt-4">
     @for (provider of providersWithServices; track provider.providerId) {
-        <div class="col-12 col-md-6 col-lg-3 mb-5">
+      <div class="col-12 col-md-6 col-lg-3 mb-5">
         <div class="card shadow-sm">
           <img [src]="imageUrls[$index % imageUrls.length]" alt="service" class="img-fluid mb-3 card-img-top" />
 
