@@ -113,4 +113,8 @@ export class AuthService {
   getCurrentUserEmail(): string {
     return this._userPayload ? this._userPayload.email : null;
   }
+  getCurrentUserId(): number | null {
+    return this._userPayload ? this._userPayload.id : null;
+  }
+  
 }
