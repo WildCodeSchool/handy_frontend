@@ -26,7 +26,7 @@
 
           @let selectedSlot = selectedSlots[item.userId + '_' + item.provisionId];
           @if (selectedSlot) {
-            <button type="button" (click)="confirmAvailability(item.userId, item.provisionId)" class="btn-confirm">Confirmer le créneau ✅</button>
+            <button type="button" (click)="confirmAvailability(item.userId, item.provisionId)" class="btn-confirm" [disabled]="confirmedSlots[item.userId + '_' + item.provisionId]">Confirmer le créneau ✅</button>
           }
         }
 
@@ -55,6 +55,11 @@
 
   @if (toastMessage) {
     <div class="toast" [ngClass]="toastType">{{ toastMessage }}</div>
+  }
+  @if (successMessageUpdate) {
+    <div class="alert alert-success mt-2" role="alert">
+      {{ successMessageUpdate }}
+    </div>
   }
   @if (cart.length === 0) {
     <p>Aucun élément dans le panier</p>

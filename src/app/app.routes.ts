@@ -18,6 +18,7 @@ import { CalendarComponent } from './feature/calendars/components/calendar/calen
 import { CrudUserComponent } from './feature/user/page/crud-user/crud-user.component';
 import { AboutUsComponent } from './feature/home/components/about-us/about-us.component';
 import { ContactComponent } from './feature/contact/contact.component';
+import { CguPageComponent } from './feature/legal/cgu-page/cgu-page.component';
 
 export const routes: Routes = [
   {
@@ -53,6 +54,10 @@ export const routes: Routes = [
     component: CreateUserComponent,
   },
   { path: 'auth', component: UserConnectionComponent },
+  
+  {
+    path: 'conditions-generales', component : CguPageComponent
+  },
 
   {
     path: 'providers',

@@ -1,5 +1,5 @@
 <div class="container px-4 py-8">
-  @if (isSelectedServicesVisible) {
+  <!-- @if (isSelectedServicesVisible) {
     <div class="selected-services bg-light p-4 rounded shadow">
       <button type="button" class="btn btn-close" (click)="closeSelectedServices()">Fermer</button>
       <h3 class="mb-3 fs-4">Services sélectionnés</h3>
@@ -28,7 +28,7 @@
         <h4 class="fs-5">Total à régler : {{ getTotalCoefficient() | currency: 'EUR' }}</h4>
       </div>
     </div>
-  }
+  } -->
 
   <div class="row mt-4">
     @for (provider of providersWithServices; track provider.providerId) {

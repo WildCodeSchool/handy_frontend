@@ -1,10 +1,9 @@
 <div class="container py-5 px-3 px-md-4 px-lg-5">
-  <a [routerLink]="'/order'" class="btn btn-success btn-lg fw-bold px-4 py-2">Passer commande par ici</a>
 
   @let provider = provider$ | async;
   @if (provider) {
     <div class="mb-5">
-      <div class="card shadow-sm rounded-4 p-4 max-w-600">
+      <div class="card  provider-card">
         <div class="d-flex mb-3">
           <div class="flex-grow-1 pe-3">
             <div class="fw-semibold mb-2">{{ provider.firstName }} {{ provider.lastName }}</div>
@@ -27,13 +26,14 @@
         <hr />
 
         <div class="d-flex align-items-center">
-          <img src="assets/images/blocks/ecommerce/review/review-1-2.png" alt="Produit" class="img-fluid me-3 rounded custom-img-48" />
-          <div>
-            <ul class="mb-0">
+          <div class="provider-services">
+            <ul class="mb-3">
               @for (service of provider.services?.slice(0, 3) ?? []; track service.id) {
-                <li>{{ service.name }} (Coeff: {{ service.coeff }})</li>
+                <li>{{ service.name }} ( {{ service.coeff }} euros)</li>
               }
             </ul>
+            <a [routerLink]="'/order'" class="btn btn-success btn-lg fw-bold px-4 py-2">Prendre rendez-vous</a>
+
           </div>
         </div>
       </div>

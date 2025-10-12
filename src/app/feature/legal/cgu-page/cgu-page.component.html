@@ -1,0 +1,54 @@
+<section class="terms-section py-5">
+    <div class="container px-3 px-md-4 px-lg-5">
+      <h2 class="text-center mb-4">Conditions Générales d’Utilisation</h2>
+  
+      <div class="terms-content bg-light p-4 border rounded shadow-sm mb-4" style="max-height: 500px; overflow-y: auto;">
+        <h4>1. Objet</h4>
+        <p>
+          Les présentes conditions générales ont pour objet de définir les modalités d’accès et d’utilisation de notre plateforme. 
+          En utilisant nos services, vous acceptez ces conditions dans leur intégralité.
+        </p>
+  
+        <h4>2. Services</h4>
+        <p>
+          Nous proposons des services adaptés aux besoins des utilisateurs. Chaque prestation est effectuée par des intervenants qualifiés.
+        </p>
+  
+        <h4>3. Responsabilités</h4>
+        <p>
+          Nous nous engageons à fournir des services de qualité, cependant nous ne saurions être tenus responsables de tout incident indépendant de notre volonté.
+        </p>
+  
+        <h4>4. Confidentialité</h4>
+        <p>
+          Les informations personnelles collectées sont strictement confidentielles et utilisées uniquement pour la gestion de vos commandes et services.
+        </p>
+  
+        <h4>5. Modifications</h4>
+        <p>
+          Nous nous réservons le droit de modifier ces conditions à tout moment. Les utilisateurs seront informés de toute mise à jour significative.
+        </p>
+      </div>
+  
+      <form>
+        <div class="form-check mb-4">
+          <input class="form-check-input" type="checkbox" value="" id="acceptTerms" required>
+          <label class="form-check-label" for="acceptTerms">
+            J’ai lu et j’accepte les Conditions Générales d’Utilisation
+          </label>
+        </div>
+  
+        <button type="submit" class="btn btn-success btn-lg w-100" disabled id="submitBtn">Continuer</button>
+      </form>
+    </div>
+  </section>
+  
+  <script>
+    const checkbox = document.getElementById('acceptTerms');
+    const submitBtn = document.getElementById('submitBtn');
+  
+    checkbox.addEventListener('change', function() {
+      submitBtn.disabled = !this.checked;
+    });
+  </script>
+  

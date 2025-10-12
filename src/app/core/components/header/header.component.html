@@ -1,9 +1,10 @@
 <header class="bg-dark text-white py-3">
-  <div class="container d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between">
-    <div class="col-12 col-md-3 mb-4 mb-md-0">
+  <div class="container px-0 d-flex flex-column flex-md-row align-items-center justify-content-start justify-content-md-between">
+    <div class="mb-3 mb-md-0">
+      <a [routerLink]="''">
       <img src="assets/logo.png" alt="Logo Alfred" class="img-fluid" />
+    </a>
     </div>
-    <span class="header-logo mx-auto mx-md-0 text-center">Handy App</span>
     <nav class="d-none d-md-flex gap-4">
       <a [routerLink]="''" class="nav-link">Accueil</a>
       <a [routerLink]="'/products'" class="nav-link">Services</a>
@@ -11,9 +12,15 @@
       <a [routerLink]="'/contacts'" class="nav-link">Contact</a>
     </nav>
     @if (isLoggedIn) {
+      
       <button type="button" class="btn btn-danger d-none d-md-block" (click)="onLogout()">Déconnexion</button>
     } @else {
-      <button type="button" class="header-button btn btn-success d-none d-md-block" (click)="navigateToSignUpPage()">Se connecter/ s'inscrire</button>
+      <div class="d-flex align-items-center gap-2 d-none d-md-flex">
+      <button type="button" class="header-button btn btn-success d-none d-md-block" (click)="navigateToSignUpPage()">Se connecter</button>
+      <a [routerLink]="'/signup'" class="text-white text-decoration-underline d-none d-md-block">
+        S'inscrire
+      </a>
+    </div>
     }
 
     @if (isLoggedIn) {
@@ -37,7 +44,10 @@
       @if (isLoggedIn) {
         <button type="button" class="btn btn-danger mt-3" (click)="onLogout()">Déconnexion</button>
       } @else {
-        <button type="button" class="btn btn-success mt-3" (click)="navigateToSignUpPage()">Se connecter / S'inscrire</button>
+        <button type="button" class="btn btn-success mt-3" (click)="navigateToSignUpPage()">Se connecter</button>
+        <a [routerLink]="'/signup'" class="text-white text-decoration-underline">
+          S'inscrire
+        </a>
       }
     </nav>
   </div>

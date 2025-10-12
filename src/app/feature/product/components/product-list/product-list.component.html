@@ -1,7 +1,9 @@
+
 <div class="container all my-5 pb-5 px-4">
   <h2 class="text-center mb-5">Nos Services</h2>
-
-  @if (selectedItem) {
+  <p class="text-center text-secondary fs-5">
+    Nous proposons des services adaptés aux personnes à mobilité réduite pour faciliter votre quotidien et vous permettre de rester autonome. Que ce soit pour l’accompagnement, les promenades ou le ménage, nos intervenants qualifiés sont là pour vous assister avec professionnalisme et bienveillance. Chaque prestation est pensée pour votre confort, votre sécurité et votre tranquillité d’esprit, afin que vous puissiez profiter pleinement de chaque moment de votre journée.
+  </p>  @if (selectedItem) {
     <div class="col-12 mt-4">
       <app-product [product]="selectedItem" (closeDetails)="CloseDetails()"></app-product>
     </div>
@@ -11,30 +13,38 @@
     @if (products$ | async; as products) {
       @if (products.length === 1) {
         <div class="col-12 col-md-10 offset-md-1 mb-4">
-          <div class="card h-100 shadow-sm border-0">
-            <div class="card-body text-center"></div>
-            <div class="text-center">
-              <img [src]="serviceList[products[0].id % serviceList.length].imgUrl" alt="service" class="prestation mb-3" />
+          <div class="card prestation-card shadow-sm border-0">
+            <img
+              [src]="serviceList[products[0].id % serviceList.length].imgUrl"
+              alt="service"
+              class="prestation card-img-top" />
+            <div class="card-body text-center">
               <h5 class="card-title fw-bold text-black">{{ products[0].name }}</h5>
               <p class="card-text">
                 💰 <strong>{{ products[0].coeff | currency: 'EUR' }}</strong>
               </p>
-              <button type="button" class="btn btn-success" (click)="onSelectProduct(products[0])">Voir les détails</button>
+              <button type="button" class="btn btn-success" (click)="onSelectProduct(products[0])">
+                Voir les détails
+              </button>
             </div>
           </div>
         </div>
       } @else {
         @for (product of products; track product.id) {
           <div class="col-12 col-md-6 col-lg-4 mb-4">
-            <div class="p-4 shadow rounded-4 bg-white h-100 d-flex flex-column justify-content-between">
-              <div class="d-flex justify-content-between text-secondary small mb-3"></div>
-              <div class="text-center">
-                <img [src]="serviceList[product.id % serviceList.length].imgUrl" alt="service" class="prestation" />
-                <h5 class="mt-3 card-title">{{ product.name }}</h5>
+            <div class="card prestation-card shadow-sm border-0 h-100">
+              <img
+                [src]="serviceList[product.id % serviceList.length].imgUrl"
+                alt="service"
+                class="prestation card-img-top" />
+              <div class="card-body text-center d-flex flex-column justify-content-between">
+                <h5 class="card-title">{{ product.name }}</h5>
                 <p class="card-text">
                   💰 <strong>{{ product.coeff | currency: 'EUR' }}</strong>
                 </p>
-                <button type="button" class="btn btn-success" (click)="onSelectProduct(product)">Voir les détails</button>
+                <button type="button" class="btn btn-success mt-auto" (click)="onSelectProduct(product)">
+                  Voir les détails
+                </button>
               </div>
             </div>
           </div>
