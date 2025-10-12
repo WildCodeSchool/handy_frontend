@@ -22,7 +22,6 @@ export function securePasswordValidator(minLength: number = 12): ValidatorFn {
 
     return passwordValid ? null : { securePassword: true };
   };
-  
 }
 export function termsAcceptedValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {

@@ -90,7 +90,7 @@
     font-size: 0.9rem;
   }
   .selected-services button,
-.selected-services .btn {
+  .selected-services .btn {
     font-size: 0.85rem;
   }
 }

@@ -1,65 +1,65 @@
 .provider-card {
-    max-width: 480px; 
-    padding: 1.5rem;
-    border-radius: 1rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    background-color: #fff;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-  
-    .provider-name {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: #212529;
-      margin-bottom: 0.5rem;
-      word-wrap: break-word; 
-      white-space: normal;   
+  max-width: 480px;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+
+  .provider-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #212529;
+    margin-bottom: 0.5rem;
+    word-wrap: break-word;
+    white-space: normal;
+  }
+
+  .custom-img-75 {
+    width: 75px;
+    height: 75px;
+    object-fit: cover;
+  }
+
+  .custom-img-48 {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+  }
+
+  .provider-services {
+    flex-grow: 1;
+
+    ul {
+      margin-bottom: 1rem;
+      padding-left: 0;
+      list-style: none;
+
+      li {
+        margin-bottom: 0.25rem;
+        color: #495057;
+        word-wrap: break-word;
+      }
     }
-  
-    .custom-img-75 {
-      width: 75px;
-      height: 75px;
-      object-fit: cover;
+
+    .btn {
+      display: inline-block;
+      margin-top: 0.5rem;
     }
-  
+  }
+}
+
+@media (max-width: 576px) {
+  .provider-card {
+    max-width: 90%;
+    padding: 1rem;
+
+    .custom-img-75,
     .custom-img-48 {
-      width: 48px;
-      height: 48px;
-      object-fit: cover;
-    }
-  
-    .provider-services {
-      flex-grow: 1;
-  
-      ul {
-        margin-bottom: 1rem;
-        padding-left: 0;
-        list-style: none;
-  
-        li {
-          margin-bottom: 0.25rem;
-          color: #495057;
-          word-wrap: break-word; 
-        }
-      }
-  
-      .btn {
-        display: inline-block;
-        margin-top: 0.5rem;
-      }
+      width: auto;
+      height: auto;
     }
   }
-  
-  @media (max-width: 576px) {
-    .provider-card {
-      max-width: 90%;
-      padding: 1rem;
-  
-      .custom-img-75, .custom-img-48 {
-        width: auto;
-        height: auto;
-      }
-    }
-  }
-  
+}

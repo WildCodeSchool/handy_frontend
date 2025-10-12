@@ -56,7 +56,8 @@
     max-width: 90%;
     padding: 1rem;
   }
-  .provider-card .custom-img-75, .provider-card .custom-img-48 {
+  .provider-card .custom-img-75,
+  .provider-card .custom-img-48 {
     width: auto;
     height: auto;
   }

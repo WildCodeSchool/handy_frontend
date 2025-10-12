@@ -5,8 +5,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './cgu-page.component.html',
-  styleUrl: './cgu-page.component.scss'
+  styleUrl: './cgu-page.component.scss',
 })
-export class CguPageComponent {
-
-}
+export class CguPageComponent {}

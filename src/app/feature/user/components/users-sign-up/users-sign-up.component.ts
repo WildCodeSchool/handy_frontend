@@ -25,7 +25,7 @@ export class UsersSignUpComponent {
       },
       { validators: passwordMatchValidator() }
     ),
-    termsAccepted: [false, [termsAcceptedValidator()]]
+    termsAccepted: [false, [termsAcceptedValidator()]],
   });
 
   protected getEmailAndPassword(): { email: string; password: string } | null {
@@ -38,5 +38,3 @@ export class UsersSignUpComponent {
     return null;
   }
 }
-
-

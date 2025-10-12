@@ -26,7 +26,13 @@
 
           @let selectedSlot = selectedSlots[item.userId + '_' + item.provisionId];
           @if (selectedSlot) {
-            <button type="button" (click)="confirmAvailability(item.userId, item.provisionId)" class="btn-confirm" [disabled]="confirmedSlots[item.userId + '_' + item.provisionId]">Confirmer le créneau ✅</button>
+            <button
+              type="button"
+              (click)="confirmAvailability(item.userId, item.provisionId)"
+              class="btn-confirm"
+              [disabled]="confirmedSlots[item.userId + '_' + item.provisionId]">
+              Confirmer le créneau ✅
+            </button>
           }
         }
 

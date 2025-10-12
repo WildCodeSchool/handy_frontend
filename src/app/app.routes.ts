@@ -54,9 +54,10 @@ export const routes: Routes = [
     component: CreateUserComponent,
   },
   { path: 'auth', component: UserConnectionComponent },
-  
+
   {
-    path: 'conditions-generales', component : CguPageComponent
+    path: 'conditions-generales',
+    component: CguPageComponent,
   },
 
   {

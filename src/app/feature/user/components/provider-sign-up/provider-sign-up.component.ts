@@ -59,8 +59,5 @@ export class ProviderSignUpComponent extends UsersSignUpComponent {
           console.error('Erreur lors de l’inscription du prestataire :', err);
         },
       });
-    
   }
- 
-  
 }

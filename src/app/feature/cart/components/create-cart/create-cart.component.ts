@@ -31,7 +31,6 @@ export class CreateCartComponent {
   orderNumber: string | null = null;
   successMessageUpdate: string | null = null;
 
-
   providerMap: Record<number, ProviderWithServicesDTO> = {};
   serviceMap: Record<string, AppProvider> = {};
 
