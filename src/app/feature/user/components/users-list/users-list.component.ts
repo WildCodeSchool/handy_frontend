@@ -19,8 +19,6 @@ export class UsersListComponent {
   users$ = this._refresh$.pipe(switchMap(() => this._usersService.getAllUsers()));
   selectedUser: UserProfil | null = null;
 
-  
-
   deleteUser(userId: number): void {
     if (userId == null) return;
     this._usersService.deleteUser(userId).subscribe({
@@ -31,7 +29,4 @@ export class UsersListComponent {
   selectUser(user: UserProfil): void {
     this.selectedUser = user;
   }
-
-
-
 }

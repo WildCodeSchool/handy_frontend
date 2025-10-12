@@ -8,7 +8,6 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const authService = inject(AuthService);
 
-
   return next(req).pipe(
     catchError(err => {
       if (err.status === 401 || err.status === 403) {

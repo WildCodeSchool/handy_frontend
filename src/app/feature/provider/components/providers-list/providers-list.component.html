@@ -1,16 +1,14 @@
 <div class="container-fluid p-5 text-white banner-background">
   <div class="row justify-content-start text-success">
-      <h1 class="fw-bold display-4">Prêt pour trouver votre assitant ?</h1>
-      <h1 class="fw-bold display-4 text-success">Vos attentes?</h1>
-      
-    </div>
+    <h1 class="fw-bold display-4">Prêt pour trouver votre assitant ?</h1>
+    <h1 class="fw-bold display-4 text-success">Vos attentes?</h1>
   </div>
+</div>
 <div class="bg-dark text-white py-3 px-3 px-lg-5">
   <div class="container-fluid">
     <div class="row align-items-center justify-content-between">
       <div class="col-12 col-sm-auto mb-3 mb-sm-0">
         <a [routerLink]="'/order'" class="btn btn-success btn-lg fw-bold px-4 py-2">Prendre rendez-vous</a>
-
       </div>
 
       <div class="col-12 col-sm-auto"></div>
@@ -20,7 +18,8 @@
 @if (providersWithServices$ | async; as providersWithServices) {
   <div class="container my-5">
     <h2 class="text-dark display-5 fw-medium mb-4 text-center text-lg-start">Les pros à votre service</h2>
-    <p class="lead text-success mt-3 mb-4 ">  Notre équipe vous accompagne au quotidien pour simplifier vos tâches et améliorer votre confort, tout en respectant votre autonomie.
+    <p class="lead text-success mt-3 mb-4">
+      Notre équipe vous accompagne au quotidien pour simplifier vos tâches et améliorer votre confort, tout en respectant votre autonomie.
     </p>
     <div class="row g-4">
       @for (provider of providersWithServices; track provider.providerId) {

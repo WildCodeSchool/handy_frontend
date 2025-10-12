@@ -13,16 +13,15 @@
       <a [routerLink]="'/contacts'" class="nav-link">Contact</a>
     </nav>
     <div class="d-flex align-items-center gap-2">
-
-    @if (isLoggedIn) {
-      <button type="button" class="btn btn-danger d-none d-md-block me-3" (click)="onLogout()">Déconnexion</button>
-    } @else {
-      <div class="d-flex align-items-center gap-2 d-none d-md-flex">
-        <button type="button" class="header-button btn btn-success d-none d-md-block" (click)="navigateToSignUpPage()">Se connecter</button>
-        <a [routerLink]="'/signup'" class="text-white text-decoration-underline d-none d-md-block"> S'inscrire </a>
-      </div>
-    }
-  </div>
+      @if (isLoggedIn) {
+        <button type="button" class="btn btn-danger d-none d-md-block me-3" (click)="onLogout()">Déconnexion</button>
+      } @else {
+        <div class="d-flex align-items-center gap-2 d-none d-md-flex">
+          <button type="button" class="header-button btn btn-success d-none d-md-block" (click)="navigateToSignUpPage()">Se connecter</button>
+          <a [routerLink]="'/signup'" class="text-white text-decoration-underline d-none d-md-block"> S'inscrire </a>
+        </div>
+      }
+    </div>
 
     @if (isLoggedIn) {
       @if (isProvider$ | async) {
