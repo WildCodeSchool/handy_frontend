@@ -3,7 +3,7 @@
     <fieldset>
       <h2>Profil prestataire</h2>
       <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
+        <label for="username" class="form-label">Identifiant</label>
         <input id="username" formControlName="username" type="text" required class="form-control" />
         @if (signUpForm.get('username')?.invalid && signUpForm.get('username')?.touched) {
           <div class="invalid-feedback d-block">
@@ -16,7 +16,6 @@
           </div>
         }
       </div>
-
       <div class="mb-3">
         <label for="email" class="form-label">Email</label>
         <input id="email" formControlName="email" type="email" required class="form-control" />
@@ -37,7 +36,24 @@
       <div formGroupName="passwords">
         <div class="mb-3">
           <label for="password" class="form-label">Mot de passe</label>
-          <input type="password" id="password" formControlName="password" class="form-control" />
+          <div class="mb-3 position-relative">
+            <input
+              id="password"
+              formControlName="password"
+              [type]="showPassword ? 'text' : 'password'"
+              class="form-control pe-5"
+              placeholder="Mot de passe" />
+            <i
+              class="fas password-icon position-absolute top-50 end-0 translate-middle-y me-3"
+              [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"
+              (click)="togglePasswordVisibility()"
+              (keydown)="togglePasswordVisibilityOnKey($event)"
+              tabindex="0"
+              aria-label="Afficher/Masquer le mot de passe"
+              role="button"
+              [attr.aria-pressed]="showPassword ? 'true' : 'false'">
+            </i>
+          </div>
           <app-form-error [control]="signUpForm.get('passwords.password')"></app-form-error>
         </div>
         @if (signUpForm.get('passwords.password')?.invalid && signUpForm.get('passwords.password')?.touched) {
@@ -54,7 +70,23 @@
         }
         <div class="mb-3">
           <label for="confirmPassword" class="form-label">Confirmer le mot de passe</label>
-          <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control" />
+          <div class="mb-3 position-relative">
+            <input
+              id="confirmPassword"
+              formControlName="confirmPassword"
+              [type]="showConfirmPassword ? 'text' : 'password'"
+              class="form-control pe-5"
+              placeholder="Confirmer le mot de passe" />
+            <i
+              class="fas password-icon position-absolute top-50 end-0 translate-middle-y me-3"
+              [ngClass]="showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'"
+              (click)="toggleConfirmPasswordVisibility()"
+              (keydown)="toggleConfirmPasswordVisibilityOnKey($event)"
+              tabindex="0"
+              aria-label="Afficher/Masquer le mot de passe"
+              role="button">
+            </i>
+          </div>
           <app-form-error [control]="signUpForm.get('passwords')"></app-form-error>
         </div>
         <div>
@@ -62,6 +94,19 @@
             <span class="error">Les mots de passe ne correspondent pas.</span>
           }
         </div>
+      </div>
+
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="terms" formControlName="termsAccepted" required />
+        <label class="form-check-label" for="terms">
+          J’accepte les
+          <a [routerLink]="'/conditions-generales'" target="_blank" class="text-primary text-decoration-underline">
+            Conditions Générales d’Utilisation
+          </a>
+        </label>
+        @if (signUpForm.get('termsAccepted')?.invalid && signUpForm.get('termsAccepted')?.touched) {
+          <div class="invalid-feedback d-block">Vous devez accepter les Conditions Générales pour vous inscrire.</div>
+        }
       </div>
 
       <button type="submit" class="btn btn-success" [disabled]="signUpForm.invalid">S'inscrire</button>

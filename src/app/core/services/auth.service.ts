@@ -116,5 +116,4 @@ export class AuthService {
   getCurrentUserId(): number | null {
     return this._userPayload ? this._userPayload.id : null;
   }
-  
 }
