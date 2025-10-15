@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { passwordMatchValidator, securePasswordValidator } from 'src/app/core/validators/validators';
+import { passwordMatchValidator, securePasswordValidator, termsAcceptedValidator } from 'src/app/core/validators/validators';
 
 @Component({
   selector: 'app-users-sign-up',
@@ -25,6 +25,7 @@ export class UsersSignUpComponent {
       },
       { validators: passwordMatchValidator() }
     ),
+    termsAccepted: [false, [termsAcceptedValidator()]],
   });
 
   protected getEmailAndPassword(): { email: string; password: string } | null {

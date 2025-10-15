@@ -41,3 +41,19 @@
 .order-details-container .btn:hover {
   background-color: #218838;
 }
+@media screen and (max-width: 576px) {
+  .order-details-container h3 {
+    font-size: 1.2rem !important;
+  }
+
+  .order-details-container {
+    width: 90vw;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .order-details-container .btn {
+    font-size: 0.85rem;
+    padding: 8px 12px;
+  }
+}

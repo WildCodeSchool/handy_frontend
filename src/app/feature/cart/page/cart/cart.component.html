@@ -1,7 +1,15 @@
 <h1>Trouvez l'aide qui vous correspond</h1>
+<!-- <div class="button-container">
+  <button type="button" (click)="toggleCartVisibility()" class="btn-toggle-cart">
+    {{ isCartVisible ? 'Cacher le panier' : 'Afficher le panier 🛒' }}
+  </button>
+</div> -->
 <div class="button-container">
   <button type="button" (click)="toggleCartVisibility()" class="btn-toggle-cart">
     {{ isCartVisible ? 'Cacher le panier' : 'Afficher le panier 🛒' }}
+    <span *ngIf="_cartService.cart$ | async as cart" class="cart-badge" [class.animate]="animateBadge" (change)="triggerBadgeAnimation()">
+      {{ cart.length }}
+    </span>
   </button>
 </div>
 @if (isCartVisible) {
