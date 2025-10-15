@@ -29,6 +29,7 @@ export class CreateCartComponent {
   selectedSlots: Record<string, Availability> = {};
   confirmedSlots: Record<string, boolean> = {};
   orderNumber: string | null = null;
+  successMessageUpdate: string | null = null;
 
   providerMap: Record<number, ProviderWithServicesDTO> = {};
   serviceMap: Record<string, AppProvider> = {};
@@ -122,6 +123,7 @@ export class CreateCartComponent {
           this.orderNumber = order.orderNumber;
           this.clearCart();
           this.showToast(`Commande envoyée avec succès ✅ (N°: ${this.orderNumber})`, 'success');
+          this.successMessageUpdate = 'Commande créée avec succès !';
         }),
         takeUntilDestroyed(this._destroyRef)
       )

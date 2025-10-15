@@ -97,3 +97,21 @@ h1 {
   height: 20vh;
   margin-bottom: 20px;
 }
+
+.cart-badge {
+  display: inline-block;
+  background-color: red;
+  color: white;
+  font-size: 0.8rem;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  border-radius: 50%;
+  text-align: center;
+  margin-left: 4px;
+  transition: transform 0.3s;
+}
+
+.cart-badge.animate {
+  transform: scale(1.5);
+}

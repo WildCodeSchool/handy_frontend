@@ -30,12 +30,10 @@ export class ProviderProfilComponent implements OnInit {
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _authService = inject(AuthService);
 
-
   ngOnInit(): void {
-    
     this.loadProvisions();
     this.loadExistingServices();
-  } 
+  }
 
   loadExistingServices(): void {
     if (!this.providerId) {
@@ -82,7 +80,6 @@ export class ProviderProfilComponent implements OnInit {
             this.message = 'Service ajouté avec succès !';
             this.existingServices.push(provisionIdNum);
             // this.loadExistingServices();
-
           },
           error: () => {
             this.message = "Erreur lors de l'ajout du service.";

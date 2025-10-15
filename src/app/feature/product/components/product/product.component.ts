@@ -5,11 +5,12 @@ import { UpdateProductComponent } from '../update-product/update-product.compone
 import { CreateProductComponent } from '../create-product/create-product.component';
 import { DeleteProductComponent } from '../delete-product/delete-product.component';
 import { ProductForCreation } from '../../models/productCreation';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [CommonModule, UpdateProductComponent, CreateProductComponent, DeleteProductComponent],
+  imports: [CommonModule, UpdateProductComponent, CreateProductComponent, DeleteProductComponent, RouterLink],
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss',
 })

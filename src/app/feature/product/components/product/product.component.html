@@ -1,6 +1,7 @@
 @if (product) {
   <div class="order-details-container">
     <h3>Description</h3>
+    <a routerLink="/order" class="btn btn-success btn-lg">Prendre rendez-vous</a>
     <div class="px-6 py-4">
       <div class="font-bold text-xl mb-2">{{ product.name }} - 💰 {{ product.coeff | currency: 'EUR' }}€</div>
     </div>
