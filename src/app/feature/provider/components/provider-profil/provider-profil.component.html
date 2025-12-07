@@ -1,24 +1,26 @@
-<h3 class="fw-bold text-success">Liste des services disponibles</h3>
-<div class="card shadow-sm p-4">
+<h3 class="fw-bold text-success mb-4 text-center">Liste des services disponibles</h3>
+<div class="card shadow-lg border-0 p-4 rounded-4">
   @if (provisions$ | async; as provisions) {
     @if (provisions.length > 0) {
-      <ul class="list-group">
+      <ul class="list-group list-group-flush">
         @for (provision of provisions; track provision.id) {
-          <li>
-            <label>
+          <li class="list-group-item d-flex align-items-center justify-content-between py-3 rounded-3 mb-2 shadow-sm border">
+            <div class="d-flex align-items-center gap-2">
               <input type="radio" name="selectedProvision" [value]="provision.id" [(ngModel)]="selectedProvisionId" />
-              {{ provision.name }}
-            </label>
+              <span class="fw-semibold">{{ provision.name }}</span>
+            </div>
           </li>
         }
       </ul>
 
-      <div class="text-center mt-3">
-        <button type="button" class="btn btn-success mt-3" (click)="attachServiceToConnectedProvider()">Ajouter ce service</button>
+      <div class="text-center mt-4">
+        <button type="button" class="btn btn-success px-4 py-2 rounded-pill shadow-sm" (click)="attachServiceToConnectedProvider()">
+          ➕ Ajouter ce service
+        </button>
       </div>
 
       @if (message) {
-        <p>{{ message }}</p>
+        <p class="text-center mt-3 text-info">{{ message }}</p>
       }
     } @else {
       <p>Aucun service disponible.</p>
