@@ -8,8 +8,6 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(
     catchError(err => {
-
-      
       if (err.status === 401 || err.status === 403) {
         authService.logout();
         alert('Votre session a expiré, veuillez vous reconnecter.');

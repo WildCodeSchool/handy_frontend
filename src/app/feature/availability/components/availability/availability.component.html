@@ -9,25 +9,25 @@
 
 <div class="card shadow-sm mb-4">
   <div class="card-body">
-<form (ngSubmit)="createAvailability()" class="p-4 shadow-sm rounded bg-light">
-   <div class="row">
+    <form (ngSubmit)="createAvailability()" class="p-4 shadow-sm rounded bg-light">
+      <div class="row">
         <div class="col-md-6 mb-3">
-    <label for="startTime" class="form-control">Début :</label>
-    <input type="datetime-local" [(ngModel)]="newStartTime" name="startTime" required id="startTime" />
-  </div>
-  <div class="col-md-6 mb-3">
-    <label for="endTime" class="form-control">Fin :</label>
-    <input type="datetime-local" [(ngModel)]="newEndTime" name="endTime" required id="endTime" />
+          <label for="startTime" class="form-control">Début :</label>
+          <input type="datetime-local" [(ngModel)]="newStartTime" name="startTime" required id="startTime" />
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="endTime" class="form-control">Fin :</label>
+          <input type="datetime-local" [(ngModel)]="newEndTime" name="endTime" required id="endTime" />
+        </div>
+      </div>
+      @if (!newStartTime || !newEndTime) {
+        <div class="alert alert-warning py-2">Les deux plages sont requises pour soumettre le formulaire.</div>
+      }
+
+      <button type="submit" class="btn btn-success mt-3">Ajouter</button>
+    </form>
   </div>
 </div>
-  @if (!newStartTime || !newEndTime) {
-    <div class="alert alert-warning py-2">Les deux plages sont requises pour soumettre le formulaire.</div>
-  }
-
-  <button type="submit" class="btn btn-success mt-3">Ajouter</button>
-</form>
-  </div>
-    </div>
 <hr />
 
 <h3 class="fw-bold text-success">Résumé de mes disponibilités</h3>

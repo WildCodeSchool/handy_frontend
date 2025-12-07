@@ -147,7 +147,7 @@
     width: 100%;
   }
   .cart-actions .btn-clear,
-.cart-actions .btn-submit {
+  .cart-actions .btn-submit {
     width: 100%;
     font-size: 0.9rem;
     padding: 10px;

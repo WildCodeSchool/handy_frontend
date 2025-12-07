@@ -57,9 +57,7 @@
             @if (signUpForm.get('passwords.password')?.errors?.['required']) {
               <span class="error">Le mot de passe est requis.</span>
             }
-            @if (signUpForm.get('passwords.password')?.errors?.['securePassword']) {
-              
-            }
+            @if (signUpForm.get('passwords.password')?.errors?.['securePassword']) {}
           </div>
         }
         <div class="mb-3">

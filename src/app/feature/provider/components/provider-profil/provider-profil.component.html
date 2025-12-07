@@ -8,14 +8,15 @@
             <div class="d-flex align-items-center gap-2">
               <input type="radio" name="selectedProvision" [value]="provision.id" [(ngModel)]="selectedProvisionId" />
               <span class="fw-semibold">{{ provision.name }}</span>
-                        </div>
-
+            </div>
           </li>
         }
       </ul>
 
       <div class="text-center mt-4">
-        <button type="button" class="btn btn-success px-4 py-2 rounded-pill shadow-sm" (click)="attachServiceToConnectedProvider()">➕ Ajouter ce service</button>
+        <button type="button" class="btn btn-success px-4 py-2 rounded-pill shadow-sm" (click)="attachServiceToConnectedProvider()">
+          ➕ Ajouter ce service
+        </button>
       </div>
 
       @if (message) {
