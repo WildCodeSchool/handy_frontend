@@ -1,6 +1,6 @@
 import { Component, inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FeedbackService } from '../../services/feedback.service';
-import { Feedback } from '../../model/feedback';
+import { Feedback } from '../../models/feedback';
 import { CommonModule } from '@angular/common';
 import { catchError, map, Observable, of } from 'rxjs';
 import { DeleteFeedbackComponent } from '../delete-feedback/delete-feedback.component';

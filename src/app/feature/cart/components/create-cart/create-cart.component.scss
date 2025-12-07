@@ -116,3 +116,46 @@
   box-sizing: border-box;
   width: 100%;
 }
+
+@media screen and (max-width: 576px) {
+  .cart-container {
+    padding: 10px;
+  }
+
+  .cart-list li {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px;
+  }
+
+  .cart-list select {
+    width: 100% !important;
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .btn-remove {
+    width: 100%;
+    text-align: center;
+    padding: 8px 10px !important;
+    font-size: 0.9rem;
+  }
+
+  .btn-confirm {
+    width: 100%;
+    padding: 10px 12px !important;
+    font-size: 0.9rem;
+  }
+
+  .cart-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .cart-actions .btn-clear,
+  .cart-actions .btn-submit {
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+}
