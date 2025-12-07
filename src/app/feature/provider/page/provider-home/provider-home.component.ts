@@ -11,4 +11,5 @@ import { UpdateUserComponent } from 'src/app/feature/user/components/update-user
   templateUrl: './provider-home.component.html',
   styleUrl: './provider-home.component.scss',
 })
-export class ProviderHomeComponent {}
+export class ProviderHomeComponent {
+}
